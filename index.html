@@ -136,10 +136,10 @@
   .card p { color: var(--muted); font-size: 13.5px; line-height: 1.6; margin-top: 4px; }
   .pill { display: inline-block; font-size: 9.5px; letter-spacing: .16em; text-transform: uppercase; background: var(--sand); color: var(--olive-d); padding: 5px 11px; border-radius: 999px; font-weight: 600; margin: 8px 6px 0 0; }
   .mapbtn { display: inline-block; margin-top: 10px; font-size: 9.5px; letter-spacing: .18em; text-transform: uppercase; font-weight: 600; background: var(--olive); color: #fff; padding: 7px 14px; border-radius: 999px; text-decoration: none; }
-  .kv { display: flex; justify-content: space-between; gap: 14px; padding: 13px 0; border-bottom: 1px dashed var(--taupe); font-size: 14px; }
+  .kv { display: flex; flex-direction: column; gap: 3px; padding: 13px 0; border-bottom: 1px dashed var(--taupe); font-size: 14px; }
   .kv:last-child { border: none; }
-  .kv span:first-child { font-family: var(--serif); font-size: 19px; font-weight: 700; flex: none; max-width: 42%; }
-  .kv span:last-child { color: #5a5547; text-align: right; line-height: 1.5; }
+  .kv span:first-child { font-family: var(--serif); font-size: 20px; font-weight: 700; }
+  .kv span:last-child { color: #5a5547; text-align: left; line-height: 1.6; font-size: 14px; }
 
   /* Dienų puslapis su šonine juosta */
   .side { display: flex; min-height: calc(100% - 0px); }
@@ -281,6 +281,13 @@ const TRIP = {
     { tab: "Grįžimas", wiki: "Vilnius Airport", date: "29 RUGPJŪČIO", from: "DPS", fromCity: "Denpasaras", to: "VNO", toCity: "Vilnius", flight: "XX 124", depart: "01:00", arrive: "18:40", airline: "Pavyzdinė oro linija", terminal: "I", seat: "15B" }
   ],
 
+  stayTip: {
+    title: "Geriausia bazė: Uluvatu",
+    wiki: "Uluwatu Bali beach", scene: "sunset",
+    text: "Turistinis rajonas, į kurį labai lengva atvykti. Čia daug paplūdimių, nuomos punktų ir kavinių.",
+    bullets: ["Daug paplūdimių viename rajone", "Lengva nuomoti motoroleris ar naudoti Gojek", "Daug nakvynės ir maitinimosi pasirinkimų"]
+  },
+
   stays: [
     { name: "Ubudo vila su baseinu", wiki: "Ubud Bali", where: "Ubudas", dates: "15 – 20 rgp.", price: "55 € / naktis", note: "Pusryčiai įskaičiuoti. Registracija nuo 14:00.", scene: "terraces" },
     { name: "Čangu bangų namelis", wiki: "Canggu Bali", where: "Čangu", dates: "21 – 22 rgp.", price: "70 € / naktis", note: "5 min. pėsčiomis iki paplūdimio.", scene: "beach" },
@@ -351,9 +358,9 @@ const TRIP = {
   ],
 
   transport: [
-    ["Taksi / Grab", "Patogiausia trumpoms kelionėms, kaina matoma programėlėje."],
+    ["Gojek / Grab", "Patogu trumpoms kelionėms, kaina matoma programėlėje."],
     ["Vairuotojas visai dienai", "~35–50 € už dieną, pigiau susitarus iš anksto."],
-    ["Motoroleris", "Tik su patirtimi ir tarptautine vairuotojo pažyma."],
+    ["Motoroleris", "Pigiausias būdas judėti: nuoma ~5 € per dieną, kuras ~0,50 € už litrą. Nuomos punktai dažnai dokumentų neprašo, bet vairuoti legaliai reikia galiojančios pažymos su motociklo kategorija (tarptautinė). Be jos gresia bauda, o draudimas gali negalioti. Visada su šalmu."],
     ["Iš oro uosto", "Gojek arba Grab. Abu ima tokį patį mokestį, kaina matoma programėlėje."]
   ],
 
@@ -400,7 +407,7 @@ const NAV = [["home","Pradžia"],["overview","Maršrutas"],["daily","Dienos"],["
 const $ = id => document.getElementById(id);
 const esc = s => { const d = document.createElement("div"); d.textContent = s == null ? "" : String(s); return d.innerHTML; };
 const mapUrl = q => "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(q + " " + TRIP.mapCity);
-const rise = i => `style="--i:${i}"`;
+const rise = i => `data-i="${i}"`;
 
 /* ---------- Iliustracijos (SVG) ---------- */
 let _u = 0;
@@ -541,7 +548,7 @@ const V = {
         </div></div></div>`;
   },
   stay() {
-    return `<div class="view pad">${ttl("Where", "to Stay")}<div class="section">${TRIP.stays.map((s, i) => `<div class="card rise" ${rise(i + 1)}>${art(s.scene, s.photo, "round", s.wiki)}<h3>${esc(s.name)}</h3><p>${esc(s.where)} · ${esc(s.dates)}</p><span class="pill">${esc(s.price)}</span><p style="margin-top:10px">${esc(s.note)}</p><a class="mapbtn" target="_blank" rel="noopener" href="${mapUrl(s.name + " " + s.where)}">Žemėlapis</a></div>`).join("")}</div></div>`;
+    return `<div class="view pad">${ttl("Where", "to Stay")}<div class="section"><div class="card rise" ${rise(1)} style="background:var(--olive);color:#fff">${art(TRIP.stayTip.scene, null, "round", TRIP.stayTip.wiki)}<span class="pill" style="background:rgba(255,255,255,.2);color:#fff">Patarimas</span><h3 style="margin-top:8px">${esc(TRIP.stayTip.title)}</h3><p style="color:rgba(255,255,255,.85)">${esc(TRIP.stayTip.text)}</p>${TRIP.stayTip.bullets.map(b => `<p style="color:#fff;margin-top:6px">• ${esc(b)}</p>`).join("")}</div>${TRIP.stays.map((s, i) => `<div class="card rise" ${rise(i + 1)}>${art(s.scene, s.photo, "round", s.wiki)}<h3>${esc(s.name)}</h3><p>${esc(s.where)} · ${esc(s.dates)}</p><span class="pill">${esc(s.price)}</span><p style="margin-top:10px">${esc(s.note)}</p><a class="mapbtn" target="_blank" rel="noopener" href="${mapUrl(s.name + " " + s.where)}">Žemėlapis</a></div>`).join("")}</div></div>`;
   },
   daily() {
     return `<div class="view full"><div class="side"><div class="strip">${art("terraces", null, "", "Tegallalang rice terrace Bali")}</div><div class="main" style="padding-top:62px">
@@ -621,6 +628,7 @@ function go(name, arg, push = true) {
   $("backBtn").hidden = stack.length < 2 || name === "home";
   const key = { day: "daily", place: "overview" }[name] || name;
   $("nav").innerHTML = NAV.map(([k, l]) => `<button data-go="${k}" class="${k === key ? "on" : ""}">${ic(k)}<span>${l}</span></button>`).join("");
+  $("screen").querySelectorAll("[data-i]").forEach(e => e.style.setProperty("--i", e.dataset.i));
   closeDrawer();
   hydrate();
 }
