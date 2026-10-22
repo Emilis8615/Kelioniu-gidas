@@ -155,6 +155,7 @@
   .it { display: flex; gap: 12px; padding: 9px 0; }
   .it .t { width: 46px; flex: none; font-size: 11px; letter-spacing: .08em; font-weight: 600; color: var(--olive-d); padding-top: 3px; }
   .it .x { font-size: 14.5px; line-height: 1.4; }
+  .it .mini { display: inline-block; margin-top: 5px; font-size: 9.5px; letter-spacing: .16em; text-transform: uppercase; font-weight: 600; color: var(--olive-d); background: var(--sand); padding: 4px 10px; border-radius: 999px; text-decoration: none; }
   .it .n { font-size: 12.5px; color: var(--muted); margin-top: 2px; line-height: 1.5; }
   .daynav { display: flex; justify-content: space-between; gap: 10px; margin-top: 20px; }
   .daynav button { background: var(--sand); padding: 10px 16px; border-radius: 999px; font-size: 10.5px; letter-spacing: .14em; text-transform: uppercase; font-weight: 600; color: var(--olive-d); }
@@ -298,10 +299,10 @@ const TRIP = {
   /* [laikas, veikla, pastaba] */
   days: [
     { date: "15 rugpjūčio", title: "Atvykimas", wiki: "Ngurah Rai International Airport", scene: "plane", morning: [["06:00","Skrydis iš Vilniaus","Atvykti į oro uostą 3 val. iš anksto"]], afternoon: [["14:00","Skrydis ir persėdimas"]], evening: [["23:30","Nusileidimas Denpasare","Parodyti 3 QR kodus, pasiimti bagažą. Pinigų oro uoste nekeisti"],["00:30","Gojek arba Grab į viešbutį","~1 val. kelio, kaina matoma programėlėje"]] },
-    { date: "16 rugpjūčio", title: "Ubudas", wiki: "Tegallalang rice terrace Bali", scene: "terraces", morning: [["09:00","Pusryčiai vilos terasoje"],["10:30","Tegalalango ryžių terasos","Ateiti anksti, kol nėra minios"]], afternoon: [["13:00","Pietūs Ubudo centre"],["15:00","Beždžionių miškas","Slėpti akinius ir maišelius"]], evening: [["19:00","Vakarienė ir tradicinis šokių vakaras"]] },
+    { date: "16 rugpjūčio", title: "Ubudas", wiki: "Tegallalang rice terrace Bali", scene: "terraces", morning: [["09:00","Pusryčiai vilos terasoje"],["10:30","Tegalalango ryžių terasos","Pasivaikščiojimas, ateiti anksti, kol nėra minios","Tegalalang Rice Terrace"]], afternoon: [["13:00","Smagūs baseinai prie terasų","","swimming pool near Tegalalang Rice Terrace"],["15:00","Zoologijos sodas","Pakeliui","Bali Zoo"],["16:30","ATV per džiungles","Protingos kainos, važiuojama ilgai","ATV ride Ubud"]], evening: [["19:00","Vakarienė Ubude"]] },
     { date: "17 rugpjūčio", title: "Šventyklos", wiki: "Tirta Empul temple", scene: "temple", morning: [["08:00","Tirta Empul šventykla","Reikalingas sarongas"]], afternoon: [["13:00","Kavos plantacija"],["15:30","Laisvas laikas / masažas"]], evening: [["19:30","Vakarienė"]] },
     { date: "18 rugpjūčio", title: "Kriokliai", wiki: "Tegenungan Waterfall Bali", scene: "waterfall", morning: [["07:00","Tegenungan krioklys","Būtinai batai su protektoriumi"]], afternoon: [["14:00","Joga ar plaukimas baseine"]], evening: [["19:00","Vakarienė Ubude"]] },
-    { date: "19 rugpjūčio", title: "Poilsio diena", wiki: "Ubud Bali", scene: "cafe", morning: [["10:00","Ilgi pusryčiai"]], afternoon: [["14:00","Nemokamas laikas, masažas"]], evening: [["19:00","Pakuojamės kitam miestui"]] },
+    { date: "19 rugpjūčio", title: "Poilsio diena", wiki: "Ubud Bali", scene: "cafe", morning: [["10:00","Ilgi pusryčiai"]], afternoon: [["14:00","Beždžionių miškas","Slėpti akinius ir maišelius","Sacred Monkey Forest Sanctuary Ubud"],["16:00","Masažas ir nemokamas laikas"]], evening: [["19:00","Pakuojamės kitam miestui"]] },
     { date: "20 rugpjūčio", title: "Kelias į Čangu", wiki: "Canggu Bali", scene: "palms", morning: [["10:00","Išsiregistravimas"],["11:00","Kelionė į Čangu","~1,5 val. taksi"]], afternoon: [["15:00","Pirmas žvilgsnis į paplūdimį"]], evening: [["18:30","Saulėlydis Batu Bolong"]] },
     { date: "21 rugpjūčio", title: "Banglentės", wiki: "Canggu Batu Bolong beach", scene: "beach", morning: [["09:00","Banglenčių pamoka","2 val. su instruktoriumi"]], afternoon: [["13:00","Pietūs paplūdimio kavinėje"]], evening: [["19:00","Vakarienė ir kokteiliai"]] },
     { date: "22 rugpjūčio", title: "Tanah Lotas", wiki: "Tanah Lot temple Bali", scene: "sunset", morning: [["10:00","Kava ir pasivaikščiojimas"]], afternoon: [["16:00","Tanah Lot šventykla"]], evening: [["18:00","Saulėlydis prie jūros"]] },
@@ -336,10 +337,22 @@ const TRIP = {
   ],
 
   visit: [
-    { name: "Tegalalangas", wiki: "Tegallalang rice terrace Bali", note: "Ryžių terasos", scene: "terraces", map: "Tegalalang Rice Terrace" },
+    { name: "Ryžių terasos", wiki: "Tegallalang rice terrace Bali", note: "Ubudas: terasos ir baseinai", scene: "terraces", map: "Tegalalang Rice Terrace",
+      text: "Ubude labai smagu pasižiūrėti ir pasivaikščioti ryžių terasose. Šalia yra labai smagių baseinų.",
+      bullets: ["Pasivaikščiojimas tarp terasų", "Šalia smagūs baseinai", "Pakeliui užsuk į zoologijos sodą, o tada ATV"],
+      links: [["Ryžių terasos žemėlapyje", "Tegalalang Rice Terrace"], ["Baseinai prie terasų", "swimming pool near Tegalalang Rice Terrace"]] },
+    { name: "Zoologijos sodas", wiki: "Bali Zoo", note: "Pakeliui į ATV", scene: "palms", map: "Bali Zoo",
+      text: "Pakeliui verta užsukti į zoologijos sodą.",
+      bullets: ["Gerai tinka pakeliui tarp terasų ir ATV", "Bilietus galima pirkti internetu arba vietoje"],
+      links: [["Zoologijos sodas žemėlapyje", "Bali Zoo"]] },
+    { name: "ATV Ubude", wiki: "Ubud Bali jungle", note: "Per džiungles", scene: "waterfall", map: "ATV ride Ubud",
+      text: "Pasivažinėjimas ATV per džiungles Ubude: protingos kainos, važiuojama ilgai ir labai smagu.",
+      bullets: ["Protingos kainos", "Važiuojama ilgai", "Kelias per džiungles", "Parink operatorių pagal atsiliepimus"],
+      links: [["ATV ratai Ubude žemėlapyje", "ATV ride Ubud"]] },
     { name: "Uluvatu šventykla", wiki: "Uluwatu Temple Bali", note: "Šventykla ant uolos",
       text: "Labai gražūs vaizdai ir kultūra, todėl tikrai verta nueiti. Bilietą pirk vietoje. Verta pamatyti ir vietinių pasirodymą apie jų kultūrą (Kecak šokis saulėlydžio metu).",
-      bullets: ["Bilietą pirk vietoje", "Pasirodymas apie vietinę kultūrą, verta pamatyti", "Vaizdai nuo uolos į vandenyną", "Beždžionės čia drąsios: saugok akinius ir telefoną", "Šventyklai reikalingas sarongas, dažnai jį duoda prie įėjimo"], scene: "temple", map: "Uluwatu Temple" },
+      bullets: ["Bilietą pirk vietoje", "Pasirodymas apie vietinę kultūrą, verta pamatyti", "Vaizdai nuo uolos į vandenyną", "Beždžionės čia drąsios: saugok akinius ir telefoną", "Šventyklai reikalingas sarongas, dažnai jį duoda prie įėjimo"],
+      links: [["Uluvatu šventykla žemėlapyje", "Uluwatu Temple"]], scene: "temple", map: "Uluwatu Temple" },
     { name: "Tanah Lotas", wiki: "Tanah Lot temple Bali", note: "Saulėlydžio šventykla", scene: "sunset", map: "Tanah Lot" },
     { name: "Tegenunganas", wiki: "Tegenungan Waterfall Bali", note: "Krioklys", scene: "waterfall", map: "Tegenungan Waterfall" }
   ],
@@ -559,7 +572,7 @@ const V = {
   },
   day(i) {
     const d = TRIP.days[i];
-    const slot = (n, a) => a.length ? `<div class="slot">${n}</div>` + a.map(([t, x, nt]) => `<div class="it"><div class="t">${esc(t)}</div><div><div class="x">${esc(x)}</div>${nt ? `<div class="n">${esc(nt)}</div>` : ""}</div></div>`).join("") : "";
+    const slot = (n, a) => a.length ? `<div class="slot">${n}</div>` + a.map(([t, x, nt, m]) => `<div class="it"><div class="t">${esc(t)}</div><div><div class="x">${esc(x)}</div>${nt ? `<div class="n">${esc(nt)}</div>` : ""}${m ? `<a class="mini" target="_blank" rel="noopener" href="${mapUrl(m)}">Žemėlapis ↗</a>` : ""}</div></div>`).join("") : "";
     return `<div class="view full"><div class="side"><div class="strip">${art(d.scene, d.photo, "", d.wiki)}</div><div class="main" style="padding-top:62px">
       <h2 class="ttl rise" ${rise(0)} style="padding:0"><span class="a">Day</span><span class="b" style="margin:-4px 0 0 46px">${i + 1}</span></h2>
       <div class="eyebrow rise" ${rise(1)} style="text-align:left;margin-top:6px">${esc(d.date)} · ${esc(d.title)}</div>
@@ -588,7 +601,7 @@ const V = {
       <div class="place-title rise" ${rise(1)} style="margin-top:-34px"><h2 style="font-size:32px;letter-spacing:.03em">${esc(v.name)}</h2><div class="script">Details</div></div>
       <p class="prose rise" ${rise(2)}>${esc(v.text || v.note)}</p>
       ${(v.bullets || []).length ? `<div class="section rise" ${rise(3)}><div class="card" style="padding:6px 18px">${v.bullets.map(b => `<div class="check" style="cursor:default"><div class="box" style="background:var(--olive)">✓</div><div class="label">${esc(b)}</div></div>`).join("")}</div></div>` : ""}
-      <div style="text-align:center;margin-top:10px" class="rise" ${rise(4)}><a class="mapbtn" target="_blank" rel="noopener" href="${mapUrl(v.map)}">Žemėlapis</a></div></div>`;
+      <div style="display:flex;flex-direction:column;gap:10px;align-items:center;margin-top:12px" class="rise" ${rise(4)}>${(v.links || [["Žemėlapis", v.map]]).map(([l, q]) => `<a class="mapbtn" target="_blank" rel="noopener" href="${mapUrl(q)}">${esc(l)} ↗</a>`).join("")}</div></div>`;
   },
   eat() { return placeGrid("Where", "to Eat", TRIP.eat); },
   out() { return placeGrid("Going", "Out", TRIP.out); },
