@@ -337,7 +337,9 @@ const TRIP = {
 
   visit: [
     { name: "Tegalalangas", wiki: "Tegallalang rice terrace Bali", note: "Ryžių terasos", scene: "terraces", map: "Tegalalang Rice Terrace" },
-    { name: "Uluvatu", wiki: "Uluwatu Temple Bali", note: "Šventykla ant uolos", scene: "temple", map: "Uluwatu Temple" },
+    { name: "Uluvatu šventykla", wiki: "Uluwatu Temple Bali", note: "Šventykla ant uolos",
+      text: "Labai gražūs vaizdai ir kultūra, todėl tikrai verta nueiti. Bilietą pirk vietoje. Verta pamatyti ir vietinių pasirodymą apie jų kultūrą (Kecak šokis saulėlydžio metu).",
+      bullets: ["Bilietą pirk vietoje", "Pasirodymas apie vietinę kultūrą, verta pamatyti", "Vaizdai nuo uolos į vandenyną", "Beždžionės čia drąsios: saugok akinius ir telefoną", "Šventyklai reikalingas sarongas, dažnai jį duoda prie įėjimo"], scene: "temple", map: "Uluwatu Temple" },
     { name: "Tanah Lotas", wiki: "Tanah Lot temple Bali", note: "Saulėlydžio šventykla", scene: "sunset", map: "Tanah Lot" },
     { name: "Tegenunganas", wiki: "Tegenungan Waterfall Bali", note: "Krioklys", scene: "waterfall", map: "Tegenungan Waterfall" }
   ],
@@ -580,10 +582,18 @@ const V = {
       ${TRIP.arrival.map((x, i) => `<div class="step rise" ${rise(8 + i)}><div class="num">${i + 1}</div><div class="sb"><h3>${esc(x.title)}</h3>${x.info.map(t => `<p>${esc(t)}</p>`).join("")}${x.note ? `<p class="warn">${esc(x.note)}</p>` : ""}</div></div>`).join("")}
       </div></div>`;
   },
+  spot(i) {
+    const v = TRIP.visit[i];
+    return `<div class="view pad">${art(v.scene, v.photo, "arch hero", v.wiki)}
+      <div class="place-title rise" ${rise(1)} style="margin-top:-34px"><h2 style="font-size:32px;letter-spacing:.03em">${esc(v.name)}</h2><div class="script">Details</div></div>
+      <p class="prose rise" ${rise(2)}>${esc(v.text || v.note)}</p>
+      ${(v.bullets || []).length ? `<div class="section rise" ${rise(3)}><div class="card" style="padding:6px 18px">${v.bullets.map(b => `<div class="check" style="cursor:default"><div class="box" style="background:var(--olive)">✓</div><div class="label">${esc(b)}</div></div>`).join("")}</div></div>` : ""}
+      <div style="text-align:center;margin-top:10px" class="rise" ${rise(4)}><a class="mapbtn" target="_blank" rel="noopener" href="${mapUrl(v.map)}">Žemėlapis</a></div></div>`;
+  },
   eat() { return placeGrid("Where", "to Eat", TRIP.eat); },
   out() { return placeGrid("Going", "Out", TRIP.out); },
   shop() { return placeGrid("Where", "to Buy", TRIP.shop); },
-  visit() { return tallGrid("Places", "to Visit", TRIP.visit); },
+  visit() { return tallGrid("Places", "to Visit", TRIP.visit, true); },
   things() { return tallGrid("Things", "to Do", TRIP.things); },
   attire() { return listPage("Attire", "what to wear", TRIP.attire); },
   transport() { return listPage("Transport", "getting around", TRIP.transport); },
@@ -597,8 +607,8 @@ const V = {
 function placeGrid(a, b, items) {
   return `<div class="view pad">${ttl(a, b)}<div class="two" style="margin-top:14px">${items.map((e, i) => `<div class="cell rise" ${rise(i + 1)}>${art(e.scene, e.photo, "round", e.wiki)}<h4>${esc(e.name)}</h4><small>${esc(e.where)}${e.price ? " · " + esc(e.price) : ""}</small><small>${esc(e.note)}</small><a class="badge" target="_blank" rel="noopener" href="${mapUrl(e.name + " " + e.where)}">Žemėlapis</a></div>`).join("")}</div></div>`;
 }
-function tallGrid(a, b, items) {
-  return `<div class="view pad">${ttl(a, b)}<div class="two" style="margin-top:14px">${items.map((e, i) => `<div class="cell tall rise" ${rise(i + 1)}>${art(e.scene, e.photo, "arch-sm", e.wiki)}<h4>${esc(e.name)}</h4><small>${esc(e.note)}</small><a class="badge" target="_blank" rel="noopener" href="${mapUrl(e.map)}">Žemėlapis</a></div>`).join("")}</div></div>`;
+function tallGrid(a, b, items, clickable) {
+  return `<div class="view pad">${ttl(a, b)}<div class="two" style="margin-top:14px">${items.map((e, i) => `<div class="cell tall rise" ${rise(i + 1)}${clickable ? ` data-spot="${i}" style="cursor:pointer"` : ""}>${art(e.scene, e.photo, "arch-sm", e.wiki)}<h4>${esc(e.name)}</h4><small>${esc(e.note)}</small>${clickable && e.text ? `<span class="badge" style="background:var(--olive);color:#fff">Daugiau</span> ` : ""}<a class="badge" target="_blank" rel="noopener" href="${mapUrl(e.map)}">Žemėlapis</a></div>`).join("")}</div></div>`;
 }
 function listPage(a, b, rows) {
   return `<div class="view pad">${ttl(a, b)}<div class="section"><div class="card rise" ${rise(1)} style="padding:6px 18px">${rows.map(([x, y]) => `<div class="kv"><span>${esc(x)}</span><span>${esc(y)}</span></div>`).join("")}</div></div></div>`;
@@ -626,7 +636,7 @@ function go(name, arg, push = true) {
   $("phone").classList.toggle("nonav", cover);
   $("topbar").classList.toggle("hidden", cover);
   $("backBtn").hidden = stack.length < 2 || name === "home";
-  const key = { day: "daily", place: "overview" }[name] || name;
+  const key = { day: "daily", place: "overview", spot: "visit" }[name] || name;
   $("nav").innerHTML = NAV.map(([k, l]) => `<button data-go="${k}" class="${k === key ? "on" : ""}">${ic(k)}<span>${l}</span></button>`).join("");
   $("screen").querySelectorAll("[data-i]").forEach(e => e.style.setProperty("--i", e.dataset.i));
   closeDrawer();
@@ -645,6 +655,8 @@ function closeDrawer() { $("drawer").classList.remove("open"); }
 document.addEventListener("click", e => {
   const g = e.target.closest("[data-go]"); if (g) return go(g.dataset.go);
   const d = e.target.closest("[data-day]"); if (d && !d.disabled) return go("day", Number(d.dataset.day));
+  if (e.target.closest("a")) return;
+  const sp = e.target.closest("[data-spot]"); if (sp) return go("spot", Number(sp.dataset.spot));
   const p = e.target.closest("[data-place]"); if (p) return go("place", Number(p.dataset.place));
   const f = e.target.closest("[data-flight]"); if (f) { S.flight = Number(f.dataset.flight); return go("flight", undefined, false); }
   const pr = e.target.closest("[data-prep]");
