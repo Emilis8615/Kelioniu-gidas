@@ -190,6 +190,7 @@
   .step.done h3 { color: var(--muted); }
   .step h3 { font-family: var(--display); font-size: 19px; font-weight: 700; line-height: 1.2; }
   .step .sb p { color: #5a5547; font-size: 13.5px; line-height: 1.6; margin-top: 6px; }
+  .sub { font-family: var(--serif); font-size: 32px; font-weight: 700; margin: 26px 4px 12px; }
   .step .sb p.warn { color: #8a5a2b; background: #f3e3c8; border-radius: 10px; padding: 8px 10px; font-size: 12.5px; }
 
   /* Apatinė juosta */
@@ -259,6 +260,14 @@ const TRIP = {
       link: "https://allindonesia.imigrasi.go.id/", linkLabel: "allindonesia.imigrasi.go.id" }
   ],
 
+  /* Po nusileidimo, eilės tvarka */
+  arrival: [
+    { title: "Parodyk 3 QR kodus", info: ["Viza (e-VOA), Balio turistinis mokestis ir atvykimo deklaracija bus tikrinami nusileidus.", "Kai kurios svetainės rašo, kad jų nereikia, bet jei neturėsi, vis tiek teks juos susitvarkyti prie vartų (eilė ir laukimas)."], note: "Išsisaugok QR kodus telefone ir ekrano nuotraukomis." },
+    { title: "Pasiimk lagaminus ir nesikeisk pinigų", info: ["Oro uoste pinigų keitimas labai nepalankus, neapsimoka."] },
+    { title: "Išėjęs iš oro uosto naudok Gojek arba Grab", info: ["Abu ima tokį patį mokestį, o kaina matoma programėlėje, todėl neapgaus."], note: "Programėlę geriau įsidiegti dar namie, nes oro uosto internetas gali būti lėtas." },
+    { title: "Pinigus pasikeisk mieste", info: ["Nuvažiavęs į viešbutį, apsidairyk, kur galima pasikeisti pinigų.", "Nepasitikėk viena vieta: pasivaikščiok ir palygink kelias, nes kursai labai skiriasi."] }
+  ],
+
   overview: [
     { place: "Ubudas", wiki: "Ubud Bali", dates: "15 – 20 rugpjūčio", scene: "terraces", text: "Kultūrinė Balio širdis: ryžių terasos, šventyklos, beždžionių miškas ir tylūs rytai. Čia verta leisti laiką lėtai: joga, kava su vaizdu ir pasivaikščiojimai tarp laukų." },
     { place: "Čangu", wiki: "Canggu Bali", dates: "21 – 22 rugpjūčio", scene: "beach", text: "Juodo smėlio paplūdimiai, banglentininkai ir madingos kavinės. Geriausia vieta pramokti sėlinti ant bangų ir pamatyti saulėlydį." },
@@ -281,7 +290,7 @@ const TRIP = {
 
   /* [laikas, veikla, pastaba] */
   days: [
-    { date: "15 rugpjūčio", title: "Atvykimas", wiki: "Ngurah Rai International Airport", scene: "plane", morning: [["06:00","Skrydis iš Vilniaus","Atvykti į oro uostą 3 val. iš anksto"]], afternoon: [["14:00","Skrydis ir persėdimas"]], evening: [["23:30","Nusileidimas Denpasare","Pasiimti bagažą, pasikeisti pinigų"],["00:30","Transferis į Ubudą","~1 val. kelio"]] },
+    { date: "15 rugpjūčio", title: "Atvykimas", wiki: "Ngurah Rai International Airport", scene: "plane", morning: [["06:00","Skrydis iš Vilniaus","Atvykti į oro uostą 3 val. iš anksto"]], afternoon: [["14:00","Skrydis ir persėdimas"]], evening: [["23:30","Nusileidimas Denpasare","Parodyti 3 QR kodus, pasiimti bagažą. Pinigų oro uoste nekeisti"],["00:30","Gojek arba Grab į viešbutį","~1 val. kelio, kaina matoma programėlėje"]] },
     { date: "16 rugpjūčio", title: "Ubudas", wiki: "Tegallalang rice terrace Bali", scene: "terraces", morning: [["09:00","Pusryčiai vilos terasoje"],["10:30","Tegalalango ryžių terasos","Ateiti anksti, kol nėra minios"]], afternoon: [["13:00","Pietūs Ubudo centre"],["15:00","Beždžionių miškas","Slėpti akinius ir maišelius"]], evening: [["19:00","Vakarienė ir tradicinis šokių vakaras"]] },
     { date: "17 rugpjūčio", title: "Šventyklos", wiki: "Tirta Empul temple", scene: "temple", morning: [["08:00","Tirta Empul šventykla","Reikalingas sarongas"]], afternoon: [["13:00","Kavos plantacija"],["15:30","Laisvas laikas / masažas"]], evening: [["19:30","Vakarienė"]] },
     { date: "18 rugpjūčio", title: "Kriokliai", wiki: "Tegenungan Waterfall Bali", scene: "waterfall", morning: [["07:00","Tegenungan krioklys","Būtinai batai su protektoriumi"]], afternoon: [["14:00","Joga ar plaukimas baseine"]], evening: [["19:00","Vakarienė Ubude"]] },
@@ -345,7 +354,7 @@ const TRIP = {
     ["Taksi / Grab", "Patogiausia trumpoms kelionėms, kaina matoma programėlėje."],
     ["Vairuotojas visai dienai", "~35–50 € už dieną, pigiau susitarus iš anksto."],
     ["Motoroleris", "Tik su patirtimi ir tarptautine vairuotojo pažyma."],
-    ["Transferis iš oro uosto", "Susitarti iš anksto, kad nereiktų derėtis naktį."]
+    ["Iš oro uosto", "Gojek arba Grab. Abu ima tokį patį mokestį, kaina matoma programėlėje."]
   ],
 
   packing: ["Pasas ir bilietai","Kelionės draudimas","Apsauga nuo saulės (SPF 50)","Repelentas","Lengvi drabužiai","Maudymosi kostiumėlis","Sarongas šventykloms","Universalus adapteris","Maža vaistinėlė","Nešiojamas įkroviklis","Lietpaltis"],
@@ -502,7 +511,7 @@ const V = {
     return `<div class="view pad">
       <div class="eyebrow rise" ${rise(0)} style="margin-top:6px">Kelionių gidas</div>
       ${ttl("Travel", "Guide")}
-      <button class="prepbar rise" ${rise(1)} data-go="prep">${ic("prep")}<span class="pt"><b>Prieš kelionę</b><small>${prepCount()} iš ${TRIP.prep.length} padaryta · viza, mokestis, deklaracija</small></span><span class="chev">›</span></button>
+      <button class="prepbar rise" ${rise(1)} data-go="prep">${ic("prep")}<span class="pt"><b>Prieš kelionę</b><small>${prepCount()} iš ${TRIP.prep.length} padaryta · viza, mokestis, QR kodai</small></span><span class="chev">›</span></button>
       <div class="panel rise" ${rise(2)}><div class="grid-menu">${MENU.map(([k, l]) => `<button class="tile" data-go="${k}">${ic(k)}<span>${l}</span></button>`).join("")}</div></div>
       <div class="hint rise" ${rise(3)}>Spausk ikoną</div>
     </div>`;
@@ -559,7 +568,10 @@ const V = {
           ${x.info.map(t => `<p>${esc(t)}</p>`).join("")}
           ${x.note ? `<p class="warn">${esc(x.note)}</p>` : ""}
           ${x.link ? `<a class="mapbtn" target="_blank" rel="noopener" href="${esc(x.link)}">Atidaryti: ${esc(x.linkLabel)}</a>` : ""}
-        </div></div>`).join("")}</div></div>`;
+        </div></div>`).join("")}
+      <h3 class="sub rise" ${rise(7)}>Nusileidus Denpasare</h3>
+      ${TRIP.arrival.map((x, i) => `<div class="step rise" ${rise(8 + i)}><div class="num">${i + 1}</div><div class="sb"><h3>${esc(x.title)}</h3>${x.info.map(t => `<p>${esc(t)}</p>`).join("")}${x.note ? `<p class="warn">${esc(x.note)}</p>` : ""}</div></div>`).join("")}
+      </div></div>`;
   },
   eat() { return placeGrid("Where", "to Eat", TRIP.eat); },
   out() { return placeGrid("Going", "Out", TRIP.out); },
