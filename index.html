@@ -213,6 +213,41 @@
   .drawer .brand + .script { font-size: 30px; color: var(--olive); margin: -2px 0 14px; }
   .drawer .item { display: flex; align-items: center; gap: 14px; width: 100%; padding: 12px 4px; border-bottom: 1px dashed var(--taupe); text-align: left; font-size: 13px; letter-spacing: .14em; text-transform: uppercase; font-weight: 500; }
   .drawer .item svg { width: 24px; height: 24px; color: var(--olive); stroke-width: 1.4; }
+
+  /* ===== Kompiuteris / didelis ekranas: plati svetainė ===== */
+  @media (min-width: 900px) {
+    body { display: block; background: var(--cream); }
+    .phone { max-width: none; max-height: none; width: 100%; height: 100dvh; border: none; border-radius: 0; box-shadow: none; flex-direction: row; }
+    nav { order: -1; flex: none; width: 210px; height: auto; flex-direction: column; justify-content: flex-start; align-items: stretch; gap: 4px; padding: 28px 14px; border-radius: 0; box-shadow: 6px 0 24px rgba(70,55,30,.08); border-top: none; }
+    nav::before { content: "Kelionės lietuviams"; font-family: var(--display); font-weight: 900; font-size: 22px; line-height: 1.1; padding: 4px 12px 22px; color: var(--olive-d); }
+    nav button { flex-direction: row; justify-content: flex-start; gap: 12px; padding: 12px 14px; border-radius: 14px; font-size: 11px; letter-spacing: .14em; }
+    nav button svg { width: 22px; height: 22px; }
+    nav button:hover { background: rgba(255,255,255,.45); }
+    nav button.on { background: var(--paper); transform: none; box-shadow: 0 2px 10px rgba(70,55,30,.1); }
+    nav button.on::after { display: none; }
+    .screen > * { width: 100%; max-width: 1040px; align-self: center; }
+    .topbar { left: 210px; right: 0; }
+    .nonav .topbar { left: 0; }
+    .cover { max-width: 600px; padding-top: 36px; }
+    .cover .art { min-height: 460px; }
+    .grid-menu { grid-template-columns: repeat(4, 1fr); }
+    .tile svg { width: 42px; height: 42px; }
+    .panel { margin: 18px 24px; padding: 24px 16px 16px; }
+    .prepbar { width: calc(100% - 48px); margin: 14px 24px 0; }
+    .two { grid-template-columns: repeat(4, 1fr); gap: 20px 18px; padding: 8px 24px; }
+    .days { grid-template-columns: repeat(5, 1fr); gap: 16px; padding: 18px 0 10px; }
+    .section { padding: 10px 24px; }
+    .section:has(> .card) { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; align-items: start; }
+    .section > .card { margin-bottom: 0; }
+    .section > .progress { grid-column: 1 / -1; }
+    .hero { height: 440px; max-width: 520px; margin: 0 auto; }
+    .prose { max-width: 620px; margin: 0 auto; font-size: 16px; }
+    .flight-card, .tabs { max-width: 560px; margin-left: auto; margin-right: auto; }
+    .strip { width: 30%; }
+    .side .main { padding: 12px 36px 28px 28px; }
+    .ttl .a { font-size: 62px; } .ttl .b { font-size: 56px; margin-left: 66px; }
+    .drawer .sheet { width: 340px; }
+  }
 </style>
 </head>
 <body>
