@@ -3,388 +3,551 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#f4efe6">
+<meta name="theme-color" content="#f3ede2">
 <title>Kelionių gidas</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600&family=Caveat:wght@500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,500;6..96,700;6..96,900&family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Jost:wght@400;500;600&family=Allura&display=swap" rel="stylesheet">
 <style>
   :root {
-    --cream: #f4efe6;
-    --sand: #e6dccb;
-    --sand-dark: #d4c7b0;
-    --olive: #6b7550;
-    --olive-dark: #4f573a;
-    --ink: #2b2a25;
-    --muted: #7d7766;
-    --white: #fffdf8;
+    --cream: #f3ede2;
+    --paper: #faf6ee;
+    --sand: #e4dac7;
+    --taupe: #cdbfa6;
+    --olive: #6f7a52;
+    --olive-d: #4d5638;
+    --ink: #1f1d18;
+    --muted: #867f6d;
+    --display: "Bodoni Moda", "Didot", Georgia, serif;
     --serif: "Cormorant Garamond", Georgia, "Times New Roman", serif;
-    --sans: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-    --script: "Caveat", "Segoe Script", cursive;
-    --nav-h: 66px;
+    --sans: "Jost", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    --script: "Allura", "Segoe Script", "Brush Script MT", cursive;
+    --nav-h: 64px;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
   html, body { height: 100%; }
-  body {
-    font-family: var(--sans);
-    color: var(--ink);
-    background: #cfc6b4;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
+  body { font-family: var(--sans); color: var(--ink); background: #bdb29b; display: flex; align-items: center; justify-content: center; }
   button { font: inherit; color: inherit; background: none; border: none; cursor: pointer; }
+  a { color: inherit; }
 
-  /* "Telefono" rėmas kompiuteriuose, pilnas ekranas telefonuose */
-  .phone {
-    position: relative;
-    width: 100%;
-    max-width: 420px;
-    height: 100dvh;
-    max-height: 860px;
-    background: var(--cream);
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-  }
-  @media (min-width: 560px) {
-    .phone { border-radius: 36px; box-shadow: 0 30px 80px rgba(60,50,30,.35); border: 8px solid #2b2a25; }
-  }
+  .phone { position: relative; width: 100%; max-width: 420px; height: 100dvh; max-height: 880px; background: var(--cream); overflow: hidden; display: flex; flex-direction: column; isolation: isolate; }
+  @media (min-width: 560px) { .phone { border-radius: 42px; border: 9px solid #1d1b16; box-shadow: 0 40px 90px rgba(50,40,20,.45); } }
+  .phone::after { content: ""; position: absolute; inset: 0; pointer-events: none; z-index: 60; opacity: .22; mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .42  0 0 0 0 .36  0 0 0 0 .26  0 0 0 .55 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>"); }
 
-  .screen { flex: 1; overflow-y: auto; overflow-x: hidden; scroll-behavior: smooth; padding-bottom: 24px; }
+  .screen { flex: 1; overflow-y: auto; overflow-x: hidden; scroll-behavior: smooth; display: flex; flex-direction: column; }
+  .screen > * { flex: 1 0 auto; }
+  .view.full { display: flex; flex-direction: column; padding-bottom: 0; }
+  .view.full .side { flex: 1; }
   .screen::-webkit-scrollbar { width: 0; }
-  .view { display: none; animation: fade .3s ease; }
-  .view.active { display: block; }
-  @keyframes fade { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+  .view { min-height: 100%; padding-bottom: 28px; animation: enter .5s cubic-bezier(.2,.7,.2,1); }
+  .view.pad { padding-top: 58px; }
+  @keyframes enter { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+  .rise { opacity: 0; animation: rise .6s cubic-bezier(.2,.7,.2,1) forwards; animation-delay: calc(var(--i, 0) * 60ms + 120ms); }
+  @keyframes rise { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
+
+  /* Viršutinė juosta */
+  .topbar { position: absolute; top: 0; left: 0; right: 0; height: 58px; padding: 10px 16px; display: flex; gap: 10px; align-items: center; z-index: 25; pointer-events: none; }
+  .topbar button { pointer-events: auto; width: 38px; height: 38px; border-radius: 50%; background: rgba(250,246,238,.82); backdrop-filter: blur(6px); display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px rgba(60,50,30,.15); color: var(--olive-d); }
+  .topbar svg { width: 20px; height: 20px; }
+  .topbar button[hidden] { display: none; }
+  .topbar.hidden { display: none; }
+
+  svg.ic { fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+
+  /* Paveikslai */
+  .art { position: relative; overflow: hidden; background: var(--sand); }
+  .art > svg, .art > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+  .arch { border-radius: 999px 999px 22px 22px; }
+  .arch-sm { border-radius: 999px 999px 14px 14px; }
+  .round { border-radius: 18px; }
 
   /* Viršelis */
-  .cover { min-height: 100%; padding: 28px 26px 30px; display: flex; flex-direction: column; align-items: center; text-align: center; }
-  .cover .kicker { letter-spacing: .3em; font-size: 11px; color: var(--muted); text-transform: uppercase; margin-top: 8px; }
-  .cover h1 { font-family: var(--serif); font-size: 84px; line-height: .95; font-weight: 700; margin: 10px 0 18px; letter-spacing: .02em; }
-  .arch {
-    width: 100%; flex: 1; min-height: 300px;
-    border-radius: 999px 999px 24px 24px;
-    background:
-      radial-gradient(circle at 70% 22%, #fff7d6 0 8%, transparent 9%),
-      linear-gradient(180deg, #8fc3d6 0%, #cfe6ea 48%, #f1dcb2 70%, #7e9660 100%);
-    position: relative; overflow: hidden;
-  }
-  .arch::after { content: "🌴"; position: absolute; left: 14%; bottom: 8%; font-size: 90px; filter: drop-shadow(0 4px 6px rgba(0,0,0,.15)); }
-  .arch::before { content: "🌴"; position: absolute; right: 12%; bottom: 14%; font-size: 64px; transform: scaleX(-1); filter: drop-shadow(0 4px 6px rgba(0,0,0,.15)); }
-  .cover .script { font-family: var(--script); font-size: 38px; margin-top: 18px; }
-  .cover .dates { font-size: 13px; letter-spacing: .12em; margin: 2px 0 18px; }
-  .btn-main { background: var(--olive); color: #fff; padding: 13px 30px; border-radius: 999px; font-weight: 600; letter-spacing: .04em; font-size: 14px; }
-  .btn-main:active { background: var(--olive-dark); }
+  .cover { position: relative; min-height: 100%; padding: 26px 22px 28px; display: flex; flex-direction: column; align-items: center; }
+  .cover .small { letter-spacing: .38em; font-size: 10.5px; text-transform: uppercase; color: var(--muted); font-weight: 500; z-index: 3; }
+  .cover h1 { font-family: var(--display); font-weight: 900; font-size: clamp(92px, 27vw, 118px); line-height: .85; letter-spacing: -.01em; margin-top: 8px; z-index: 3; position: relative; text-shadow: 0 2px 0 rgba(255,255,255,.35); }
+  .cover .art { width: 100%; flex: 1; min-height: 330px; margin-top: -38px; z-index: 1; box-shadow: 0 18px 40px rgba(70,55,30,.25); }
+  .cover .foot { text-align: center; margin-top: 16px; z-index: 3; }
+  .script { font-family: var(--script); }
+  .cover .foot .script { font-size: 46px; line-height: 1; }
+  .cover .dates { font-size: 12px; letter-spacing: .3em; font-weight: 500; margin: 6px 0 16px; }
+  .btn-main { background: var(--olive); color: #fff; padding: 14px 34px; border-radius: 999px; font-weight: 500; letter-spacing: .14em; font-size: 12px; text-transform: uppercase; box-shadow: 0 8px 20px rgba(79,86,56,.35); transition: transform .15s; }
+  .btn-main:active { transform: scale(.97); }
+  .drift { animation: drift 14s ease-in-out infinite alternate; }
+  @keyframes drift { from { transform: translateX(-14px); } to { transform: translateX(18px); } }
 
   /* Antraštės */
-  .head { padding: 26px 24px 8px; }
-  .head h2 { font-family: var(--serif); font-size: 40px; line-height: 1; font-weight: 700; }
-  .head .script { font-family: var(--script); font-size: 28px; color: var(--olive); margin-top: 2px; }
-  .head .sub { color: var(--muted); font-size: 14px; margin-top: 8px; }
+  .ttl { position: relative; padding: 4px 24px 0; }
+  .ttl .a { display: block; font-family: var(--serif); font-weight: 700; font-size: 50px; line-height: .9; letter-spacing: -.01em; }
+  .ttl .b { display: block; font-family: var(--script); color: var(--olive); font-size: 46px; line-height: 1; margin: -12px 0 0 54px; }
+  .lead { padding: 10px 26px 4px; color: var(--muted); font-size: 14px; line-height: 1.65; }
   .section { padding: 10px 20px; }
-  .back { display: inline-flex; align-items: center; gap: 6px; color: var(--muted); font-size: 13px; padding: 16px 20px 0; }
+  .eyebrow { font-size: 10.5px; letter-spacing: .3em; text-transform: uppercase; text-align: center; font-weight: 600; }
 
   /* Ikonų meniu */
-  .menu-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; padding: 14px 20px 20px; }
-  .tile {
-    background: var(--sand); border-radius: 18px; padding: 16px 6px 12px;
-    display: flex; flex-direction: column; align-items: center; gap: 8px;
-    font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--olive-dark); font-weight: 600;
-    transition: transform .12s, background .12s;
-  }
-  .tile:active { transform: scale(.96); background: var(--sand-dark); }
-  .tile svg { width: 34px; height: 34px; }
-  svg.ic { fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+  .panel { background: var(--sand); margin: 14px 18px; border-radius: 26px; padding: 18px 10px 12px; }
+  .grid-menu { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px 2px; }
+  .tile { display: flex; flex-direction: column; align-items: center; gap: 7px; padding: 14px 4px 10px; color: var(--olive-d); border-radius: 16px; transition: transform .15s, background .15s; }
+  .tile:active { transform: scale(.94); background: rgba(255,255,255,.4); }
+  .tile svg { width: 38px; height: 38px; stroke-width: 1.3; }
+  .tile span { font-size: 9.5px; letter-spacing: .16em; text-transform: uppercase; font-weight: 600; }
+  .hint { text-align: center; font-size: 10.5px; letter-spacing: .3em; text-transform: uppercase; margin-top: 6px; color: var(--muted); }
 
-  /* Kortelės */
-  .card { background: var(--white); border-radius: 18px; padding: 16px 18px; margin-bottom: 12px; box-shadow: 0 2px 10px rgba(80,70,40,.07); }
-  .card h3 { font-family: var(--serif); font-size: 24px; line-height: 1.1; margin-bottom: 2px; }
-  .card p { color: var(--muted); font-size: 14px; line-height: 1.55; }
-  .pill { display: inline-block; font-size: 11px; background: var(--sand); color: var(--olive-dark); padding: 3px 10px; border-radius: 999px; font-weight: 600; margin-right: 6px; margin-top: 8px; }
-  .kv { display: flex; justify-content: space-between; gap: 12px; padding: 9px 0; border-bottom: 1px dashed var(--sand-dark); font-size: 14px; }
-  .kv:last-child { border: none; }
-  .kv span:first-child { color: var(--muted); }
-  .kv span:last-child { font-weight: 600; text-align: right; }
+  /* Maršrutas */
+  .split { display: flex; align-items: stretch; gap: 0; }
+  .vert { writing-mode: vertical-rl; transform: rotate(180deg); display: flex; align-items: center; gap: 0; padding: 18px 8px 18px 20px; flex: none; }
+  .vert .a { font-family: var(--display); font-weight: 700; font-size: 38px; line-height: 1; }
+  .vert .b { font-family: var(--script); font-size: 40px; color: var(--olive); margin-top: 12px; }
+  .stops { flex: 1; padding: 8px 18px 8px 4px; }
+  .stop { display: block; width: 100%; text-align: left; background: var(--paper); border-radius: 16px; padding: 14px 16px; margin-bottom: 10px; box-shadow: 0 2px 10px rgba(80,70,40,.07); position: relative; }
+  .stop h4 { font-family: var(--display); font-size: 21px; letter-spacing: .04em; text-transform: uppercase; font-weight: 700; line-height: 1.1; }
+  .stop .d { font-size: 10.5px; letter-spacing: .18em; text-transform: uppercase; color: var(--muted); margin-top: 4px; font-weight: 500; }
+  .stop::after { content: "›"; position: absolute; right: 16px; top: 50%; transform: translateY(-52%); font-size: 26px; color: var(--taupe); }
 
-  /* Maršrutas (overview) */
-  .route { position: relative; margin: 6px 0 0 8px; padding-left: 22px; border-left: 2px solid var(--sand-dark); }
-  .stop { position: relative; padding: 0 0 22px; }
-  .stop::before { content: ""; position: absolute; left: -29px; top: 6px; width: 12px; height: 12px; border-radius: 50%; background: var(--olive); border: 3px solid var(--cream); }
-  .stop h4 { font-family: var(--serif); font-size: 26px; line-height: 1; }
-  .stop .d { font-size: 12px; letter-spacing: .1em; color: var(--muted); text-transform: uppercase; margin: 4px 0; }
-  .stop p { font-size: 14px; color: var(--muted); }
+  /* Vietos detalė */
+  .hero { height: 330px; margin: 0 22px; }
+  .place-title { position: relative; text-align: center; margin-top: -58px; z-index: 3; }
+  .place-title h2 { font-family: var(--display); font-weight: 900; font-size: 62px; text-transform: uppercase; line-height: 1; text-shadow: 0 2px 0 rgba(255,255,255,.4); letter-spacing: .02em; }
+  .place-title .script { font-size: 42px; color: var(--olive); margin-top: -4px; }
+  .prose { padding: 8px 30px 0; font-size: 14.5px; line-height: 1.75; color: #4a463b; text-align: center; }
 
   /* Skrydis */
-  .ticket { background: var(--white); border-radius: 18px; overflow: hidden; margin-bottom: 14px; box-shadow: 0 2px 10px rgba(80,70,40,.07); }
-  .ticket-top { background: var(--olive); color: #fff; padding: 14px 18px; display: flex; justify-content: space-between; align-items: center; font-size: 12px; letter-spacing: .1em; text-transform: uppercase; }
-  .route-line { display: flex; align-items: center; gap: 10px; padding: 18px; }
-  .route-line .code { font-family: var(--serif); font-size: 40px; font-weight: 700; line-height: 1; }
-  .route-line .city { font-size: 12px; color: var(--muted); }
-  .route-line .mid { flex: 1; text-align: center; color: var(--olive); }
-  .route-line .mid::before { content: ""; display: block; border-top: 2px dotted var(--sand-dark); margin-bottom: -12px; }
-  .route-line .mid span { position: relative; background: var(--white); padding: 0 6px; font-size: 20px; }
-  .ticket-meta { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; padding: 0 18px 18px; }
-  .ticket-meta div { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; }
-  .ticket-meta b { display: block; font-size: 15px; color: var(--ink); text-transform: none; letter-spacing: 0; margin-top: 2px; }
+  .tabs { display: flex; gap: 8px; padding: 14px 22px 0; }
+  .tabs button { flex: 1; padding: 11px; border-radius: 999px; background: var(--sand); font-size: 11px; letter-spacing: .16em; text-transform: uppercase; font-weight: 600; color: var(--olive-d); }
+  .tabs button.on { background: var(--olive); color: #fff; }
+  .flight-card { margin: 14px 22px 0; background: var(--paper); border-radius: 22px; overflow: hidden; box-shadow: 0 4px 18px rgba(80,70,40,.1); }
+  .flight-card .art { height: 150px; }
+  .route { display: flex; align-items: center; gap: 8px; padding: 18px 20px 6px; }
+  .route .code { font-family: var(--display); font-weight: 900; font-size: 42px; line-height: 1; }
+  .route .city { font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); margin-top: 2px; }
+  .route .mid { flex: 1; text-align: center; color: var(--olive); position: relative; height: 24px; }
+  .route .mid::before { content: ""; position: absolute; left: 0; right: 0; top: 50%; border-top: 1.5px dotted var(--taupe); }
+  .route .mid svg { position: relative; width: 24px; height: 24px; background: var(--paper); padding: 0 3px; transform: rotate(90deg); }
+  .meta { display: grid; grid-template-columns: 1fr 1fr; gap: 14px 10px; padding: 14px 20px 20px; }
+  .meta small { display: block; font-size: 9.5px; letter-spacing: .2em; text-transform: uppercase; color: var(--muted); font-weight: 500; }
+  .meta b { font-family: var(--serif); font-size: 22px; font-weight: 700; }
 
-  /* Dienų ratukai */
-  .days { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; padding: 16px 28px 24px; }
-  .day-btn {
-    aspect-ratio: 1; border-radius: 50%; background: var(--sand); color: var(--olive-dark);
-    display: flex; flex-direction: column; align-items: center; justify-content: center;
-    font-size: 11px; letter-spacing: .1em; text-transform: uppercase; font-weight: 600;
-    transition: transform .12s, background .12s;
-  }
-  .day-btn b { font-family: var(--serif); font-size: 30px; line-height: 1; letter-spacing: 0; }
-  .day-btn:active { transform: scale(.94); background: var(--sand-dark); }
+  /* Kortelės */
+  .card { background: var(--paper); border-radius: 22px; padding: 14px; margin-bottom: 14px; box-shadow: 0 3px 14px rgba(80,70,40,.08); }
+  .card .art { height: 150px; margin-bottom: 12px; }
+  .card h3 { font-family: var(--display); font-size: 21px; font-weight: 700; line-height: 1.15; }
+  .card p { color: var(--muted); font-size: 13.5px; line-height: 1.6; margin-top: 4px; }
+  .pill { display: inline-block; font-size: 9.5px; letter-spacing: .16em; text-transform: uppercase; background: var(--sand); color: var(--olive-d); padding: 5px 11px; border-radius: 999px; font-weight: 600; margin: 8px 6px 0 0; }
+  .mapbtn { display: inline-block; margin-top: 10px; font-size: 9.5px; letter-spacing: .18em; text-transform: uppercase; font-weight: 600; background: var(--olive); color: #fff; padding: 7px 14px; border-radius: 999px; text-decoration: none; }
+  .kv { display: flex; justify-content: space-between; gap: 14px; padding: 13px 0; border-bottom: 1px dashed var(--taupe); font-size: 14px; }
+  .kv:last-child { border: none; }
+  .kv span:first-child { font-family: var(--serif); font-size: 19px; font-weight: 700; flex: none; max-width: 42%; }
+  .kv span:last-child { color: #5a5547; text-align: right; line-height: 1.5; }
 
-  /* Dienos tvarkaraštis */
-  .slot-title { font-family: var(--serif); font-size: 26px; margin: 18px 0 6px; display: flex; align-items: center; gap: 10px; }
-  .slot-title::after { content: ""; flex: 1; border-top: 1px solid var(--sand-dark); }
-  .item { display: flex; gap: 14px; padding: 10px 0; align-items: flex-start; }
-  .item .t { width: 52px; flex: none; font-size: 13px; font-weight: 600; color: var(--olive-dark); padding-top: 2px; }
-  .item .x { font-size: 15px; }
-  .item .n { font-size: 13px; color: var(--muted); }
-  .daynav { display: flex; justify-content: space-between; padding: 18px 20px 0; }
-  .daynav button { background: var(--sand); padding: 10px 18px; border-radius: 999px; font-size: 13px; font-weight: 600; color: var(--olive-dark); }
-  .daynav button:disabled { opacity: .35; }
+  /* Dienų puslapis su šonine juosta */
+  .side { display: flex; min-height: calc(100% - 0px); }
+  .strip { width: 26%; flex: none; position: relative; }
+  .strip .art { position: absolute; inset: 0; border-radius: 0 0 0 0; }
+  .side .main { flex: 1; padding: 12px 18px 24px 16px; min-width: 0; }
+  .days { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; padding: 16px 0 10px; }
+  .dbtn { aspect-ratio: 1; border-radius: 50%; background: var(--sand); color: var(--olive-d); display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 8.5px; letter-spacing: .18em; font-weight: 600; transition: transform .15s, background .15s; }
+  .dbtn b { font-family: var(--display); font-size: 24px; letter-spacing: 0; line-height: 1.05; font-weight: 700; }
+  .dbtn:active { transform: scale(.92); background: var(--taupe); }
+  .slot { font-family: var(--serif); font-size: 28px; font-weight: 700; margin: 18px 0 4px; display: flex; align-items: center; gap: 10px; }
+  .slot::after { content: ""; flex: 1; border-top: 1px solid var(--taupe); }
+  .it { display: flex; gap: 12px; padding: 9px 0; }
+  .it .t { width: 46px; flex: none; font-size: 11px; letter-spacing: .08em; font-weight: 600; color: var(--olive-d); padding-top: 3px; }
+  .it .x { font-size: 14.5px; line-height: 1.4; }
+  .it .n { font-size: 12.5px; color: var(--muted); margin-top: 2px; line-height: 1.5; }
+  .daynav { display: flex; justify-content: space-between; gap: 10px; margin-top: 20px; }
+  .daynav button { background: var(--sand); padding: 10px 16px; border-radius: 999px; font-size: 10.5px; letter-spacing: .14em; text-transform: uppercase; font-weight: 600; color: var(--olive-d); }
+  .daynav button:disabled { opacity: .3; }
 
-  /* Vietos su nuotraukomis (gradientai) */
-  .places { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-  .place { background: var(--white); border-radius: 100px 100px 18px 18px; overflow: hidden; box-shadow: 0 2px 10px rgba(80,70,40,.07); text-align: center; padding-bottom: 14px; }
-  .place .ph { height: 120px; display: flex; align-items: center; justify-content: center; font-size: 46px; background: linear-gradient(160deg, var(--a), var(--b)); }
-  .place h4 { font-family: var(--serif); font-size: 21px; margin: 10px 10px 2px; line-height: 1.05; }
-  .place small { color: var(--muted); font-size: 12px; display: block; padding: 0 10px; }
-  .place a, .map-link { display: inline-block; margin-top: 8px; font-size: 11px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--olive-dark); background: var(--sand); padding: 5px 12px; border-radius: 999px; text-decoration: none; }
-  .eat .ph { height: 90px; border-radius: 14px; margin-bottom: 10px; display: flex; align-items: center; justify-content: center; font-size: 38px; background: linear-gradient(160deg, var(--a), var(--b)); }
+  /* Tinkleliai (maistas / vietos) */
+  .two { display: grid; grid-template-columns: 1fr 1fr; gap: 14px 12px; padding: 4px 20px; }
+  .cell { text-align: center; }
+  .cell .art { aspect-ratio: 1 / 1.05; }
+  .cell.tall .art { aspect-ratio: 3 / 4; }
+  .cell h4 { font-family: var(--serif); font-size: 21px; font-weight: 700; line-height: 1.05; margin-top: 10px; }
+  .cell small { display: block; color: var(--muted); font-size: 11.5px; margin-top: 3px; line-height: 1.4; }
+  .cell .badge { display: inline-block; margin-top: 8px; font-size: 8.5px; letter-spacing: .18em; text-transform: uppercase; font-weight: 600; background: var(--sand); color: var(--olive-d); padding: 5px 11px; border-radius: 999px; text-decoration: none; }
 
-  /* Pakavimo sąrašas */
-  .check { display: flex; align-items: center; gap: 12px; padding: 11px 0; border-bottom: 1px dashed var(--sand-dark); font-size: 15px; cursor: pointer; }
+  /* Pakuotė */
+  .progress { height: 7px; background: var(--sand); border-radius: 999px; overflow: hidden; margin: 8px 0 14px; }
+  .progress i { display: block; height: 100%; background: var(--olive); transition: width .35s; }
+  .check { display: flex; align-items: center; gap: 14px; padding: 12px 0; border-bottom: 1px dashed var(--taupe); font-size: 14.5px; cursor: pointer; }
   .check:last-child { border: none; }
-  .box { width: 22px; height: 22px; border-radius: 7px; border: 2px solid var(--olive); flex: none; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 14px; }
+  .box { width: 22px; height: 22px; border-radius: 50%; border: 1.5px solid var(--olive); flex: none; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 12px; transition: background .15s; }
   .check.done .box { background: var(--olive); }
   .check.done .label { text-decoration: line-through; color: var(--muted); }
-  .progress { height: 8px; background: var(--sand); border-radius: 999px; overflow: hidden; margin: 6px 0 14px; }
-  .progress i { display: block; height: 100%; background: var(--olive); width: 0; transition: width .3s; }
 
-  /* Apatinė naršymo juosta */
-  nav { height: calc(var(--nav-h) + env(safe-area-inset-bottom)); padding-bottom: env(safe-area-inset-bottom); background: var(--sand); display: flex; justify-content: space-around; align-items: center; flex: none; border-top: 1px solid var(--sand-dark); }
-  nav button { display: flex; flex-direction: column; align-items: center; gap: 3px; color: #a39a85; font-size: 10px; letter-spacing: .04em; padding: 6px 8px; transition: color .15s; }
+  /* Apatinė juosta */
+  nav { height: calc(var(--nav-h) + env(safe-area-inset-bottom)); padding-bottom: env(safe-area-inset-bottom); background: var(--sand); display: flex; justify-content: space-around; align-items: center; flex: none; border-radius: 22px 22px 0 0; box-shadow: 0 -6px 20px rgba(70,55,30,.1); position: relative; z-index: 10; }
+  nav button { display: flex; flex-direction: column; align-items: center; gap: 3px; color: #a99f88; padding: 6px 7px; font-size: 8.5px; letter-spacing: .12em; text-transform: uppercase; font-weight: 600; transition: color .15s, transform .15s; }
   nav button svg { width: 24px; height: 24px; }
-  nav button.active { color: var(--olive-dark); }
-  .hide-nav nav { display: none; }
+  nav button.on { color: var(--olive-d); transform: translateY(-2px); }
+  nav button.on::after { content: ""; width: 4px; height: 4px; border-radius: 50%; background: var(--olive); margin-top: 1px; }
+  .nonav nav { display: none; }
+
+  /* Šoninis meniu */
+  .drawer { position: absolute; inset: 0; z-index: 40; pointer-events: none; }
+  .drawer .shade { position: absolute; inset: 0; background: rgba(30,26,18,.45); opacity: 0; transition: opacity .3s; }
+  .drawer .sheet { position: absolute; top: 0; bottom: 0; left: 0; width: 76%; background: var(--cream); transform: translateX(-102%); transition: transform .38s cubic-bezier(.2,.7,.2,1); padding: 70px 22px 24px; overflow-y: auto; border-radius: 0 28px 28px 0; }
+  .drawer.open { pointer-events: auto; }
+  .drawer.open .shade { opacity: 1; }
+  .drawer.open .sheet { transform: none; }
+  .drawer .brand { font-family: var(--display); font-weight: 900; font-size: 34px; line-height: 1; }
+  .drawer .brand + .script { font-size: 30px; color: var(--olive); margin: -2px 0 14px; }
+  .drawer .item { display: flex; align-items: center; gap: 14px; width: 100%; padding: 12px 4px; border-bottom: 1px dashed var(--taupe); text-align: left; font-size: 13px; letter-spacing: .14em; text-transform: uppercase; font-weight: 500; }
+  .drawer .item svg { width: 24px; height: 24px; color: var(--olive); stroke-width: 1.4; }
 </style>
 </head>
 <body>
 <div class="phone" id="phone">
+  <div class="topbar hidden" id="topbar">
+    <button id="menuBtn" aria-label="Meniu"><svg class="ic" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h10"/></svg></button>
+    <button id="backBtn" aria-label="Atgal" hidden><svg class="ic" viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button>
+  </div>
   <div class="screen" id="screen"></div>
   <nav id="nav"></nav>
+  <div class="drawer" id="drawer"><div class="shade" id="shade"></div><div class="sheet" id="sheet"></div></div>
 </div>
 
 <script>
 /* ============================================================
    ČIA KEISK SAVO KELIONĖS DUOMENIS
-   Viskas, ką matai programėlėje, paimama iš šio objekto.
+   Viskas programėlėje paimama iš šio objekto.
+   Vaizdų laukas "scene" pasirenka iliustraciją:
+   palms, temple, terraces, beach, sunset, waterfall, food, cafe, plane, market, night
+   Jei nori tikros nuotraukos, pridėk lauką  photo: "nuotrauka.jpg"  (failą įkelk šalia index.html).
    ============================================================ */
 const TRIP = {
   title: "BALI",
-  tagline: "Kelionių planas",
-  dates: "15 RGP – 29 RGP",
+  tagline: "Kelionių gidas",
+  script: "Travel Itinerary",
+  dates: "15 – 29 RUGPJŪČIO",
   traveler: "Emilis ir kompanija",
+  mapCity: "Bali",
+
   overview: [
-    { place: "Ubudas", dates: "15–20 rugpjūčio", text: "Ryžių terasos, šventyklos, joga ir miškas." },
-    { place: "Čangu", dates: "21–22 rugpjūčio", text: "Banglentės, paplūdimio kavinės, saulėlydžiai." },
-    { place: "Seminjakas", dates: "23–24 rugpjūčio", text: "Restoranai, parduotuvės, naktinis gyvenimas." },
-    { place: "Kuta", dates: "25–27 rugpjūčio", text: "Platus paplūdimys ir pirmosios bangos." },
-    { place: "Legianas", dates: "28–29 rugpjūčio", text: "Ramesnis paplūdimys, atsisveikinimas su sala." }
+    { place: "Ubudas", dates: "15 – 20 rugpjūčio", scene: "terraces", text: "Kultūrinė Balio širdis: ryžių terasos, šventyklos, beždžionių miškas ir tylūs rytai. Čia verta leisti laiką lėtai: joga, kava su vaizdu ir pasivaikščiojimai tarp laukų." },
+    { place: "Čangu", dates: "21 – 22 rugpjūčio", scene: "beach", text: "Juodo smėlio paplūdimiai, banglentininkai ir madingos kavinės. Geriausia vieta pramokti sėlinti ant bangų ir pamatyti saulėlydį." },
+    { place: "Seminjakas", dates: "23 – 24 rugpjūčio", scene: "night", text: "Prabangesnė pakrantės dalis: restoranai, paplūdimio klubai, parduotuvės ir gyvas vakaras." },
+    { place: "Kuta", dates: "25 – 27 rugpjūčio", scene: "sunset", text: "Platus paplūdimys ir pirmosios bangos pradedantiesiems. Gyva, triukšminga ir nebrangi vieta." },
+    { place: "Legianas", dates: "28 – 29 rugpjūčio", scene: "palms", text: "Ramesnis paplūdimys ir paskutinės dienos prieš grįžimą namo. Ilgi pusryčiai, masažas ir saulėlydis." }
   ],
+
   flights: [
-    { label: "Išvykimas", date: "2026-08-15", from: "VNO", fromCity: "Vilnius", to: "DPS", toCity: "Denpasaras", flight: "XX 123", depart: "06:00", arrive: "23:30", terminal: "1", seat: "15A", airline: "Pavyzdinė aviakompanija" },
-    { label: "Grįžimas", date: "2026-08-29", from: "DPS", fromCity: "Denpasaras", to: "VNO", toCity: "Vilnius", flight: "XX 124", depart: "01:00", arrive: "18:40", terminal: "I", seat: "15B", airline: "Pavyzdinė aviakompanija" }
+    { tab: "Išvykimas", date: "15 RUGPJŪČIO", from: "VNO", fromCity: "Vilnius", to: "DPS", toCity: "Denpasaras", flight: "XX 123", depart: "06:00", arrive: "23:30", airline: "Pavyzdinė oro linija", terminal: "1", seat: "15A" },
+    { tab: "Grįžimas", date: "29 RUGPJŪČIO", from: "DPS", fromCity: "Denpasaras", to: "VNO", toCity: "Vilnius", flight: "XX 124", depart: "01:00", arrive: "18:40", airline: "Pavyzdinė oro linija", terminal: "I", seat: "15B" }
   ],
+
   stays: [
-    { name: "Ubudo vila su baseinu", where: "Ubudas", dates: "15–20 rgp.", price: "55 € / naktis", note: "Pusryčiai įskaičiuoti. Registracija nuo 14:00." },
-    { name: "Čangu bangų namelis", where: "Čangu", dates: "21–22 rgp.", price: "70 € / naktis", note: "5 min. pėsčiomis iki paplūdimio." },
-    { name: "Seminjako viešbutis", where: "Seminjakas", dates: "23–24 rgp.", price: "65 € / naktis", note: "Arti restoranų gatvės." }
+    { name: "Ubudo vila su baseinu", where: "Ubudas", dates: "15 – 20 rgp.", price: "55 € / naktis", note: "Pusryčiai įskaičiuoti. Registracija nuo 14:00.", scene: "terraces" },
+    { name: "Čangu bangų namelis", where: "Čangu", dates: "21 – 22 rgp.", price: "70 € / naktis", note: "5 min. pėsčiomis iki paplūdimio.", scene: "beach" },
+    { name: "Seminjako viešbutis", where: "Seminjakas", dates: "23 – 24 rgp.", price: "65 € / naktis", note: "Arti restoranų gatvės.", scene: "night" },
+    { name: "Kutos svečių namai", where: "Kuta", dates: "25 – 28 rgp.", price: "40 € / naktis", note: "Prie pat paplūdimio ir bangų.", scene: "sunset" }
   ],
+
+  /* [laikas, veikla, pastaba] */
   days: [
-    { date: "15 rugpjūčio", title: "Atvykimas", morning: [], afternoon: [], evening: [{t:"23:30", x:"Nusileidimas Denpasare", n:"Pasiimti bagažą, pasikeisti pinigų"}, {t:"01:00", x:"Transferis į Ubudą", n:"Susitarti iš anksto, ~1 val."}] },
-    { date: "16 rugpjūčio", title: "Ubudas", morning: [{t:"09:00", x:"Pusryčiai vilos terasoje"}, {t:"10:30", x:"Tegalalango ryžių terasos", n:"Ateiti anksti, kol nėra minios"}], afternoon: [{t:"13:00", x:"Pietūs Ubudo centre"}, {t:"15:00", x:"Beždžionių miškas", n:"Slėpti akinius ir maišelius"}], evening: [{t:"19:00", x:"Vakarienė ir tradicinis šokių vakaras"}] },
-    { date: "17 rugpjūčio", title: "Šventyklos", morning: [{t:"08:00", x:"Tirta Empul šventykla", n:"Reikalingas sarongas"}], afternoon: [{t:"13:00", x:"Kavos plantacija"}, {t:"15:30", x:"Laisvas laikas / masažas"}], evening: [{t:"19:30", x:"Vakarienė"}] },
-    { date: "18 rugpjūčio", title: "Gamta", morning: [{t:"07:00", x:"Kriokliai", n:"Tegenungan arba Kanto Lampo"}], afternoon: [{t:"14:00", x:"Joga ar plaukimas baseine"}], evening: [{t:"19:00", x:"Vakarienė Ubude"}] },
-    { date: "19 rugpjūčio", title: "Poilsio diena", morning: [{t:"10:00", x:"Ilgi pusryčiai"}], afternoon: [{t:"14:00", x:"Nemokamas laikas"}], evening: [{t:"19:00", x:"Pakuojamės"}] },
-    { date: "20 rugpjūčio", title: "Į Čangu", morning: [{t:"10:00", x:"Išsiregistravimas"}, {t:"11:00", x:"Kelionė į Čangu", n:"~1,5 val. taksi"}], afternoon: [{t:"15:00", x:"Pirmas žvilgsnis į paplūdimį"}], evening: [{t:"18:30", x:"Saulėlydis Batu Bolong"}] }
+    { date: "15 rugpjūčio", title: "Atvykimas", scene: "plane", morning: [["06:00","Skrydis iš Vilniaus","Atvykti į oro uostą 3 val. iš anksto"]], afternoon: [["14:00","Skrydis ir persėdimas"]], evening: [["23:30","Nusileidimas Denpasare","Pasiimti bagažą, pasikeisti pinigų"],["00:30","Transferis į Ubudą","~1 val. kelio"]] },
+    { date: "16 rugpjūčio", title: "Ubudas", scene: "terraces", morning: [["09:00","Pusryčiai vilos terasoje"],["10:30","Tegalalango ryžių terasos","Ateiti anksti, kol nėra minios"]], afternoon: [["13:00","Pietūs Ubudo centre"],["15:00","Beždžionių miškas","Slėpti akinius ir maišelius"]], evening: [["19:00","Vakarienė ir tradicinis šokių vakaras"]] },
+    { date: "17 rugpjūčio", title: "Šventyklos", scene: "temple", morning: [["08:00","Tirta Empul šventykla","Reikalingas sarongas"]], afternoon: [["13:00","Kavos plantacija"],["15:30","Laisvas laikas / masažas"]], evening: [["19:30","Vakarienė"]] },
+    { date: "18 rugpjūčio", title: "Kriokliai", scene: "waterfall", morning: [["07:00","Tegenungan krioklys","Būtinai batai su protektoriumi"]], afternoon: [["14:00","Joga ar plaukimas baseine"]], evening: [["19:00","Vakarienė Ubude"]] },
+    { date: "19 rugpjūčio", title: "Poilsio diena", scene: "cafe", morning: [["10:00","Ilgi pusryčiai"]], afternoon: [["14:00","Nemokamas laikas, masažas"]], evening: [["19:00","Pakuojamės kitam miestui"]] },
+    { date: "20 rugpjūčio", title: "Kelias į Čangu", scene: "palms", morning: [["10:00","Išsiregistravimas"],["11:00","Kelionė į Čangu","~1,5 val. taksi"]], afternoon: [["15:00","Pirmas žvilgsnis į paplūdimį"]], evening: [["18:30","Saulėlydis Batu Bolong"]] },
+    { date: "21 rugpjūčio", title: "Banglentės", scene: "beach", morning: [["09:00","Banglenčių pamoka","2 val. su instruktoriumi"]], afternoon: [["13:00","Pietūs paplūdimio kavinėje"]], evening: [["19:00","Vakarienė ir kokteiliai"]] },
+    { date: "22 rugpjūčio", title: "Tanah Lotas", scene: "sunset", morning: [["10:00","Kava ir pasivaikščiojimas"]], afternoon: [["16:00","Tanah Lot šventykla"]], evening: [["18:00","Saulėlydis prie jūros"]] },
+    { date: "23 rugpjūčio", title: "Seminjakas", scene: "market", morning: [["10:00","Persikėlimas į Seminjaką"]], afternoon: [["14:00","Apsipirkimas ir kavinės"]], evening: [["19:30","Vakarienė, paplūdimio klubas"]] },
+    { date: "24 rugpjūčio", title: "Uluvatu", scene: "temple", morning: [["10:00","Plaukimas ir poilsis"]], afternoon: [["16:00","Uluvatu šventykla ant uolos"]], evening: [["18:00","Kecak šokis saulėlydyje"]] },
+    { date: "25 rugpjūčio", title: "Kuta", scene: "beach", morning: [["10:00","Persikėlimas į Kutą"]], afternoon: [["14:00","Bangos ir paplūdimys"]], evening: [["19:00","Naktinė turgavietė"]] },
+    { date: "26 rugpjūčio", title: "Nusa Penida", scene: "sunset", morning: [["07:30","Laivas į Nusa Penidą"]], afternoon: [["12:00","Kelingkingo uola ir Angelo paplūdimys"]], evening: [["18:00","Grįžimas laivu"]] },
+    { date: "27 rugpjūčio", title: "Laisva diena", scene: "cafe", morning: [["10:00","Pusryčiai"]], afternoon: [["14:00","Masažas ir pirkiniai"]], evening: [["19:00","Vakarienė"]] },
+    { date: "28 rugpjūčio", title: "Legianas", scene: "palms", morning: [["10:00","Persikėlimas į Legianą"]], afternoon: [["15:00","Paskutinis plaukimas"]], evening: [["18:30","Saulėlydis ir atsisveikinimas"],["22:30","Transferis į oro uostą"]] },
+    { date: "29 rugpjūčio", title: "Namo", scene: "plane", morning: [["01:00","Skrydis į Vilnių"]], afternoon: [["~12:00","Persėdimas"]], evening: [["18:40","Nusileidimas Vilniuje"]] }
   ],
+
   eat: [
-    { name: "Warung Sari", type: "Vietinė virtuvė", price: "€", note: "Pigūs patiekalai, būtinai paragauti nasi campur.", where: "Ubudas", emoji: "🍜", a: "#e9c58a", b: "#c98b4b" },
-    { name: "Šviežių sulčių baras", type: "Kavinė", price: "€", note: "Smoothie bowl ir šviežios sultys.", where: "Čangu", emoji: "🥤", a: "#b7d49a", b: "#7fa45b" },
-    { name: "Jūros gėrybių vakarienė", type: "Restoranas", price: "€€", note: "Kepti žuvies patiekalai paplūdimyje.", where: "Džimbaranas", emoji: "🦐", a: "#f1b99a", b: "#d8745a" },
-    { name: "Kavinė su vaizdu", type: "Kavinė", price: "€€", note: "Puikus vaizdas į ryžių laukus.", where: "Ubudas", emoji: "☕", a: "#d7c3a5", b: "#a58662" }
+    { name: "Warung Sari", type: "Vietinė virtuvė", price: "€", where: "Ubudas", note: "Pigūs patiekalai, būtinai paragauti nasi campur.", scene: "food" },
+    { name: "Sulčių baras", type: "Kavinė", price: "€", where: "Čangu", note: "Smoothie bowl ir šviežios sultys.", scene: "cafe" },
+    { name: "Jūros gėrybės", type: "Restoranas", price: "€€", where: "Džimbaranas", note: "Žuvis kepama paplūdimyje.", scene: "sunset" },
+    { name: "Kavinė su vaizdu", type: "Kavinė", price: "€€", where: "Ubudas", note: "Vaizdas į ryžių laukus.", scene: "terraces" }
   ],
+
+  out: [
+    { name: "Paplūdimio klubas", type: "Saulėlydis", where: "Seminjakas", note: "Atvykti prieš saulėlydį, kad rastum vietą.", scene: "sunset" },
+    { name: "Koktelių baras", type: "Vakaras", where: "Seminjakas", note: "Gyva muzika kas vakarą.", scene: "night" },
+    { name: "Naktinė turgavietė", type: "Pasivaikščiojimas", where: "Kuta", note: "Skanus gatvės maistas.", scene: "market" },
+    { name: "Kecak šokis", type: "Kultūra", where: "Uluvatu", note: "Šokis saulėlydžio metu, bilietai prie įėjimo.", scene: "temple" }
+  ],
+
+  shop: [
+    { name: "Ubudo turgus", type: "Suvenyrai", where: "Ubudas", note: "Derėtis galima ir verta.", scene: "market" },
+    { name: "Seminjako butikai", type: "Mada", where: "Seminjakas", note: "Lengvi lininiai drabužiai.", scene: "market" },
+    { name: "Kavos parduotuvė", type: "Skanėstai", where: "Ubudas", note: "Balio kava ir prieskoniai dovanoms.", scene: "cafe" },
+    { name: "Sidabro dirbtuvės", type: "Papuošalai", where: "Čelukas", note: "Rankų darbo papuošalai.", scene: "market" }
+  ],
+
   visit: [
-    { name: "Tegalalangas", note: "Ryžių terasos", emoji: "🌾", a: "#a9d08e", b: "#5d8f46", map: "Tegalalang Rice Terrace" },
-    { name: "Uluvatu", note: "Šventykla ant uolos", emoji: "🛕", a: "#9fc4d8", b: "#5f8fae", map: "Uluwatu Temple" },
-    { name: "Tanah Lot", note: "Saulėlydžio šventykla", emoji: "🌅", a: "#f3c28b", b: "#d98a5a", map: "Tanah Lot" },
-    { name: "Nusa Penida", note: "Dienos kelionė laivu", emoji: "🏝️", a: "#8fd1d6", b: "#3f9aa6", map: "Nusa Penida" }
+    { name: "Tegalalangas", note: "Ryžių terasos", scene: "terraces", map: "Tegalalang Rice Terrace" },
+    { name: "Uluvatu", note: "Šventykla ant uolos", scene: "temple", map: "Uluwatu Temple" },
+    { name: "Tanah Lotas", note: "Saulėlydžio šventykla", scene: "sunset", map: "Tanah Lot" },
+    { name: "Tegenunganas", note: "Krioklys", scene: "waterfall", map: "Tegenungan Waterfall" }
   ],
+
+  things: [
+    { name: "Banglentės", note: "Pamokos Čangu ir Kutoje", scene: "beach", map: "Surf lesson Canggu" },
+    { name: "Joga Ubude", note: "Rytinės pamokos", scene: "palms", map: "Yoga Ubud" },
+    { name: "Nusa Penida", note: "Dienos kelionė laivu", scene: "sunset", map: "Nusa Penida" },
+    { name: "Masažas", note: "Nuo 10 € valandai", scene: "cafe", map: "Spa Ubud" }
+  ],
+
+  attire: [
+    ["Dienai", "Lengvi lininiai drabužiai, šortai, marškinėliai."],
+    ["Šventykloms", "Dengti pečius ir kelius. Sarongą dažnai išduoda prie įėjimo."],
+    ["Vakarui", "Lengva suknelė ar marškiniai, kartais palaidinė ilgomis rankovėmis (uodams)."],
+    ["Avalynė", "Šlepetės, patogūs sportiniai batai ir batai kriokliams."],
+    ["Sezonas", "Rugpjūtis sausas, bet vakarais gali būti vėsiau."]
+  ],
+
   transport: [
-    ["Taksi / Grab", "Patogiausia trumpoms kelionėms, kaina fiksuojama programėlėje"],
-    ["Vairuotojas visai dienai", "~35–50 € už dieną, pigiau susitarus iš anksto"],
-    ["Motoroleris", "Tik su patirtimi ir tarptautine vairuotojo pažyma"],
-    ["Transferis iš oro uosto", "Susitarti iš anksto, kad nereiktų derėtis naktį"]
+    ["Taksi / Grab", "Patogiausia trumpoms kelionėms, kaina matoma programėlėje."],
+    ["Vairuotojas visai dienai", "~35–50 € už dieną, pigiau susitarus iš anksto."],
+    ["Motoroleris", "Tik su patirtimi ir tarptautine vairuotojo pažyma."],
+    ["Transferis iš oro uosto", "Susitarti iš anksto, kad nereiktų derėtis naktį."]
   ],
-  packing: ["Pasas ir bilietai", "Kelionės draudimas", "Apsauga nuo saulės (SPF 50)", "Repelentas", "Lengvi drabužiai", "Maudymosi kostiumėlis", "Sarongas šventykloms", "Universalus adapteris", "Maža vaistinėlė", "Nešiojamas įkroviklis", "Lietpaltis (lietingas sezonas)"],
+
+  packing: ["Pasas ir bilietai","Kelionės draudimas","Apsauga nuo saulės (SPF 50)","Repelentas","Lengvi drabužiai","Maudymosi kostiumėlis","Sarongas šventykloms","Universalus adapteris","Maža vaistinėlė","Nešiojamas įkroviklis","Lietpaltis"],
+
   tips: [
     ["Valiuta", "Indonezijos rupija (IDR). Grynieji praverčia mažose kavinėse."],
-    ["Vandens", "Gerti tik buteliuose arba filtruotą vandenį."],
+    ["Vanduo", "Gerti tik buteliuose arba filtruotą."],
     ["Etiketas", "Šventyklose dengti pečius ir kelius."],
-    ["Pagalba", "Bendras pagalbos numeris Indonezijoje: 112"]
+    ["Pagalba", "Bendras pagalbos numeris Indonezijoje: 112."]
   ]
 };
 
 /* ============================================================
    PROGRAMĖLĖS KODAS (nebūtina keisti)
    ============================================================ */
-const ICONS = {
-  overview: '<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/>',
-  flight: '<path d="M2 16l20-6-3-3-6 2-6-5-2 1 4 6-5 2-2-2-1 1 3 4 4 1 1-1-1-2 6-2 5 8 2-1-3-9z" transform="translate(0 -1)"/>',
-  stay: '<path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/><path d="M10 20v-6h4v6"/>',
-  daily: '<rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16M9 3v4M15 3v4"/>',
-  eat: '<path d="M7 3v8M5 3v5a2 2 0 004 0V3M7 11v10"/><path d="M17 3c-2 2-3 5-3 8h3v10"/>',
-  visit: '<path d="M12 21s-7-6.5-7-12a7 7 0 0114 0c0 5.5-7 12-7 12z"/><circle cx="12" cy="9" r="2.5"/>',
-  transport: '<circle cx="12" cy="12" r="9"/><path d="M15.5 8.5l-2 5-5 2 2-5z"/>',
-  packing: '<rect x="6" y="7" width="12" height="14" rx="2"/><path d="M9 7V4h6v3M10 11v6M14 11v6"/>',
-  tips: '<path d="M12 3a6 6 0 00-3.5 11c.6.5 1 1.2 1 2v1h5v-1c0-.8.4-1.5 1-2A6 6 0 0012 3z"/><path d="M10 21h4"/>',
-  home: '<path d="M3 11l9-7 9 7v9a1 1 0 01-1 1h-5v-6H9v6H4a1 1 0 01-1-1z"/>'
+const IC = {
+  overview: '<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3.2 3 3.2 15 0 18M12 3c-3.2 3-3.2 15 0 18"/>',
+  flight: '<path d="M21 15.5v-2L13.5 9V4a1.5 1.5 0 00-3 0v5L3 13.5v2l7.5-2.2V18l-2 1.5V21l3.5-1 3.5 1v-1.5l-2-1.5v-4.7z"/>',
+  stay: '<path d="M3 11l9-7.5 9 7.5"/><path d="M5.5 9.5V20h13V9.5"/><path d="M10 20v-6h4v6"/>',
+  daily: '<rect x="4" y="5" width="16" height="15" rx="2.5"/><path d="M4 10h16M9 3v4M15 3v4M8.5 14h2M13.5 14h2"/>',
+  attire: '<path d="M12 7.5a2 2 0 10-2-2"/><path d="M12 7.5V9l9 6.2a1 1 0 01-.6 1.8H3.6A1 1 0 013 15.2L12 9"/>',
+  packing: '<rect x="5.5" y="5" width="13" height="16" rx="2"/><path d="M9 5V3.5h6V5M9 11l1.5 1.5L13.5 9.5M9 16.5h6"/>',
+  transport: '<circle cx="12" cy="12" r="9"/><path d="M15.8 8.2l-2.2 5.4-5.4 2.2 2.2-5.4z"/>',
+  eat: '<path d="M7 3v7.5M5 3v5a2 2 0 004 0V3M7 10.5V21"/><path d="M17.5 3c-2.3 1.6-3.5 4.4-3.5 8h3.5V21"/>',
+  out: '<path d="M4.5 4h15L12 12.5z"/><path d="M12 12.5V20M8 20.5h8M16.5 6.5l3-3"/>',
+  shop: '<path d="M5.5 8.5h13L19.5 21h-15z"/><path d="M9 8.5a3 3 0 016 0"/>',
+  visit: '<path d="M12 21.5s-7-6.3-7-12a7 7 0 0114 0c0 5.7-7 12-7 12z"/><circle cx="12" cy="9.5" r="2.5"/>',
+  things: '<circle cx="16.5" cy="6.5" r="2.5"/><path d="M3 14c2-2.6 4-2.6 6 0s4 2.6 6 0 4-2.6 6 0M3 19c2-2.6 4-2.6 6 0s4 2.6 6 0 4-2.6 6 0"/>',
+  tips: '<path d="M12 3a6 6 0 00-3.6 10.8c.6.5 1 1.2 1 2V17h5.2v-1.2c0-.8.4-1.5 1-2A6 6 0 0012 3z"/><path d="M10 20.5h4"/>',
+  home: '<path d="M3.5 11L12 4l8.5 7"/><path d="M5.5 10v10h13V10"/><path d="M10 20v-5h4v5"/>'
 };
-const ic = (n, cls = "ic") => `<svg class="${cls}" viewBox="0 0 24 24">${ICONS[n]}</svg>`;
+const ic = n => `<svg class="ic" viewBox="0 0 24 24">${IC[n] || ""}</svg>`;
 
 const MENU = [
-  ["overview","Apžvalga"], ["flight","Skrydžiai"], ["stay","Nakvynė"],
-  ["daily","Dienos"], ["eat","Kur valgyti"], ["visit","Ką aplankyti"],
-  ["transport","Transportas"], ["packing","Pakuotis"], ["tips","Patarimai"]
+  ["overview","Apžvalga"],["flight","Skrydžiai"],["stay","Nakvynė"],
+  ["daily","Dienos"],["attire","Apranga"],["packing","Pakuotė"],
+  ["transport","Transportas"],["eat","Kur valgyti"],["out","Vakarai"],
+  ["shop","Pirkiniai"],["visit","Aplankyti"],["things","Veiklos"]
 ];
-const NAV = [["home","Pradžia"], ["daily","Dienos"], ["eat","Maistas"], ["visit","Vietos"], ["packing","Pakuotis"]];
+const NAV = [["home","Pradžia"],["overview","Maršrutas"],["daily","Dienos"],["eat","Maistas"],["visit","Vietos"],["packing","Pakuotė"]];
 
 const $ = id => document.getElementById(id);
 const esc = s => { const d = document.createElement("div"); d.textContent = s == null ? "" : String(s); return d.innerHTML; };
-const mapUrl = q => "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(q + " Bali");
+const mapUrl = q => "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(q + " " + TRIP.mapCity);
+const rise = i => `style="--i:${i}"`;
+
+/* ---------- Iliustracijos (SVG) ---------- */
+let _u = 0;
+const cloud = (x, y, s, o = .9) => `<g class="drift" transform="translate(${x} ${y}) scale(${s})" fill="#fff" opacity="${o}"><ellipse cx="0" cy="0" rx="40" ry="11"/><ellipse cx="-22" cy="-8" rx="22" ry="12"/><ellipse cx="14" cy="-12" rx="26" ry="14"/></g>`;
+const palm = (x, y, h, lean, c = "#2f6b3a", w = 1) => {
+  const tx = x + lean, ty = y - h;
+  const leaf = a => `<path d="M0 0C18 -22 55 -26 92 -2C58 -13 26 -7 0 0Z" transform="rotate(${a})"/>`;
+  return `<g><path d="M${x} ${y}Q${x + lean * .2} ${y - h * .55} ${tx} ${ty}" stroke="#5a4630" stroke-width="${6 * w}" fill="none" stroke-linecap="round"/>` +
+    `<g transform="translate(${tx} ${ty}) scale(${w})" fill="${c}">${[-178,-150,-122,-94,-66,-38,-10,18,40].map(leaf).join("")}</g></g>`;
+};
+const meru = (cx, by, s = 1, c = "#3a3126", st = "#cfc3aa") => {
+  let o = `<rect x="${cx - 36 * s}" y="${by - 14 * s}" width="${72 * s}" height="${14 * s}" fill="${st}"/>`;
+  for (let i = 0; i < 4; i++) {
+    const w = (44 - i * 8) * s, y = by - 14 * s - i * 17 * s;
+    o += `<path d="M${cx - w} ${y}L${cx - w * .62} ${y - 15 * s}L${cx + w * .62} ${y - 15 * s}L${cx + w} ${y}Z" fill="${c}"/><rect x="${cx - w * .55}" y="${y}" width="${w * 1.1}" height="${3 * s}" fill="${st}"/>`;
+  }
+  const top = by - 14 * s - 3 * 17 * s - 15 * s;
+  return o + `<path d="M${cx} ${top - 22 * s}L${cx - 3 * s} ${top}H${cx + 3 * s}Z" fill="${c}"/>`;
+};
+const gate = (cx, by, col = "#8d7b62") => {
+  const half = `<path d="M${cx - 14} ${by}V${by - 170}L${cx - 30} ${by - 150}V${by - 130}H${cx - 46}V${by - 100}H${cx - 62}V${by - 70}H${cx - 78}V${by - 40}H${cx - 94}V${by}Z" fill="${col}"/>`;
+  return half + `<g transform="translate(${2 * cx} 0) scale(-1 1)">${half}</g>`;
+};
+const sky = (id, a, b, c) => `<defs><linearGradient id="${id}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${a}"/><stop offset=".62" stop-color="${b}"/><stop offset="1" stop-color="${c}"/></linearGradient></defs><rect width="300" height="400" fill="url(#${id})"/>`;
+const wavy = (y, c) => `<path d="M0 ${y}C50 ${y - 22} 110 ${y + 10} 170 ${y - 10}S270 ${y + 8} 300 ${y - 6}V400H0Z" fill="${c}"/>`;
+
+function scene(kind) {
+  const id = "g" + (++_u);
+  const S = {
+    palms: () => sky(id, "#6bb0d6", "#bfe0ea", "#f3e8cb") + `<circle cx="232" cy="84" r="26" fill="#fff6cf" opacity=".95"/>` + cloud(70, 96, 1.25) + cloud(220, 160, 1) + cloud(150, 46, .8, .75) +
+      palm(52, 430, 340, 48, "#2f6b3a", 1.55) + palm(250, 430, 280, -52, "#3d7d45", 1.3) + palm(150, 430, 190, 10, "#25552f", 1.05),
+    temple: () => sky(id, "#f0b27a", "#f6d9a8", "#f7ecd2") + `<circle cx="150" cy="170" r="48" fill="#fff0c4" opacity=".85"/>` + cloud(60, 90, 1, .7) + cloud(240, 120, .9, .6) +
+      palm(30, 420, 300, 24, "#2f6b3a", 1.3) + palm(280, 420, 260, -26, "#2f6b3a", 1.2) + gate(150, 372, "#8d7b62") +
+      `<rect x="0" y="372" width="300" height="40" fill="#6b5a45"/><path d="M118 372h64l12 28h-88z" fill="#a8977c"/>`,
+    terraces: () => sky(id, "#9fd0cf", "#d7ecd0", "#eef2cf") + cloud(80, 80, 1, .8) + cloud(230, 120, .8, .7) +
+      [["#c4de78",230],["#a5cb5c",262],["#86b64d",296],["#689f40",332],["#4a8335",368]].map(([c, y]) => wavy(y, c)).join("") +
+      palm(40, 300, 190, 18, "#2b5f33", 1) + palm(260, 330, 220, -20, "#2b5f33", 1.1),
+    beach: () => sky(id, "#7cc0dc", "#cde8ee", "#f6ecd0") + `<circle cx="80" cy="100" r="30" fill="#fff4c9"/>` + cloud(210, 80, 1) +
+      `<rect y="200" width="300" height="90" fill="#3c9ec0"/><path d="M0 230q30-8 60 0t60 0 60 0 60 0 60 0M0 255q30-8 60 0t60 0 60 0 60 0 60 0" stroke="#fff" stroke-width="3" fill="none" opacity=".7"/>` +
+      `<path d="M0 290C70 270 160 290 300 275V400H0Z" fill="#ecd9ae"/><g transform="translate(205 300) rotate(-24)"><ellipse rx="14" ry="62" fill="#e8743b"/><path d="M0 -60V60" stroke="#fff" stroke-width="3"/></g>` + palm(40, 420, 280, 30, "#2f6b3a", 1.3),
+    sunset: () => sky(id, "#e0735a", "#f4b27a", "#f9dfa6") + `<circle cx="150" cy="215" r="58" fill="#fff0c4" opacity=".95"/>` + cloud(60, 90, 1, .5) + cloud(240, 140, .9, .45) +
+      `<rect y="240" width="300" height="160" fill="#5a4a63"/><path d="M0 262q30-7 60 0t60 0 60 0 60 0 60 0" stroke="#f6c58a" stroke-width="2.5" fill="none" opacity=".7"/>` +
+      `<path d="M70 330C85 292 120 276 150 276S215 292 230 330Z" fill="#2c2420"/>` + meru(150, 282, .8, "#1c1814", "#2c2420"),
+    waterfall: () => sky(id, "#a8d5b4", "#d4ecd0", "#eef3dd") + `<path d="M0 0H110V220C80 230 40 220 0 232Z" fill="#2f6b3a"/><path d="M300 0H190V200C220 214 260 210 300 226Z" fill="#3d7d45"/>` +
+      `<rect x="112" y="0" width="76" height="260" fill="#f4fbff"/><path d="M122 0V250M142 0V260M160 0V255M176 0V250" stroke="#cfe9f0" stroke-width="3"/><rect x="0" y="250" width="300" height="150" fill="#4aa7b4"/>` +
+      `<ellipse cx="150" cy="262" rx="70" ry="14" fill="#fff" opacity=".7"/><path d="M0 330q50-10 100 0t100 0 100 0" stroke="#fff" stroke-width="2.5" fill="none" opacity=".55"/>` + palm(30, 260, 190, 22, "#25552f", 1) + palm(270, 270, 210, -20, "#25552f", 1.1),
+    food: () => `<rect width="300" height="400" fill="#c9a77c"/><path d="M0 120H300M0 260H300" stroke="#b8956a" stroke-width="3"/><circle cx="150" cy="200" r="130" fill="#f5efe2"/><circle cx="150" cy="200" r="112" fill="#e9dfc7"/>` +
+      `<circle cx="120" cy="170" r="42" fill="#f0d27a"/><circle cx="185" cy="160" r="30" fill="#c9553a"/><circle cx="170" cy="235" r="40" fill="#7fae4e"/><circle cx="105" cy="240" r="26" fill="#e8743b"/><path d="M92 140q20-20 40 0" stroke="#fff" stroke-width="4" fill="none"/>` +
+      `<g fill="#3d7d45"><path d="M0 30C40 20 70 50 80 90 40 80 10 60 0 30Z"/><path d="M300 330C260 320 230 350 220 390 260 380 290 360 300 330Z"/></g>`,
+    cafe: () => `<rect width="300" height="400" fill="#d9c3a0"/><circle cx="150" cy="210" r="118" fill="#f6f0e4"/><circle cx="150" cy="210" r="86" fill="#fffaf0"/><circle cx="150" cy="210" r="62" fill="#5a3a26"/><circle cx="150" cy="210" r="50" fill="#7a5238"/>` +
+      `<path d="M120 200q30-26 60 0q-30 24-60 0z" fill="#e8d5b5"/><path d="M236 190a22 22 0 010 40" stroke="#f6f0e4" stroke-width="12" fill="none"/>` +
+      `<g fill="#6f7a52"><path d="M10 330C60 310 100 340 110 390 60 390 20 370 10 330Z"/><path d="M290 30C250 20 220 50 214 90 260 86 288 66 290 30Z"/></g>`,
+    plane: () => sky(id, "#4f9ad0", "#9ccbe6", "#e2f0f4") + cloud(60, 110, 1.4, .95) + cloud(230, 80, 1.2, .9) + cloud(120, 330, 1.6, .95) + cloud(250, 270, 1.1, .85) +
+      `<g transform="translate(150 200) rotate(-30) scale(.55)" fill="#fff" stroke="#c7d6de" stroke-width="3"><path d="M-8 -80Q0 -92 8 -80V-30L70 10V26L8 8V50L26 64V74L0 68-26 74V64L-8 50V8L-70 26V10L-8 -30Z"/></g>`,
+    market: () => `<rect width="300" height="400" fill="#efe0c0"/><g>${Array.from({ length: 6 }, (_, i) => `<path d="M${i * 50} 0H${i * 50 + 50}V70Q${i * 50 + 25} 96 ${i * 50} 70Z" fill="${i % 2 ? "#fff6e2" : "#c9553a"}"/>`).join("")}</g>` +
+      `<g fill="#b98a55"><ellipse cx="70" cy="300" rx="50" ry="22"/><ellipse cx="230" cy="310" rx="52" ry="22"/></g><g fill="#e8743b"><circle cx="50" cy="278" r="14"/><circle cx="82" cy="274" r="14"/><circle cx="66" cy="262" r="14"/></g><g fill="#7fae4e"><circle cx="210" cy="288" r="14"/><circle cx="242" cy="284" r="14"/><circle cx="226" cy="272" r="14"/></g>` +
+      `<g fill="#6f7a52"><rect x="30" y="140" width="80" height="90" rx="10"/><rect x="190" y="150" width="80" height="80" rx="10" fill="#c9a77c"/></g><path d="M0 340H300V400H0Z" fill="#c9a77c"/>`,
+    night: () => sky(id, "#1d2440", "#3b3f6e", "#8e6a8f") + Array.from({ length: 26 }, (_, i) => `<circle cx="${(i * 97) % 300}" cy="${(i * 53) % 190}" r="${i % 3 ? 1 : 1.8}" fill="#fff" opacity=".8"/>`).join("") +
+      `<circle cx="228" cy="80" r="26" fill="#f7efc8"/><circle cx="238" cy="74" r="24" fill="#2b3157"/>` +
+      `<path d="M0 120Q75 170 150 130T300 120" stroke="#f6c58a" fill="none" stroke-width="1.5"/>` + Array.from({ length: 9 }, (_, i) => `<circle cx="${i * 36 + 4}" cy="${i % 2 ? 150 : 140}" r="5" fill="#ffd98a"/>`).join("") +
+      `<rect y="300" width="300" height="100" fill="#171a30"/><path d="M110 250h80l-40 54z" fill="none" stroke="#f6c58a" stroke-width="3"/><path d="M150 304v50M120 358h60" stroke="#f6c58a" stroke-width="3"/>` + palm(30, 420, 300, 28, "#0f1a2a", 1.3) + palm(275, 420, 250, -30, "#0f1a2a", 1.2)
+  };
+  return `<svg viewBox="0 0 300 400" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">${(S[kind] || S.palms)()}</svg>`;
+}
+const art = (kind, photo, cls = "") => `<div class="art ${cls}">${photo ? `<img src="${esc(photo)}" alt="">` : scene(kind)}</div>`;
+const ttl = (a, b) => `<h2 class="ttl rise" ${rise(0)}><span class="a">${a}</span><span class="b">${b}</span></h2>`;
 
 /* ---------- Ekranai ---------- */
-const views = {
+const V = {
   cover() {
     return `<div class="cover">
-      <div class="kicker">${esc(TRIP.tagline)}</div>
+      <div class="small">${esc(TRIP.tagline)}</div>
       <h1>${esc(TRIP.title)}</h1>
-      <div class="arch"></div>
-      <div class="script">Kelionės planas</div>
-      <div class="dates">${esc(TRIP.dates)}</div>
-      <button class="btn-main" data-go="home">Atidaryti gidą</button>
+      ${art("palms", TRIP.photo, "arch")}
+      <div class="foot"><div class="script">${esc(TRIP.script)}</div><div class="dates">${esc(TRIP.dates)}</div><button class="btn-main" data-go="home">Atidaryti gidą</button></div>
     </div>`;
   },
   home() {
-    return `<div class="head"><h2>Kelionių gidas</h2><div class="script">paspausk ikoną</div></div>
-      <div class="menu-grid">${MENU.map(([k, l]) => `<button class="tile" data-go="${k}">${ic(k)}<span>${l}</span></button>`).join("")}</div>
-      <div class="section"><div class="card"><h3>${esc(TRIP.title)}</h3><p>${esc(TRIP.dates)} · ${esc(TRIP.traveler)}</p></div></div>`;
+    return `<div class="view pad">
+      <div class="eyebrow rise" ${rise(0)} style="margin-top:6px">Kelionių gidas</div>
+      ${ttl("Travel", "Guide")}
+      <div class="panel rise" ${rise(2)}><div class="grid-menu">${MENU.map(([k, l]) => `<button class="tile" data-go="${k}">${ic(k)}<span>${l}</span></button>`).join("")}</div></div>
+      <div class="hint rise" ${rise(3)}>Spausk ikoną</div>
+    </div>`;
   },
   overview() {
-    return `<div class="head"><h2>Maršrutas</h2><div class="script">trumpa apžvalga</div></div>
-      <div class="section"><div class="route">${TRIP.overview.map(s => `<div class="stop"><h4>${esc(s.place)}</h4><div class="d">${esc(s.dates)}</div><p>${esc(s.text)}</p></div>`).join("")}</div></div>`;
+    return `<div class="view pad"><div class="split"><div class="vert"><span class="a">Trip</span><span class="b">Overview</span></div>
+      <div class="stops">${TRIP.overview.map((s, i) => `<button class="stop rise" ${rise(i + 1)} data-place="${i}"><h4>${esc(s.place)}</h4><div class="d">${esc(s.dates)}</div></button>`).join("")}</div></div></div>`;
+  },
+  place(i) {
+    const p = TRIP.overview[i];
+    return `<div class="view pad">${art(p.scene, p.photo, "arch hero")}
+      <div class="place-title rise" ${rise(1)}><h2>${esc(p.place)}</h2><div class="script">Details</div></div>
+      <p class="prose rise" ${rise(2)}>${esc(p.text)}</p>
+      <div style="text-align:center;margin-top:18px" class="rise" ${rise(3)}><a class="mapbtn" target="_blank" rel="noopener" href="${mapUrl(p.place)}">Žemėlapis</a></div></div>`;
   },
   flight() {
-    return `<div class="head"><h2>Skrydžiai</h2><div class="script">detalės</div></div><div class="section">` +
-      TRIP.flights.map(f => `<div class="ticket">
-        <div class="ticket-top"><span>${esc(f.label)}</span><span>${esc(f.date)}</span></div>
-        <div class="route-line">
-          <div><div class="code">${esc(f.from)}</div><div class="city">${esc(f.fromCity)}</div></div>
-          <div class="mid"><span>✈</span></div>
-          <div style="text-align:right"><div class="code">${esc(f.to)}</div><div class="city">${esc(f.toCity)}</div></div>
-        </div>
-        <div class="ticket-meta">
-          <div>Išvyksta<b>${esc(f.depart)}</b></div><div>Atvyksta<b>${esc(f.arrive)}</b></div><div>Skrydis<b>${esc(f.flight)}</b></div>
-          <div>Terminalas<b>${esc(f.terminal)}</b></div><div>Vieta<b>${esc(f.seat)}</b></div><div>Oro linija<b style="font-size:12px">${esc(f.airline)}</b></div>
-        </div></div>`).join("") + `</div>`;
+    const f = TRIP.flights[S.flight];
+    return `<div class="view pad">${ttl("Flight", "Details")}
+      <div class="tabs rise" ${rise(1)}>${TRIP.flights.map((x, i) => `<button class="${i === S.flight ? "on" : ""}" data-flight="${i}">${esc(x.tab)}</button>`).join("")}</div>
+      <div class="flight-card rise" ${rise(2)}>${art("plane", null)}
+        <div class="route"><div><div class="code">${esc(f.from)}</div><div class="city">${esc(f.fromCity)}</div></div><div class="mid">${ic("flight")}</div><div style="text-align:right"><div class="code">${esc(f.to)}</div><div class="city">${esc(f.toCity)}</div></div></div>
+        <div class="meta">
+          <div><small>Data</small><b>${esc(f.date)}</b></div><div><small>Skrydis</small><b>${esc(f.flight)}</b></div>
+          <div><small>Išvyksta</small><b>${esc(f.depart)}</b></div><div><small>Atvyksta</small><b>${esc(f.arrive)}</b></div>
+          <div><small>Terminalas</small><b>${esc(f.terminal)}</b></div><div><small>Vieta</small><b>${esc(f.seat)}</b></div>
+          <div style="grid-column:1/-1"><small>Oro linija</small><b>${esc(f.airline)}</b></div>
+        </div></div></div>`;
   },
   stay() {
-    return `<div class="head"><h2>Nakvynė</h2><div class="script">kur miegosime</div></div><div class="section">` +
-      TRIP.stays.map(s => `<div class="card"><h3>${esc(s.name)}</h3><p>${esc(s.where)} · ${esc(s.dates)}</p>
-        <span class="pill">${esc(s.price)}</span><p style="margin-top:10px">${esc(s.note)}</p>
-        <a class="map-link" target="_blank" rel="noopener" href="${mapUrl(s.name + " " + s.where)}">Žemėlapis</a></div>`).join("") + `</div>`;
+    return `<div class="view pad">${ttl("Where", "to Stay")}<div class="section">${TRIP.stays.map((s, i) => `<div class="card rise" ${rise(i + 1)}>${art(s.scene, s.photo, "round")}<h3>${esc(s.name)}</h3><p>${esc(s.where)} · ${esc(s.dates)}</p><span class="pill">${esc(s.price)}</span><p style="margin-top:10px">${esc(s.note)}</p><a class="mapbtn" target="_blank" rel="noopener" href="${mapUrl(s.name + " " + s.where)}">Žemėlapis</a></div>`).join("")}</div></div>`;
   },
   daily() {
-    return `<div class="head"><h2>Dienų planas</h2><div class="script">pasirink dieną</div></div>
-      <div class="days">${TRIP.days.map((d, i) => `<button class="day-btn" data-day="${i}">DIENA<b>${i + 1}</b></button>`).join("")}</div>`;
+    return `<div class="view full"><div class="side"><div class="strip">${art("terraces", null)}</div><div class="main" style="padding-top:62px">
+      ${ttl("Daily", "Schedule")}
+      <div class="days">${TRIP.days.map((d, i) => `<button class="dbtn rise" ${rise(i % 9)} data-day="${i}">DIENA<b>${i + 1}</b></button>`).join("")}</div></div></div></div>`;
   },
   day(i) {
     const d = TRIP.days[i];
-    const slot = (name, arr) => arr.length ? `<div class="slot-title">${name}</div>` + arr.map(a => `<div class="item"><div class="t">${esc(a.t)}</div><div><div class="x">${esc(a.x)}</div>${a.n ? `<div class="n">${esc(a.n)}</div>` : ""}</div></div>`).join("") : "";
-    return `<button class="back" data-go="daily">← Visos dienos</button>
-      <div class="head" style="padding-top:8px"><h2>Diena ${i + 1}</h2><div class="script">${esc(d.date)} · ${esc(d.title)}</div></div>
-      <div class="section"><div class="card">${slot("Rytas", d.morning)}${slot("Popietė", d.afternoon)}${slot("Vakaras", d.evening)}</div></div>
-      <div class="daynav"><button data-day="${i - 1}" ${i === 0 ? "disabled" : ""}>← Praėjusi</button><button data-day="${i + 1}" ${i === TRIP.days.length - 1 ? "disabled" : ""}>Kita →</button></div>`;
+    const slot = (n, a) => a.length ? `<div class="slot">${n}</div>` + a.map(([t, x, nt]) => `<div class="it"><div class="t">${esc(t)}</div><div><div class="x">${esc(x)}</div>${nt ? `<div class="n">${esc(nt)}</div>` : ""}</div></div>`).join("") : "";
+    return `<div class="view full"><div class="side"><div class="strip">${art(d.scene, d.photo)}</div><div class="main" style="padding-top:62px">
+      <h2 class="ttl rise" ${rise(0)} style="padding:0"><span class="a">Day</span><span class="b" style="margin:-4px 0 0 46px">${i + 1}</span></h2>
+      <div class="eyebrow rise" ${rise(1)} style="text-align:left;margin-top:6px">${esc(d.date)} · ${esc(d.title)}</div>
+      <div class="rise" ${rise(2)}>${slot("Rytas", d.morning)}${slot("Popietė", d.afternoon)}${slot("Vakaras", d.evening)}</div>
+      <div class="daynav"><button data-day="${i - 1}" ${i === 0 ? "disabled" : ""}>← Atgal</button><button data-day="${i + 1}" ${i === TRIP.days.length - 1 ? "disabled" : ""}>Kita →</button></div></div></div></div>`;
   },
-  eat() {
-    return `<div class="head"><h2>Kur valgyti</h2><div class="script">skanios vietos</div></div><div class="section">` +
-      TRIP.eat.map(e => `<div class="card eat"><div class="ph" style="--a:${e.a};--b:${e.b}">${e.emoji}</div>
-        <h3>${esc(e.name)}</h3><p>${esc(e.where)}</p><span class="pill">${esc(e.type)}</span><span class="pill">${esc(e.price)}</span>
-        <p style="margin-top:8px">${esc(e.note)}</p>
-        <a class="map-link" target="_blank" rel="noopener" href="${mapUrl(e.name + " " + e.where)}">Žemėlapis</a></div>`).join("") + `</div>`;
-  },
-  visit() {
-    return `<div class="head"><h2>Ką aplankyti</h2><div class="script">vietos sąraše</div></div><div class="section"><div class="places">` +
-      TRIP.visit.map(v => `<div class="place"><div class="ph" style="--a:${v.a};--b:${v.b}">${v.emoji}</div>
-        <h4>${esc(v.name)}</h4><small>${esc(v.note)}</small>
-        <a target="_blank" rel="noopener" href="${mapUrl(v.map)}">Žemėlapis</a></div>`).join("") + `</div></div>`;
-  },
-  transport() {
-    return `<div class="head"><h2>Transportas</h2><div class="script">kaip judėsime</div></div><div class="section"><div class="card">` +
-      TRIP.transport.map(([a, b]) => `<div class="kv"><span>${esc(a)}</span><span style="max-width:58%">${esc(b)}</span></div>`).join("") + `</div></div>`;
-  },
-  tips() {
-    return `<div class="head"><h2>Patarimai</h2><div class="script">gera žinoti</div></div><div class="section"><div class="card">` +
-      TRIP.tips.map(([a, b]) => `<div class="kv"><span>${esc(a)}</span><span style="max-width:62%;font-weight:500">${esc(b)}</span></div>`).join("") + `</div></div>`;
-  },
+  eat() { return placeGrid("Where", "to Eat", TRIP.eat); },
+  out() { return placeGrid("Going", "Out", TRIP.out); },
+  shop() { return placeGrid("Where", "to Buy", TRIP.shop); },
+  visit() { return tallGrid("Places", "to Visit", TRIP.visit); },
+  things() { return tallGrid("Things", "to Do", TRIP.things); },
+  attire() { return listPage("Attire", "what to wear", TRIP.attire); },
+  transport() { return listPage("Transport", "getting around", TRIP.transport); },
+  tips() { return listPage("Good", "to know", TRIP.tips); },
   packing() {
-    const done = getChecks();
-    const count = TRIP.packing.filter(p => done[p]).length;
-    const pct = Math.round(count / TRIP.packing.length * 100);
-    return `<div class="head"><h2>Pakuotis</h2><div class="script">${count} iš ${TRIP.packing.length} supakuota</div></div>
-      <div class="section"><div class="progress"><i style="width:${pct}%"></i></div><div class="card">` +
-      TRIP.packing.map(p => `<div class="check ${done[p] ? "done" : ""}" data-check="${esc(p)}"><div class="box">${done[p] ? "✓" : ""}</div><div class="label">${esc(p)}</div></div>`).join("") + `</div></div>`;
+    const done = getChecks(), n = TRIP.packing.filter(p => done[p]).length, pct = Math.round(n / TRIP.packing.length * 100);
+    return `<div class="view pad">${ttl("Packing", "List")}<div class="lead rise" ${rise(1)}>${n} iš ${TRIP.packing.length} supakuota</div>
+      <div class="section"><div class="progress"><i style="width:${pct}%"></i></div><div class="card" style="padding:6px 18px">${TRIP.packing.map(p => `<div class="check ${done[p] ? "done" : ""}" data-check="${esc(p)}"><div class="box">${done[p] ? "✓" : ""}</div><div class="label">${esc(p)}</div></div>`).join("")}</div></div></div>`;
   }
 };
-
-/* ---------- Pakuotės būsena ---------- */
-const CHECK_KEY = "gidas_pakuotis_v1";
-function getChecks() { try { return JSON.parse(localStorage.getItem(CHECK_KEY)) || {}; } catch (e) { return {}; } }
-function setCheck(k, v) { const c = getChecks(); c[k] = v; try { localStorage.setItem(CHECK_KEY, JSON.stringify(c)); } catch (e) {} }
-
-/* ---------- Naršymas ---------- */
-let current = "cover";
-function go(name, arg) {
-  current = name;
-  const html = name === "day" ? views.day(arg) : (views[name] || views.home)();
-  $("screen").innerHTML = `<div class="view active">${html}</div>`;
-  $("screen").scrollTop = 0;
-  $("phone").classList.toggle("hide-nav", name === "cover");
-  const navKey = name === "day" ? "daily" : name;
-  $("nav").innerHTML = NAV.map(([k, l]) => `<button data-go="${k}" class="${k === navKey || (k === "home" && !NAV.some(n => n[0] === navKey) && name !== "cover") ? "active" : ""}">${ic(k)}<span>${l}</span></button>`).join("");
+function placeGrid(a, b, items) {
+  return `<div class="view pad">${ttl(a, b)}<div class="two" style="margin-top:14px">${items.map((e, i) => `<div class="cell rise" ${rise(i + 1)}>${art(e.scene, e.photo, "round")}<h4>${esc(e.name)}</h4><small>${esc(e.where)}${e.price ? " · " + esc(e.price) : ""}</small><small>${esc(e.note)}</small><a class="badge" target="_blank" rel="noopener" href="${mapUrl(e.name + " " + e.where)}">Žemėlapis</a></div>`).join("")}</div></div>`;
+}
+function tallGrid(a, b, items) {
+  return `<div class="view pad">${ttl(a, b)}<div class="two" style="margin-top:14px">${items.map((e, i) => `<div class="cell tall rise" ${rise(i + 1)}>${art(e.scene, e.photo, "arch-sm")}<h4>${esc(e.name)}</h4><small>${esc(e.note)}</small><a class="badge" target="_blank" rel="noopener" href="${mapUrl(e.map)}">Žemėlapis</a></div>`).join("")}</div></div>`;
+}
+function listPage(a, b, rows) {
+  return `<div class="view pad">${ttl(a, b)}<div class="section"><div class="card rise" ${rise(1)} style="padding:6px 18px">${rows.map(([x, y]) => `<div class="kv"><span>${esc(x)}</span><span>${esc(y)}</span></div>`).join("")}</div></div></div>`;
 }
 
+/* ---------- Būsena ---------- */
+const S = { flight: 0 };
+const CK = "gidas_pakuotis_v2";
+function getChecks() { try { return JSON.parse(localStorage.getItem(CK)) || {}; } catch (e) { return {}; } }
+function setCheck(k, v) { const c = getChecks(); c[k] = v; try { localStorage.setItem(CK, JSON.stringify(c)); } catch (e) {} }
+
+/* ---------- Naršymas ---------- */
+let stack = [];
+function go(name, arg, push = true) {
+  if (push) stack.push([name, arg]);
+  const html = V[name] ? V[name](arg) : V.home();
+  $("screen").innerHTML = html;
+  $("screen").scrollTop = 0;
+  const cover = name === "cover";
+  $("phone").classList.toggle("nonav", cover);
+  $("topbar").classList.toggle("hidden", cover);
+  $("backBtn").hidden = stack.length < 2 || name === "home";
+  const key = { day: "daily", place: "overview" }[name] || name;
+  $("nav").innerHTML = NAV.map(([k, l]) => `<button data-go="${k}" class="${k === key ? "on" : ""}">${ic(k)}<span>${l}</span></button>`).join("");
+  closeDrawer();
+}
+function back() {
+  if (stack.length > 1) { stack.pop(); const [n, a] = stack[stack.length - 1]; go(n, a, false); }
+}
+function openDrawer() {
+  $("sheet").innerHTML = `<div class="brand">${esc(TRIP.title)}</div><div class="script">${esc(TRIP.script)}</div>` +
+    [["home", "Pradžia"], ...MENU, ["tips", "Patarimai"]].map(([k, l]) => `<button class="item" data-go="${k}">${ic(k)}<span>${l}</span></button>`).join("");
+  $("drawer").classList.add("open");
+}
+function closeDrawer() { $("drawer").classList.remove("open"); }
+
 document.addEventListener("click", e => {
-  const g = e.target.closest("[data-go]");
-  if (g) return go(g.dataset.go);
-  const d = e.target.closest("[data-day]");
-  if (d && !d.disabled) return go("day", Number(d.dataset.day));
+  const g = e.target.closest("[data-go]"); if (g) return go(g.dataset.go);
+  const d = e.target.closest("[data-day]"); if (d && !d.disabled) return go("day", Number(d.dataset.day));
+  const p = e.target.closest("[data-place]"); if (p) return go("place", Number(p.dataset.place));
+  const f = e.target.closest("[data-flight]"); if (f) { S.flight = Number(f.dataset.flight); return go("flight", undefined, false); }
   const c = e.target.closest("[data-check]");
-  if (c) {
-    const k = c.dataset.check;
-    setCheck(k, !getChecks()[k]);
-    const y = $("screen").scrollTop;
-    go("packing");
-    $("screen").scrollTop = y;
-  }
+  if (c) { const k = c.dataset.check, y = $("screen").scrollTop; setCheck(k, !getChecks()[k]); go("packing", undefined, false); $("screen").scrollTop = y; }
 });
+$("menuBtn").addEventListener("click", openDrawer);
+$("shade").addEventListener("click", closeDrawer);
+$("backBtn").addEventListener("click", back);
 
 document.title = "Kelionių gidas · " + TRIP.title;
 go("cover");
