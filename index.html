@@ -300,7 +300,6 @@ const TRIP = {
   script: "Bali gidas lietuviams",
   price: "10 €",
   buyUrl: "",
-  codeHashes: ["5a14cb33e9d1e441c8c7214fb2ed287673d41385b47d7351d421fd9961fe01f0"],
   gets: ["Dokumentai prieš skrydį: viza, turistinis mokestis ir atvykimo kortelė su oficialiomis nuorodomis","Nakvynės su nuotraukomis, kainomis ir žemėlapiu","Kur valgyti ir kur pusryčiauti, išbandytos vietos Uluvatu","Vakarai: barai ir klubai, kur verta eiti","Paplūdimiai su kainomis, laiptais ir patarimais","Vietos ir veiklos: Nusa Penida, Kelingking, Diamond Beach, ATV, ryžių terasos ir šventyklos","Surf pamokos ir motorolerio nuoma","Viskas paruošta telefonui, su tiesioginėmis nuorodomis į žemėlapį ir bilietus"],
   traveler: "Emilis ir kompanija",
   mapCity: "Bali",
@@ -587,7 +586,7 @@ const V = {
       <div class="small">${esc(TRIP.tagline)}</div>
       <h1 style="font-size:64px;margin-top:30px">Įvesk kodą</h1>
       <p class="prose" style="margin-top:14px">Kodą gavai el. paštu nusipirkęs gidą.</p>
-      <div class="codebox"><input id="codeIn" type="text" inputmode="text" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="Prieigos kodas"><button class="btn-main" data-unlock>Atrakinti</button><div id="codeMsg" class="codemsg"></div></div>
+      <div class="codebox"><input id="codeIn" type="text" inputmode="text" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="XXXX-XXXX-XXXX"><button class="btn-main" data-unlock>Atrakinti</button><div id="codeMsg" class="codemsg"></div></div>
       <div class="actions"><button class="btn-alt" data-go="cover">← Atgal</button></div>
     </div>`;
   },
@@ -671,17 +670,32 @@ function isDone(x, st) { return x.id in st ? !!st[x.id] : !!x.done; }
 function prepCount() { const st = getPrep(); return TRIP.prep.filter(x => isDone(x, st)).length; }
 
 /* ---------- Naršymas ---------- */
-const AK = "gidas_prieiga_v1";
-function hasAccess() { try { return localStorage.getItem(AK) === "1"; } catch (e) { return false; } }
-async function sha256(t) {
-  const b = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(t));
-  return [...new Uint8Array(b)].map(x => x.toString(16).padStart(2, "0")).join("");
+const AK = "gidas_prieiga_v2", DK = "gidas_irenginys_v1";
+function lsGet(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
+function lsSet(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
+function lsDel(k) { try { localStorage.removeItem(k); } catch (e) {} }
+function hasAccess() { return !!lsGet(AK); }
+function deviceId() {
+  let d = lsGet(DK);
+  if (!d) {
+    d = (crypto.randomUUID ? crypto.randomUUID() : Math.random().toString(36).slice(2) + Date.now().toString(36));
+    lsSet(DK, d);
+  }
+  return d;
 }
-async function checkCode(raw) {
-  const c = String(raw || "").toUpperCase().replace(/\s+/g, "");
-  if (!c) return false;
-  /* Laikinas patikrinimas naršyklėje. Vėliau keičiamas serverio patikrinimu. */
-  return TRIP.codeHashes.includes(await sha256(c));
+async function callApi(path, code) {
+  const r = await fetch(path, { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ code, device: deviceId() }) });
+  let data = {}; try { data = await r.json(); } catch (e) {}
+  return { ok: r.ok && data.ok === true, error: data.error, status: r.status };
+}
+/* Iš naujo patikrina išsaugotą kodą. Jei jis išjungtas ar atstatytas, prieiga nuimama. */
+function reverify() {
+  const code = lsGet(AK); if (!code) return;
+  callApi("/api/check", code).then(r => {
+    if (!r.ok && (r.error === "revoked" || r.error === "other_device" || r.error === "invalid")) {
+      lsDel(AK); stack = []; go("cover");
+    }
+  }).catch(() => {});
 }
 let stack = [];
 function go(name, arg, push = true) {
@@ -724,12 +738,15 @@ document.addEventListener("click", e => {
   const stc = e.target.closest("[data-stay]"); if (stc) return go("stayd", Number(stc.dataset.stay));
   const sf = e.target.closest("[data-surf]"); if (sf) return go("surfd", Number(sf.dataset.surf));
   if (e.target.closest("[data-unlock]")) {
-    const inp = $("codeIn"), msg = $("codeMsg");
+    const inp = $("codeIn"), msg = $("codeMsg"), code = inp.value.trim();
     msg.textContent = "";
-    checkCode(inp.value).then(ok => {
-      if (ok) { try { localStorage.setItem(AK, "1"); } catch (er) {} stack = []; go("home"); }
+    if (!code) { msg.textContent = "Įvesk kodą."; return; }
+    callApi("/api/redeem", code).then(r => {
+      if (r.ok) { lsSet(AK, code); stack = []; go("home"); }
+      else if (r.error === "other_device") msg.textContent = "Šis kodas jau naudojamas kitame įrenginyje. Parašyk mums, ir mes padėsime.";
+      else if (r.error === "revoked") msg.textContent = "Šis kodas išjungtas. Parašyk mums.";
       else msg.textContent = "Kodas neteisingas. Patikrink ir bandyk dar kartą.";
-    }).catch(() => { msg.textContent = "Nepavyko patikrinti kodo. Bandyk dar kartą."; });
+    }).catch(() => { msg.textContent = "Nepavyko susisiekti su serveriu. Bandyk dar kartą."; });
     return;
   }
   const bc = e.target.closest("[data-beach]"); if (bc) return go("beach", Number(bc.dataset.beach));
@@ -743,6 +760,7 @@ $("backBtn").addEventListener("click", back);
 
 document.title = "Kelionių gidas · " + TRIP.title;
 go(hasAccess() ? "home" : "cover");
+reverify();
 </script>
 </body>
 </html>

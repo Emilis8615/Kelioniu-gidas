@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="lt"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow"><title>Kodai</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font:15px/1.4 system-ui,sans-serif;background:#f1ece1;color:#222;padding:20px}
+.w{max-width:960px;margin:0 auto}h1{margin:0 0 14px}
+.card{background:#fff;border-radius:16px;padding:16px;margin-bottom:16px;box-shadow:0 2px 10px rgba(0,0,0,.06)}
+input{padding:11px 12px;border:1px solid #cfc7b5;border-radius:10px;font-size:15px}
+button{padding:10px 16px;border:0;border-radius:10px;background:#6b7345;color:#fff;font-size:14px;cursor:pointer}
+button.g{background:#e6dfcd;color:#333}button.r{background:#a24a3a}
+table{width:100%;border-collapse:collapse}th,td{text-align:left;padding:9px 6px;border-bottom:1px solid #eee;font-size:14px;vertical-align:top}
+code{font:600 15px ui-monospace,monospace;letter-spacing:.04em}.s{display:inline-block;padding:2px 9px;border-radius:99px;font-size:12px}
+.free{background:#e6dfcd}.used{background:#d6e6cc}.rev{background:#f0cfc8}
+.row{display:flex;gap:10px;flex-wrap:wrap}.msg{color:#a24a3a;min-height:20px;margin-top:8px}
+.tbl{overflow-x:auto}
+</style></head><body><div class="w">
+<h1>Prieigos kodai</h1>
+<div class="card" id="login"><div class="row"><input id="pw" type="password" placeholder="Administratoriaus slaptažodis" autocomplete="current-password"><button id="go">Prisijungti</button></div><div class="msg" id="lm"></div></div>
+<div id="app" hidden>
+ <div class="card"><div class="row"><input id="note" placeholder="Pastaba (pvz. vardas ar el. paštas)" style="flex:1;min-width:220px"><button id="mk">Sukurti naują kodą</button></div>
+ <div id="fresh" style="margin-top:12px"></div></div>
+ <div class="card"><div id="stats" style="margin-bottom:10px"></div><div class="tbl"><table><thead><tr><th>Kodas</th><th>Pastaba</th><th>Būsena</th><th>Aktyvuota</th><th>Paskutinį kartą</th><th></th></tr></thead><tbody id="rows"></tbody></table></div></div>
+</div>
+</div>
+<script>
+const $=id=>document.getElementById(id);
+let PW=""; try{PW=sessionStorage.getItem("pw")||""}catch(e){}
+const esc=s=>String(s==null?"":s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const fmt=d=>d?new Date(d).toLocaleString("lt-LT"):"–";
+async function api(p,b){const r=await fetch(p,{method:b===undefined?"GET":"POST",headers:{authorization:"Bearer "+PW,"content-type":"application/json"},body:b===undefined?undefined:JSON.stringify(b)});if(r.status===401)throw new Error("auth");return r.json()}
+async function load(){
+  const d=await api("/api/admin/list"); const c=d.codes||[];
+  $("login").hidden=true; $("app").hidden=false;
+  const used=c.filter(x=>x.device&&!x.revoked).length;
+  $("stats").innerHTML=`Iš viso kodų: <b>${c.length}</b> · aktyvuota: <b>${used}</b> · nepanaudota: <b>${c.filter(x=>!x.device&&!x.revoked).length}</b> · išjungta: <b>${c.filter(x=>x.revoked).length}</b>`;
+  $("rows").innerHTML=c.map(x=>{const st=x.revoked?'<span class="s rev">išjungtas</span>':x.device?'<span class="s used">aktyvuotas</span>':'<span class="s free">nepanaudotas</span>';
+  return `<tr><td><code>${esc(x.code)}</code></td><td>${esc(x.note)}</td><td>${st}</td><td>${fmt(x.activated)}</td><td>${fmt(x.lastSeen)}</td><td style="white-space:nowrap">
+  <button class="g" data-a="reset" data-c="${esc(x.code)}">Atstatyti įrenginį</button>
+  ${x.revoked?`<button class="g" data-a="restore" data-c="${esc(x.code)}">Įjungti</button>`:`<button class="r" data-a="revoke" data-c="${esc(x.code)}">Išjungti</button>`}</td></tr>`}).join("")||'<tr><td colspan="6">Kodų dar nėra.</td></tr>';
+}
+async function login(){PW=$("pw").value;try{await load();try{sessionStorage.setItem("pw",PW)}catch(e){}}catch(e){$("lm").textContent="Neteisingas slaptažodis arba serveris dar nesukonfigūruotas."}}
+$("go").onclick=login;$("pw").onkeydown=e=>{if(e.key==="Enter")login()};
+$("mk").onclick=async()=>{const r=await api("/api/admin/create",{note:$("note").value});$("note").value="";$("fresh").innerHTML=`Naujas kodas: <code style="font-size:22px">${esc(r.code)}</code> <button class="g" id="cp">Kopijuoti</button>`;$("cp").onclick=()=>navigator.clipboard&&navigator.clipboard.writeText(r.code);load()};
+$("rows").onclick=async e=>{const b=e.target.closest("button[data-a]");if(!b)return;const a=b.dataset.a;if(a==="revoke"&&!confirm("Išjungti šį kodą? Žmogus nebegalės atidaryti gido."))return;if(a==="reset"&&!confirm("Atstatyti įrenginį? Kodą bus galima aktyvuoti kitame įrenginyje."))return;await api("/api/admin/"+a,{code:b.dataset.c});load()};
+if(PW)load().catch(()=>{});
+</script></body></html>
