@@ -79,6 +79,7 @@
   .codebox { width: 100%; max-width: 360px; margin-top: 22px; display: flex; flex-direction: column; gap: 14px; align-items: stretch; text-align: center; }
   .codebox input { padding: 16px 18px; border-radius: 16px; border: 1.5px solid var(--taupe); background: #fff; font-size: 18px; letter-spacing: .12em; text-align: center; text-transform: uppercase; }
   .codemsg { min-height: 22px; font-size: 14px; color: #a24a3a; }
+  .howbuy { text-align: center; font-size: 15px; line-height: 1.45; padding: 14px 18px; background: var(--sand); border-radius: 16px; max-width: 340px; }
   .cover .eur, .price .eur { font-family: var(--sans); font-weight: 600; }
   .cover .price .eur { font-size: .8em; margin-left: .12em; }
   .contact { width: 100%; margin-top: 26px; display: flex; flex-direction: column; gap: 10px; align-items: center; text-align: center; z-index: 3; }
@@ -577,13 +578,12 @@ const V = {
   cover() {
     const buy = TRIP.buyUrl
       ? `<a class="btn-main" href="${esc(TRIP.buyUrl)}" target="_blank" rel="noopener">Pirkti už ${money(TRIP.price)}</a>`
-      : `<button class="btn-main" disabled style="opacity:.55">Pirkti už ${money(TRIP.price)} (netrukus)</button>`;
+      : `<div class="howbuy">Norėdami įsigyti gidą (${money(TRIP.price)}), kreipkitės į mūsų kontaktus.</div>`;
     return `<div class="cover">
       <div class="small">${esc(TRIP.tagline)}</div>
       <h1>${esc(TRIP.title)}</h1>
       ${art("palms", TRIP.photo, "arch", TRIP.wiki)}
-      <div class="foot"><div class="script">${esc(TRIP.script)}</div>
-        <div class="price">${money(TRIP.price)}</div></div>
+      <div class="foot"><div class="script">${esc(TRIP.script)}</div></div>
       <div class="sell card">
         <h3>Ką gausi</h3>
         ${TRIP.gets.map(g => `<div class="check" style="cursor:default"><div class="box" style="background:var(--olive)">✓</div><div class="label">${esc(g)}</div></div>`).join("")}
