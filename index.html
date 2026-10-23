@@ -273,7 +273,7 @@ const TRIP = {
   title: "BALI",
   tagline: "Kelionių gidas",
   script: "Travel Itinerary",
-  dates: "15 – 29 RUGPJŪČIO",
+  dates: "15 DIENŲ KELIONĖ",
   traveler: "Emilis ir kompanija",
   mapCity: "Bali",
   wiki: "Pura Ulun Danu Beratan temple Bali",
@@ -292,7 +292,7 @@ const TRIP = {
       link: "https://lovebali.baliprov.go.id/", linkLabel: "lovebali.baliprov.go.id" },
     { id: "card", title: "Atvykimo deklaracija (All Indonesia Arrival Card)", tag: "Nemokama", price: "0",
       info: ["Pildoma per 72 valandas iki atvykimo.", "Apima atvykimo, muitinės ir sveikatos informaciją.", "Užpildęs gauni QR kodą, kurį išsisaugok telefone."],
-      note: "Šiai kelionei pildyti galima nuo 12 rugpjūčio (atvykimas 15 rugpjūčio vakare).",
+      note: "Pildyk likus ne daugiau kaip 72 val. iki atvykimo, todėl nedaryk per anksti.",
       link: "https://allindonesia.imigrasi.go.id/", linkLabel: "allindonesia.imigrasi.go.id" }
   ],
 
@@ -305,16 +305,16 @@ const TRIP = {
   ],
 
   overview: [
-    { place: "Ubudas", wiki: "Ubud Bali", dates: "15 – 20 rugpjūčio", scene: "terraces", text: "Kultūrinė Balio širdis: ryžių terasos, šventyklos, beždžionių miškas ir tylūs rytai. Čia verta leisti laiką lėtai: joga, kava su vaizdu ir pasivaikščiojimai tarp laukų." },
-    { place: "Čangu", wiki: "Canggu Bali", dates: "21 – 22 rugpjūčio", scene: "beach", text: "Juodo smėlio paplūdimiai, banglentininkai ir madingos kavinės. Geriausia vieta pramokti sėlinti ant bangų ir pamatyti saulėlydį." },
-    { place: "Seminjakas", wiki: "Seminyak Bali", dates: "23 – 24 rugpjūčio", scene: "night", text: "Prabangesnė pakrantės dalis: restoranai, paplūdimio klubai, parduotuvės ir gyvas vakaras." },
-    { place: "Kuta", wiki: "Kuta Bali beach", dates: "25 – 27 rugpjūčio", scene: "sunset", text: "Platus paplūdimys ir pirmosios bangos pradedantiesiems. Gyva, triukšminga ir nebrangi vieta." },
-    { place: "Legianas", wiki: "Legian Bali", dates: "28 – 29 rugpjūčio", scene: "palms", text: "Ramesnis paplūdimys ir paskutinės dienos prieš grįžimą namo. Ilgi pusryčiai, masažas ir saulėlydis." }
+    { place: "Ubudas", wiki: "Ubud Bali", dates: "1–6 dienos", scene: "terraces", text: "Kultūrinė Balio širdis: ryžių terasos, šventyklos, beždžionių miškas ir tylūs rytai. Čia verta leisti laiką lėtai: joga, kava su vaizdu ir pasivaikščiojimai tarp laukų." },
+    { place: "Čangu", wiki: "Canggu Bali", dates: "7–8 dienos", scene: "beach", text: "Juodo smėlio paplūdimiai, banglentininkai ir madingos kavinės. Geriausia vieta pramokti sėlinti ant bangų ir pamatyti saulėlydį." },
+    { place: "Seminjakas", wiki: "Seminyak Bali", dates: "9–10 dienos", scene: "night", text: "Prabangesnė pakrantės dalis: restoranai, paplūdimio klubai, parduotuvės ir gyvas vakaras." },
+    { place: "Kuta", wiki: "Kuta Bali beach", dates: "11–13 dienos", scene: "sunset", text: "Platus paplūdimys ir pirmosios bangos pradedantiesiems. Gyva, triukšminga ir nebrangi vieta." },
+    { place: "Legianas", wiki: "Legian Bali", dates: "14–15 dienos", scene: "palms", text: "Ramesnis paplūdimys ir paskutinės dienos prieš grįžimą namo. Ilgi pusryčiai, masažas ir saulėlydis." }
   ],
 
   flights: [
-    { tab: "Išvykimas", wiki: "Ngurah Rai International Airport", date: "15 RUGPJŪČIO", from: "VNO", fromCity: "Vilnius", to: "DPS", toCity: "Denpasaras", flight: "XX 123", depart: "06:00", arrive: "23:30", airline: "Pavyzdinė oro linija", terminal: "1", seat: "15A" },
-    { tab: "Grįžimas", wiki: "Vilnius Airport", date: "29 RUGPJŪČIO", from: "DPS", fromCity: "Denpasaras", to: "VNO", toCity: "Vilnius", flight: "XX 124", depart: "01:00", arrive: "18:40", airline: "Pavyzdinė oro linija", terminal: "I", seat: "15B" }
+    { tab: "Išvykimas", wiki: "Ngurah Rai International Airport", date: "", from: "VNO", fromCity: "Vilnius", to: "DPS", toCity: "Denpasaras", flight: "XX 123", depart: "06:00", arrive: "23:30", airline: "Pavyzdinė oro linija", terminal: "1", seat: "15A" },
+    { tab: "Grįžimas", wiki: "Vilnius Airport", date: "", from: "DPS", fromCity: "Denpasaras", to: "VNO", toCity: "Vilnius", flight: "XX 124", depart: "01:00", arrive: "18:40", airline: "Pavyzdinė oro linija", terminal: "I", seat: "15B" }
   ],
 
   stayTip: {
@@ -325,26 +325,26 @@ const TRIP = {
   },
 
   stays: [
-    { name: "Ubudo vila su baseinu", wiki: "Ubud Bali", where: "Ubudas", dates: "15 – 20 rgp.", price: "55 € / naktis", note: "Pusryčiai įskaičiuoti. Registracija nuo 14:00.", scene: "terraces" },
-    { name: "Čangu bangų namelis", wiki: "Canggu Bali", where: "Čangu", dates: "21 – 22 rgp.", price: "70 € / naktis", note: "5 min. pėsčiomis iki paplūdimio.", scene: "beach" },
-    { name: "Seminjako viešbutis", wiki: "Seminyak Bali", where: "Seminjakas", dates: "23 – 24 rgp.", price: "65 € / naktis", note: "Arti restoranų gatvės.", scene: "night" },
-    { name: "Kutos svečių namai", wiki: "Kuta Bali beach", where: "Kuta", dates: "25 – 28 rgp.", price: "40 € / naktis", note: "Prie pat paplūdimio ir bangų.", scene: "sunset" }
+    { name: "Ubudo vila su baseinu", wiki: "Ubud Bali", where: "Ubudas", dates: "1–6 dienos", price: "55 € / naktis", note: "Pusryčiai įskaičiuoti. Registracija nuo 14:00.", scene: "terraces" },
+    { name: "Čangu bangų namelis", wiki: "Canggu Bali", where: "Čangu", dates: "7–8 dienos", price: "70 € / naktis", note: "5 min. pėsčiomis iki paplūdimio.", scene: "beach" },
+    { name: "Seminjako viešbutis", wiki: "Seminyak Bali", where: "Seminjakas", dates: "9–10 dienos", price: "65 € / naktis", note: "Arti restoranų gatvės.", scene: "night" },
+    { name: "Kutos svečių namai", wiki: "Kuta Bali beach", where: "Kuta", dates: "11–14 dienos", price: "40 € / naktis", note: "Prie pat paplūdimio ir bangų.", scene: "sunset" }
   ],
 
   /* [laikas, veikla, pastaba] */
   days: [
-    { date: "15 rugpjūčio", title: "Atvykimas", wiki: "Ngurah Rai International Airport", scene: "plane", morning: [["06:00","Skrydis iš Vilniaus","Atvykti į oro uostą 3 val. iš anksto"]], afternoon: [["14:00","Skrydis ir persėdimas"]], evening: [["23:30","Nusileidimas Denpasare","Parodyti 3 QR kodus, pasiimti bagažą. Pinigų oro uoste nekeisti"],["00:30","Gojek arba Grab į viešbutį","~1 val. kelio, kaina matoma programėlėje"]] },
-    { date: "16 rugpjūčio", title: "Ubudas", wiki: "Tegallalang rice terrace Bali", scene: "terraces", morning: [["09:00","Pusryčiai vilos terasoje"],["10:30","Tegalalango ryžių terasos","Pasivaikščiojimas, ateiti anksti, kol nėra minios","Tegalalang Rice Terrace"]], afternoon: [["13:00","Smagūs baseinai prie terasų","","swimming pool near Tegalalang Rice Terrace"],["15:00","Zoologijos sodas","Pakeliui","Bali Zoo"],["16:30","ATV per džiungles","Protingos kainos, važiuojama ilgai","ATV ride Ubud"]], evening: [["19:00","Vakarienė Ubude"]] },
-    { date: "17 rugpjūčio", title: "Šventyklos", wiki: "Tirta Empul temple", scene: "temple", morning: [["08:00","Tirta Empul šventykla","Reikalingas sarongas"]], afternoon: [["13:00","Kavos plantacija"],["15:30","Laisvas laikas / masažas"]], evening: [["19:30","Vakarienė"]] },
-    { date: "18 rugpjūčio", title: "Kriokliai", wiki: "Tegenungan Waterfall Bali", scene: "waterfall", morning: [["07:00","Tegenungan krioklys","Būtinai batai su protektoriumi"]], afternoon: [["14:00","Joga ar plaukimas baseine"]], evening: [["19:00","Vakarienė Ubude"]] },
-    { date: "19 rugpjūčio", title: "Poilsio diena", wiki: "Ubud Bali", scene: "cafe", morning: [["10:00","Ilgi pusryčiai"]], afternoon: [["14:00","Beždžionių miškas","Slėpti akinius ir maišelius","Sacred Monkey Forest Sanctuary Ubud"],["16:00","Masažas ir nemokamas laikas"]], evening: [["19:00","Pakuojamės kitam miestui"]] },
-    { date: "20 rugpjūčio", title: "Kelias į Čangu", wiki: "Canggu Bali", scene: "palms", morning: [["10:00","Išsiregistravimas"],["11:00","Kelionė į Čangu","~1,5 val. taksi"]], afternoon: [["15:00","Pirmas žvilgsnis į paplūdimį"]], evening: [["18:30","Saulėlydis Batu Bolong"]] },
-    { date: "21 rugpjūčio", title: "Banglentės", wiki: "Canggu Batu Bolong beach", scene: "beach", morning: [["09:00","Banglenčių pamoka","2 val. su instruktoriumi"]], afternoon: [["13:00","Pietūs paplūdimio kavinėje"]], evening: [["19:00","Vakarienė ir kokteiliai"]] },
-    { date: "22 rugpjūčio", title: "Tanah Lotas", wiki: "Tanah Lot temple Bali", scene: "sunset", morning: [["10:00","Kava ir pasivaikščiojimas"]], afternoon: [["16:00","Tanah Lot šventykla"]], evening: [["18:00","Saulėlydis prie jūros"]] },
-    { date: "23 rugpjūčio", title: "Seminjakas", wiki: "Seminyak Bali", scene: "market", morning: [["10:00","Persikėlimas į Seminjaką"]], afternoon: [["14:00","Apsipirkimas ir kavinės"]], evening: [["19:30","Vakarienė, paplūdimio klubas"]] },
-    { date: "24 rugpjūčio", title: "Uluvatu", wiki: "Uluwatu Temple Bali", scene: "temple", morning: [["10:00","Plaukimas ir poilsis"]], afternoon: [["16:00","Uluvatu šventykla ant uolos"]], evening: [["18:00","Kecak šokis saulėlydyje"]] },
-    { date: "25 rugpjūčio", title: "Kuta", wiki: "Kuta Bali beach", scene: "beach", morning: [["10:00","Persikėlimas į Kutą"]], afternoon: [["14:00","Bangos ir paplūdimys"]], evening: [["19:00","Naktinė turgavietė"]] },
-    { date: "26 rugpjūčio", title: "Nusa Penida", wiki: "Kelingking Beach Nusa Penida", scene: "sunset",
+    { title: "Atvykimas", wiki: "Ngurah Rai International Airport", scene: "plane", morning: [["06:00","Skrydis iš Vilniaus","Atvykti į oro uostą 3 val. iš anksto"]], afternoon: [["14:00","Skrydis ir persėdimas"]], evening: [["23:30","Nusileidimas Denpasare","Parodyti 3 QR kodus, pasiimti bagažą. Pinigų oro uoste nekeisti"],["00:30","Gojek arba Grab į viešbutį","~1 val. kelio, kaina matoma programėlėje"]] },
+    { title: "Ubudas", wiki: "Tegallalang rice terrace Bali", scene: "terraces", morning: [["09:00","Pusryčiai vilos terasoje"],["10:30","Tegalalango ryžių terasos","Pasivaikščiojimas, ateiti anksti, kol nėra minios","Tegalalang Rice Terrace"]], afternoon: [["13:00","Smagūs baseinai prie terasų","","swimming pool near Tegalalang Rice Terrace"],["15:00","Zoologijos sodas","Pakeliui","Bali Zoo"],["16:30","ATV per džiungles","Protingos kainos, važiuojama ilgai","ATV ride Ubud"]], evening: [["19:00","Vakarienė Ubude"]] },
+    { title: "Šventyklos", wiki: "Tirta Empul temple", scene: "temple", morning: [["08:00","Tirta Empul šventykla","Reikalingas sarongas"]], afternoon: [["13:00","Kavos plantacija"],["15:30","Laisvas laikas / masažas"]], evening: [["19:30","Vakarienė"]] },
+    { title: "Kriokliai", wiki: "Tegenungan Waterfall Bali", scene: "waterfall", morning: [["07:00","Tegenungan krioklys","Būtinai batai su protektoriumi"]], afternoon: [["14:00","Joga ar plaukimas baseine"]], evening: [["19:00","Vakarienė Ubude"]] },
+    { title: "Poilsio diena", wiki: "Ubud Bali", scene: "cafe", morning: [["10:00","Ilgi pusryčiai"]], afternoon: [["14:00","Beždžionių miškas","Slėpti akinius ir maišelius","Sacred Monkey Forest Sanctuary Ubud"],["16:00","Masažas ir nemokamas laikas"]], evening: [["19:00","Pakuojamės kitam miestui"]] },
+    { title: "Kelias į Čangu", wiki: "Canggu Bali", scene: "palms", morning: [["10:00","Išsiregistravimas"],["11:00","Kelionė į Čangu","~1,5 val. taksi"]], afternoon: [["15:00","Pirmas žvilgsnis į paplūdimį"]], evening: [["18:30","Saulėlydis Batu Bolong"]] },
+    { title: "Banglentės", wiki: "Canggu Batu Bolong beach", scene: "beach", morning: [["09:00","Banglenčių pamoka","2 val. su instruktoriumi"]], afternoon: [["13:00","Pietūs paplūdimio kavinėje"]], evening: [["19:00","Vakarienė ir kokteiliai"]] },
+    { title: "Tanah Lotas", wiki: "Tanah Lot temple Bali", scene: "sunset", morning: [["10:00","Kava ir pasivaikščiojimas"]], afternoon: [["16:00","Tanah Lot šventykla"]], evening: [["18:00","Saulėlydis prie jūros"]] },
+    { title: "Seminjakas", wiki: "Seminyak Bali", scene: "market", morning: [["10:00","Persikėlimas į Seminjaką"]], afternoon: [["14:00","Apsipirkimas ir kavinės"]], evening: [["19:30","Vakarienė, paplūdimio klubas"]] },
+    { title: "Uluvatu", wiki: "Uluwatu Temple Bali", scene: "temple", morning: [["10:00","Plaukimas ir poilsis"]], afternoon: [["16:00","Uluvatu šventykla ant uolos"]], evening: [["18:00","Kecak šokis saulėlydyje"]] },
+    { title: "Kuta", wiki: "Kuta Bali beach", scene: "beach", morning: [["10:00","Persikėlimas į Kutą"]], afternoon: [["14:00","Bangos ir paplūdimys"]], evening: [["19:00","Naktinė turgavietė"]] },
+    { title: "Nusa Penida", wiki: "Kelingking Beach Nusa Penida", scene: "sunset",
       morning: [
         ["Anksti","Išvažiuok iš viešbučio kuo anksčiau","Iki uosto ~1,5 val. motoroleriu, taksi panašiai. Kuo anksčiau atvyksi, tuo daugiau laiko saloje."],
         ["Uoste","The Angkal Fast Boat ofisas (Denpasare)","Ofise parodai bilietus ir gauni korteles, su kuriomis įlipsi į keltą. Bilietus pirk iš anksto, kaina apie 20 €.","The Angkal Fast Boat Denpasar","https://12go.asia/en/travel/bali/nusa-penida"]
@@ -358,9 +358,9 @@ const TRIP = {
         ["~17:00","Paskutinis keltas atgal","Dažniausiai apie 17 val., todėl nedelsk ir kooperuokis greitai."],
         ["Jei lieki","Diamond Beach ir nakvynė saloje","Diamond Beach yra kitoje salos pusėje, per vieną dieną nespėsi. Reikės likti nakvoti.","Diamond Beach Nusa Penida"]
       ] },
-    { date: "27 rugpjūčio", title: "Laisva diena", wiki: "Kuta Bali beach", scene: "cafe", morning: [["10:00","Pusryčiai"]], afternoon: [["14:00","Masažas ir pirkiniai"]], evening: [["19:00","Vakarienė"]] },
-    { date: "28 rugpjūčio", title: "Legianas", wiki: "Legian Bali", scene: "palms", morning: [["10:00","Persikėlimas į Legianą"]], afternoon: [["15:00","Paskutinis plaukimas"]], evening: [["18:30","Saulėlydis ir atsisveikinimas"],["22:30","Transferis į oro uostą"]] },
-    { date: "29 rugpjūčio", title: "Namo", wiki: "Vilnius Airport", scene: "plane", morning: [["01:00","Skrydis į Vilnių"]], afternoon: [["~12:00","Persėdimas"]], evening: [["18:40","Nusileidimas Vilniuje"]] }
+    { title: "Laisva diena", wiki: "Kuta Bali beach", scene: "cafe", morning: [["10:00","Pusryčiai"]], afternoon: [["14:00","Masažas ir pirkiniai"]], evening: [["19:00","Vakarienė"]] },
+    { title: "Legianas", wiki: "Legian Bali", scene: "palms", morning: [["10:00","Persikėlimas į Legianą"]], afternoon: [["15:00","Paskutinis plaukimas"]], evening: [["18:30","Saulėlydis ir atsisveikinimas"],["22:30","Transferis į oro uostą"]] },
+    { title: "Namo", wiki: "Vilnius Airport", scene: "plane", morning: [["01:00","Skrydis į Vilnių"]], afternoon: [["~12:00","Persėdimas"]], evening: [["18:40","Nusileidimas Vilniuje"]] }
   ],
 
   eat: [
@@ -433,7 +433,7 @@ const TRIP = {
     ["Šventykloms", "Dengti pečius ir kelius. Sarongą dažnai išduoda prie įėjimo."],
     ["Vakarui", "Lengva suknelė ar marškiniai, kartais palaidinė ilgomis rankovėmis (uodams)."],
     ["Avalynė", "Šlepetės, patogūs sportiniai batai ir batai kriokliams."],
-    ["Sezonas", "Rugpjūtis sausas, bet vakarais gali būti vėsiau."]
+    ["Sezonas", "Sausuoju sezonu (maždaug balandis–spalis) mažiau lyja, bet vakarais gali būti vėsiau."]
   ],
 
   transport: [
@@ -620,10 +620,9 @@ const V = {
       <div class="flight-card rise" ${rise(2)}>${art("plane", null, "", f.wiki)}
         <div class="route"><div><div class="code">${esc(f.from)}</div><div class="city">${esc(f.fromCity)}</div></div><div class="mid">${ic("flight")}</div><div style="text-align:right"><div class="code">${esc(f.to)}</div><div class="city">${esc(f.toCity)}</div></div></div>
         <div class="meta">
-          <div><small>Data</small><b>${esc(f.date)}</b></div><div><small>Skrydis</small><b>${esc(f.flight)}</b></div>
+          <div><small>Skrydis</small><b>${esc(f.flight)}</b></div><div><small>Oro linija</small><b style="font-size:17px">${esc(f.airline)}</b></div>
           <div><small>Išvyksta</small><b>${esc(f.depart)}</b></div><div><small>Atvyksta</small><b>${esc(f.arrive)}</b></div>
           <div><small>Terminalas</small><b>${esc(f.terminal)}</b></div><div><small>Vieta</small><b>${esc(f.seat)}</b></div>
-          <div style="grid-column:1/-1"><small>Oro linija</small><b>${esc(f.airline)}</b></div>
         </div></div></div>`;
   },
   stay() {
@@ -639,7 +638,7 @@ const V = {
     const slot = (n, a) => a.length ? `<div class="slot">${n}</div>` + a.map(([t, x, nt, m, u]) => `<div class="it"><div class="t">${esc(t)}</div><div><div class="x">${esc(x)}</div>${nt ? `<div class="n">${esc(nt)}</div>` : ""}${m ? `<a class="mini" target="_blank" rel="noopener" href="${mapUrl(m)}">Žemėlapis ↗</a>` : ""}${u ? ` <a class="mini" style="background:var(--olive);color:#fff" target="_blank" rel="noopener" href="${esc(u)}">Bilietai ↗</a>` : ""}</div></div>`).join("") : "";
     return `<div class="view full"><div class="side"><div class="strip">${art(d.scene, d.photo, "", d.wiki)}</div><div class="main" style="padding-top:62px">
       <h2 class="ttl rise" ${rise(0)} style="padding:0"><span class="a">Day</span><span class="b" style="margin:-4px 0 0 46px">${i + 1}</span></h2>
-      <div class="eyebrow rise" ${rise(1)} style="text-align:left;margin-top:6px">${esc(d.date)} · ${esc(d.title)}</div>
+      <div class="eyebrow rise" ${rise(1)} style="text-align:left;margin-top:6px">${esc(d.title)}</div>
       <div class="rise" ${rise(2)}>${slot("Rytas", d.morning)}${slot("Popietė", d.afternoon)}${slot("Vakaras", d.evening)}</div>
       <div class="daynav"><button data-day="${i - 1}" ${i === 0 ? "disabled" : ""}>← Atgal</button><button data-day="${i + 1}" ${i === TRIP.days.length - 1 ? "disabled" : ""}>Kita →</button></div></div></div></div>`;
   },
