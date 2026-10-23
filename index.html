@@ -47,6 +47,9 @@
   @keyframes rise { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
 
   /* Viršutinė juosta */
+  .areas { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin: 14px 18px 4px; }
+  .areas button { padding: 9px 16px; border-radius: 999px; background: rgba(255,255,255,.6); border: 1px solid rgba(60,50,30,.18); color: var(--olive-d); font: 600 12px Jost, sans-serif; letter-spacing: .06em; }
+  .areas button.on { background: var(--olive); color: #fff; border-color: var(--olive); }
   .topbar { position: absolute; top: 0; left: 0; right: 0; height: 58px; padding: 10px 16px; display: flex; gap: 10px; align-items: center; z-index: 25; pointer-events: none; }
   .topbar button { pointer-events: auto; width: 38px; height: 38px; border-radius: 50%; background: rgba(250,246,238,.82); backdrop-filter: blur(6px); display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px rgba(60,50,30,.15); color: var(--olive-d); }
   .topbar svg { width: 20px; height: 20px; }
@@ -361,9 +364,12 @@ const TRIP = {
 
   /* [laikas, veikla, pastaba] */
   eat: [
-    { name: "Ulu Fish Market", type: "Jūros gėrybės", price: "€€", where: "Uluvatu", map: "Ulu Fish Market Uluwatu", photo: "img/ulufish-1.jpg", note: "Vakarienė jūros gėrybių mėgėjams: šviežia žuvis, sushi, žuvies bowl'ai ir kiti jūros patiekalai. Viskas šviežia, gera muzika ir jauki atmosfera.", scene: "sunset" },
-    { name: "KALA Uluwatu", type: "Vakarienė", price: "€€", where: "Uluvatu", map: "KALA Uluwatu Greek Inspired Grill", photo: "img/kala-1.jpg", note: "Graikiškos įtakos grilio restoranas. Labai skani vakarienė, ypač steikai ir makaronai.", scene: "food" },
-    { name: "The Loft", type: "Pusryčiai", price: "€€", where: "Uluvatu", map: "The Loft Uluwatu", photo: "img/loft-1.jpg", note: "Labai skani vieta pusryčiams Uluvatu. Būtinai užsisakyk Turkish eggs, tai čia vienas geriausių patiekalų. Puikiai tinka pradėti dieną prieš keliones.", scene: "cafe" },
+    { name: "Ulu Fish Market", area: "Uluwatu", type: "Jūros gėrybės", price: "€€", where: "Uluvatu", map: "Ulu Fish Market Uluwatu", photo: "img/ulufish-1.jpg", note: "Vakarienė jūros gėrybių mėgėjams: šviežia žuvis, sushi, žuvies bowl'ai ir kiti jūros patiekalai. Viskas šviežia, gera muzika ir jauki atmosfera.", scene: "sunset" },
+    { name: "KALA Uluwatu", area: "Uluwatu", type: "Vakarienė", price: "€€", where: "Uluvatu", map: "KALA Uluwatu Greek Inspired Grill", photo: "img/kala-1.jpg", note: "Graikiškos įtakos grilio restoranas. Labai skani vakarienė, ypač steikai ir makaronai.", scene: "food" },
+    { name: "The Loft", area: "Uluwatu", type: "Pusryčiai", price: "€€", where: "Uluvatu", map: "The Loft Uluwatu", photo: "img/loft-1.jpg", note: "Labai skani vieta pusryčiams Uluvatu. Būtinai užsisakyk Turkish eggs, tai čia vienas geriausių patiekalų. Puikiai tinka pradėti dieną prieš keliones.", scene: "cafe" },
+    { name: "Crumb & Coaster", type: "Pusryčiai", price: "€€", area: "Kuta", where: "Kuta", map: "Crumb & Coaster Kuta", photo: "img/crumb-1.jpg", note: "Šiuolaikiška kavinė Kutoje, kasdien 7:30–23:00. Smoothie bowl'ai, omletai, ledinė kava ir sveikesnis vakarietiškas maistas. Gera vieta pusryčiams, jei nusibodo vietinė virtuvė. Jl. Benesari 2E.", scene: "food" },
+    { name: "Nusantara by Locavore", type: "Vakarienė", price: "€€€", area: "Ubud", where: "Ubud", map: "Nusantara by Locavore Ubud", photo: "img/nusantara-1.jpg", note: "Indoneziečių virtuvės restoranas Ubude: mažiau žinomi salyno patiekalai iš vietinių produktų. Dirba kasdien 12–14:30 ir 18–21:30. Verta rezervuoti iš anksto. Jl. Dewisita 09C.", scene: "food" },
+    { name: "Warung Bu Mi", type: "Vietinė virtuvė", price: "€", area: "Canggu", where: "Čangu", map: "Warung Bu Mi Canggu", photo: "img/bumi-1.jpg", note: "Vietinis warung'as Čangu centre, kasdien 10–22 val. Nasi campur (ryžiai su įvairiais patiekalais) apie 35 000 IDR, tad labai pigu. Daug patiekalų, galima rinktis ir tik augalinius. Jl. Batubolong 52.", scene: "food" },
   ],
 
   out: [
@@ -405,6 +411,9 @@ const TRIP = {
       text: "Pasivažinėjimas ATV per džiungles Ubude: protingos kainos, važiuojama ilgai ir labai smagu.",
       bullets: ["Protingos kainos", "Važiuojama ilgai", "Kelias per džiungles", "Parink operatorių pagal atsiliepimus"],
       links: [["ATV ratai Ubude žemėlapyje", "ATV ride Ubud"]] },
+    { name: "Plaukimas Ayung upe", photo: "img/ayung-1.jpg", note: "Jei gyveni šalia Ubudo", map: "Ayung River Rafting Ubud", scene: "waterfall", text: "Jei gyveni šalia Ubudo, būtinai išbandyk plaukimą Ayung upe. Apie 14 km per atogrąžų mišką, pro krioklius ir siauras tarpekles, su vidutinio sunkumo (II–III klasės) sąrėbiais. Tinka pradedantiesiems, šeimoms ir tiems, kurie nori adrenalino. Mes čia viską žinome ir galime padėti išsirinkti.", bullets: ["Trukmė apie 2 val. vandenyje", "Kaina priklauso nuo operatoriaus: bendroje valtyje apie 15 € asmeniui (pagal vieną pasiūlymą), privati valtis iki 4 žmonių apie 55–60 €", "Dažniausiai į kainą įeina gidas, saugos įranga, draudimas, dušai, rakinamos spintelės ir pietūs su vaizdu į ryžių laukus", "Plaukimas vyksta maždaug nuo 9 val. iki vidurdienio, tad rezervuok iš anksto", "Pasiimk maudymosi kostiumą, nepermatomus drabužius persirengimui ir batus, kurių nesigaila", "Oficialų operatoriaus puslapį ir užsakymą rasi žemiau (Sobek). Yra ir kitų operatorių, todėl palygink kainas ir atsiliepimus"], links: [["Oficialus užsakymas (Sobek)", null, "https://besact.hybridbooking.com/balisobek/booking/rsv/detail/SBU7903/SOBEK-Ayung-River-Experience"], ["Plaukimas Ayung upe žemėlapyje", "Ayung River Rafting Ubud"]] },
+    { name: "Sacred Monkey Forest", photo: "img/monkey-1.jpg", note: "Beždžionių miškas Ubude", map: "Sacred Monkey Forest Sanctuary Ubud", scene: "palms", text: "Šventasis beždžionių miškas Ubude: tankus miškas, senos šventyklos ir šimtai laisvai gyvenančių beždžionių. Mes čia buvome ir rekomenduojame, bet visada laikykis taisyklių.", bullets: ["Adresas: Jl. Monkey Forest, Ubud, apie 10 min. nuo Ubudo centro", "Dirba kasdien apie 9–18 val., paskutinis įėjimas ~17 val. (patikrink oficialiame puslapyje)", "Bilietas suaugusiam apie 130 000 IDR, vaikui apie 100 000 IDR (pagal 2026 m. šaltinį, kainos keičiasi). Bilietus galima pirkti internetu arba vietoje", "Geriausia atvykti vos atsidarius, apie 9–10 val.: mažiau žmonių ir ramesnės beždžionės", "Nelieskite ir nešerkite beždžionių, neneškite maisto ir plastikinių maišelių", "Venk žiūrėti beždžionei tiesiai į akis, nes ji tai supranta kaip grėsmę", "Saugok telefoną, akinius, papuošalus ir vandens buteliukus, nes beždžionės griebia blizgančius daiktus", "Jei beždžionė užšoko ant tavęs, išlik ramus ir leisk jai pačiai nušokti", "Šventyklos skirtos maldai, turistams į vidų eiti negalima", "Avėk uždarus ar patogius batus, lietaus sezono metu takai slidūs", "Praleisk čia apie 1–2 val."], links: [["Oficialus puslapis", null, "https://monkeyforestubud.com"], ["Monkey Forest žemėlapyje", "Sacred Monkey Forest Sanctuary Ubud"]] },
+    { name: "Campuhan Ridge Walk", photo: "img/campuhan-1.jpg", note: "Pasivaikščiojimas ant kalvagūbrio Ubude", map: "Campuhan Ridge Walk Ubud", scene: "terraces", text: "Campuhan Ridge Walk yra populiarus pasivaikščiojimas siauru taku per kalvagūbrį ir žalias kalvas Ubude. Mes čia buvome: vaizdai nuostabūs, ypač ryte ir saulėlydžio metu.", bullets: ["Maždaug 2 km į vieną pusę, apie 4 km pirmyn ir atgal", "Pėsčiomis 20–30 min. į vieną pusę, o su sustojimais nuotraukoms ir kavinėms 1,5–2 val.", "Įėjimas nemokamas, takas atviras visą parą. Prie Gunung Lebah šventyklos yra aukų dėžutės takui prižiūrėti. Jei kas nors prašo pinigų už įėjimą, tai apgavystė", "Geriausias laikas: anksti ryte (apie 6–8 val.) arba vėliau popiet (apie 16:30–18:30)", "Venk 11–15 val.: saulė stipri, šešėlio mažai", "Pradžia netoli Warwick Ibah Luxury Villas & Spa, prie Gunung Lebah šventyklos. Iš Ubudo rūmų apie 15 min. pėsčiomis ar 5 min. automobiliu", "Sausuoju sezonu (balandis–spalis) takas sausas, bet žmonių daugiau. Lietaus sezonu (lapkritis–kovas) gali būti purvina ir slidu", "Pasiimk vandens, kepurę ir kremą nuo saulės"], links: [["Campuhan Ridge Walk žemėlapyje", "Campuhan Ridge Walk Ubud"]] },
     { name: "Tukad Cepung krioklys", photo: "img/tukad-1.jpg", note: "Krioklys kanjone, išvažiuok labai anksti", map: "Tukad Cepung Waterfall", scene: "waterfall", text: "Tukad Cepung yra krioklys uolėtame kanjone. Nuo pietų Balio jis yra gana toli (apie 1 val. 20 min. nuo Kutos, apie 1 val. nuo Ubudo), todėl čia reikės išvažiuoti labai anksti. Jei jau važiuoji čia, tą pačią dieną galima pasiekti ir Batur ugnikalnį.", bullets: ["Išvažiuok labai anksti, nes kelionė nuo pietų Balio ilga", "Įėjimas apie 15 000 IDR", "Šviesos spinduliai matomi giedrą dieną, dažniausiai apie 9–11 val., tada ir daugiausia žmonių. Atvykti verta kiek anksčiau nei 9 val.", "Pėsčiomis apie 1,1 km į abi puses, lengvas ar vidutinis sunkumas. Kelias žemyn status, atgal reikia lipti", "Kanjone tikrai sušlapsi kojas, todėl avėk batus vandeniui ar tokius, kurių nesigaila. Lietaus sezono metu vanduo gali būti gilesnis, o staigūs potvyniai pavojingi", "Parkavimas nemokamas", "Jei važiuoji čia, tą pačią dieną gali pasiekti Batur ugnikalnį ir karštąsias versmes"], links: [["Tukad Cepung žemėlapyje", "Tukad Cepung Waterfall"]] },
     { name: "Batur ugnikalnis", photo: "img/batur-1.jpg", note: "4x4 džipas, keturračiai ar kopimas naktį", map: "Mount Batur Kintamani", scene: "terraces", text: "Batur ugnikalnis yra viena populiariausių Balio vietų saulėtekiui. Ant jo galima važiuoti 4x4 džipu arba keturračiais, o drąsesni gali kopti pėsčiomis naktį ir sutikti saulėtekį viršuje.", bullets: ["4x4 džipas: ekskursijos saulėtekiui ar saulėlydžiui trunka apie 5 val., kaina nuo maždaug 16 $ žmogui (pagal vieną pasiūlymą), pakeliui paprastai sustojama karštose versmėse", "Pasiėmimas iš Kintamani apie 4 val. ryto. Iš Denpasaro, Kutos, Nusa Dua ar Ubudo gali būti papildomas mokestis (apie 40 $ už automobilį)", "Keturračiai: ši veikla taip pat siūloma aplink ugnikalnį, kainas pasitikrink pas operatorių", "Kopimas naktį: pradedama naktį, o saulėtekis sutinkamas viršuje. Reikia gerų fizinių jėgų, netinka turintiems nugaros ar širdies problemų ir nėščiosioms",  "Pasiimk šiltą rūbą, nes viršuje vėsu, rankšluostį ir maudymosi kostiumėlį karštoms versmėms", "Verta derinti su Tukad Cepung ir Toya Devasya karštosiomis versmėmis"], links: [["Batur ugnikalnis žemėlapyje", "Mount Batur Kintamani"]] },
     { name: "Toya Devasya karštosios versmės", photo: "img/toya-1.jpg", note: "Maudynės ežere su vaizdu į ugnikalnį", map: "Toya Devasya Hot Springs Batur", scene: "beach", text: "Toya Devasya yra karštosios versmės ant Batur ežero kranto, su vaizdu į ugnikalnį. Čia gera pailsėti ir pasimaudyti po ryto kopimo ar džipo ekskursijos.", bullets: ["Įėjimas apie 300 000 IDR (apie 16–17 €), kaip nurodyta vienoje ekskursijos pasiūloje", "Kai kurios džipų ekskursijos jau apima sustojimą karštose versmėse (apie 8 val. ryto), o įėjimą reikia mokėti papildomai", "Pasiimk rankšluostį ir maudymosi kostiumėlį", "Puikiai tinka po kopimo ar važiavimo džipu ugnikalnyje", "Prieš vykstant pasitikrink dabartinę kainą ir darbo laiką"], links: [["Toya Devasya žemėlapyje", "Toya Devasya Hot Springs Batur"]] },
@@ -663,7 +672,12 @@ const V = {
       </div></div>`;
   },
   spot(i) { return spotPage(TRIP.visit[i]); },
-  eat() { return placeGrid("Where", "to Eat", TRIP.eat); },
+  eat() {
+    const areas = ["Uluwatu", "Ubud", "Kuta", "Canggu"];
+    const chips = `<div class="areas rise" ${rise(1)}><button data-area="" class="${eatArea ? "" : "on"}">Visi</button>${areas.map(a => `<button data-area="${a}" class="${eatArea === a ? "on" : ""}">${a}</button>`).join("")}</div>`;
+    const items = eatArea ? TRIP.eat.filter(e => e.area === eatArea) : TRIP.eat;
+    return placeGrid("Where", "to Eat", items).replace('<div class="two"', chips + '<div class="two"');
+  },
   out() { return placeGrid("Going", "Out", TRIP.out); },
   visit() { return tallGrid("Places", "to Visit", TRIP.visit, true); },
   attire() { return listPage("Attire", "what to wear", TRIP.attire); },
@@ -728,6 +742,7 @@ function reverify() {
   }).catch(() => {});
 }
 let stack = [];
+let eatArea = "";
 function go(name, arg, push = true) {
   if (!hasAccess() && name !== "cover" && name !== "code" && name !== "contact") name = "cover";
   if (push) stack.push([name, arg]);
@@ -765,6 +780,7 @@ document.addEventListener("click", e => {
   if (e.target.closest("a")) return;
   const gb = e.target.closest("[data-gal]");
   if (gb) { const g = $("gal"); g.scrollBy({ left: Number(gb.dataset.gal) * (g.firstElementChild.offsetWidth + 10), behavior: "smooth" }); return; }
+  const ar = e.target.closest("[data-area]"); if (ar) { eatArea = ar.dataset.area; return go("eat", undefined, false); }
   const stc = e.target.closest("[data-stay]"); if (stc) return go("stayd", Number(stc.dataset.stay));
   const sf = e.target.closest("[data-surf]"); if (sf) return go("surfd", Number(sf.dataset.surf));
   if (e.target.closest("[data-unlock]")) {
