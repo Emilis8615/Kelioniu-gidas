@@ -27,7 +27,10 @@ const $=id=>document.getElementById(id);
 let PW=""; try{PW=sessionStorage.getItem("pw")||""}catch(e){}
 const esc=s=>String(s==null?"":s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const fmt=d=>d?new Date(d).toLocaleString("lt-LT"):"–";
-async function api(p,b){const r=await fetch(p,{method:b===undefined?"GET":"POST",headers:{authorization:"Bearer "+PW,"content-type":"application/json"},body:b===undefined?undefined:JSON.stringify(b)});if(r.status===401)throw new Error("auth");return r.json()}
+async function api(p,b){const r=await fetch(p,{method:b===undefined?"GET":"POST",headers:{authorization:"Bearer "+PW,"content-type":"application/json"},body:b===undefined?undefined:JSON.stringify(b)});if(r.status===401){let t="";try{t=(await r.json()).error||""}catch(e){}const er=new Error("auth");er.detail="401";throw er}
+  const txt=await r.text();let j;try{j=JSON.parse(txt)}catch(e){const er=new Error("bad");er.detail="Serveris grąžino ne JSON (būsena "+r.status+"). Greičiausiai serverio dalis dar nepaleista arba trūksta KV saugyklos.";throw er}
+  if(!r.ok){const er=new Error("srv");er.detail="Serverio klaida (būsena "+r.status+")";throw er}
+  return j}
 async function load(){
   const d=await api("/api/admin/list"); const c=d.codes||[];
   $("login").hidden=true; $("app").hidden=false;
@@ -38,7 +41,7 @@ async function load(){
   <button class="g" data-a="reset" data-c="${esc(x.code)}">Atstatyti įrenginį</button>
   ${x.revoked?`<button class="g" data-a="restore" data-c="${esc(x.code)}">Įjungti</button>`:`<button class="r" data-a="revoke" data-c="${esc(x.code)}">Išjungti</button>`}</td></tr>`}).join("")||'<tr><td colspan="6">Kodų dar nėra.</td></tr>';
 }
-async function login(){PW=$("pw").value;try{await load();try{sessionStorage.setItem("pw",PW)}catch(e){}}catch(e){$("lm").textContent="Neteisingas slaptažodis arba serveris dar nesukonfigūruotas."}}
+async function login(){PW=$("pw").value;try{await load();try{sessionStorage.setItem("pw",PW)}catch(e){}}catch(e){$("lm").textContent=e.detail==="401"?"Neteisingas slaptažodis (arba ADMIN_PASSWORD dar nenustatytas ar neišdiegtas).":(e.detail||"Nepavyko prisijungti: "+e.message)}}
 $("go").onclick=login;$("pw").onkeydown=e=>{if(e.key==="Enter")login()};
 $("mk").onclick=async()=>{const r=await api("/api/admin/create",{note:$("note").value});$("note").value="";$("fresh").innerHTML=`Naujas kodas: <code style="font-size:22px">${esc(r.code)}</code> <button class="g" id="cp">Kopijuoti</button>`;$("cp").onclick=()=>navigator.clipboard&&navigator.clipboard.writeText(r.code);load()};
 $("rows").onclick=async e=>{const b=e.target.closest("button[data-a]");if(!b)return;const a=b.dataset.a;if(a==="revoke"&&!confirm("Išjungti šį kodą? Žmogus nebegalės atidaryti gido."))return;if(a==="reset"&&!confirm("Atstatyti įrenginį? Kodą bus galima aktyvuoti kitame įrenginyje."))return;await api("/api/admin/"+a,{code:b.dataset.c});load()};
