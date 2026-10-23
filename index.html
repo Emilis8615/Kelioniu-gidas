@@ -351,6 +351,10 @@ const TRIP = {
     { name: "Finns ir Atlas Beach Club", type: "Paplūdimio klubai", where: "Čangu", map: "Finns Beach Club Bali", photo: "img/finns-1.jpg", note: "Vieni didžiausių klubų Bali: visą naktį veiksmas, daug garso, baseinų ir muzikos.", scene: "night", links: [["Finns Beach Club", "Finns Beach Club Bali"], ["Atlas Beach Club", "Atlas Beach Club Bali"]] },
   ],
 
+  surf: [
+    { name: "Jaya Surf Lessons", photo: "img/jaya-1.jpg", note: "Pamokos Nusa Dua, nuo 30 €", map: "Jaya Surf Lessons Nusa Dua Bali", scene: "beach", text: "Jaya Surf Lessons veikia Nusa Dua rajone Bali ir yra labai gera vieta pradėti mokytis banglenčių sporto. Treneriai dirba su pradedančiaisiais ir parodo viską nuo pačių pagrindų, todėl patirties nereikia. Su šia mokykla mes bendradarbiaujame, todėl galime padėti susisiekti su treneriu tiesiogiai.", bullets: ["Pamokos Nusa Dua rajone, Bali", "Labai tinka pradedantiesiems", "Treneris visai dienai nuo 30 €", "Norėdamas gauti trenerio telefoną ar kitą informaciją, parašyk mums ir mes atsiųsime reikiamą info", "Ką tiksliai apima kaina (lenta, trukmė, transportas), pasitikslink su treneriu prieš rezervuodamas", "Pasiimk kremą nuo saulės, maudymosi kostiumėlį ir vandens"], links: [["Jaya Surf Lessons žemėlapyje", "Jaya Surf Lessons Nusa Dua Bali"]] }
+  ],
+
   beaches: [
     { name: "Padang Padang", photo: "img/padang-1.jpg", note: "Maža jauki įlanka", map: "Padang Padang Beach", scene: "beach", text: "Mažas, bet labai gražus paplūdimys Uluvatu, tarp Bingin ir Suluban paplūdimių. Į jį nusileidi siauru laiptų taku, kuris eina per kalkakmenio olą ir išveda tiesiai į krantą. Įlanka rami, be srovių, todėl čia gera maudytis.", bullets: ["Įėjimas apie 15 000 IDR, mokama prie bilietų kasos viršuje", "Parkavimas apie 2 000 IDR", "Geriausia atvykti prieš pietus. Vidurdienį ir popiet daugiausia žmonių, nes atvažiuoja ekskursijų autobusai, o vakare ramiau ir gražus saulėlydis", "Per atoslūgį atsiveria uolos ir nuošalūs kampeliai", "Pakeliui žemyn beždžionės grobia maišus, akinius, telefonus ir maistą, todėl daiktus laikyk užsegtus", "Banglentininkams: kairinė banga, geriausias sezonas gegužė–spalis, banglentės nuoma apie 100 000 IDR už 2 val., yra pamokų", "Paplūdimyje warung'ai su jūros gėrybėmis ir nasi goreng, gėrimai apie 3–5 €", "Šeštadienio vakarais paplūdimio vakarėlis su DJ (prasideda apie 21–22 val.)"], links: [["Padang Padang žemėlapyje", "Padang Padang Beach"]] },
     { name: "Bingin", photo: "img/bingin-1.jpg", note: "Uolos, laiptai ir bangos", map: "Bingin Beach", scene: "beach", text: "Garsus paplūdimys Uluvatu, žinomas dėl bangų ir vaizdų nuo uolos. Nuo automobilių aikštelės iki paplūdimio reikia nulipti apie 190 nelygių, gana stačių laiptų (apie 10 min.).", bullets: ["Įėjimas nemokamas, parkavimas apie 5 000 IDR motoroleriui", "Per atoslūgį paplūdimys daug platesnis, per potvynį vietos mažai", "Daugiausia žmonių vėlai popiet, tada ir gražiausias saulėlydis", "Maudytis sunkiau: uolėtas koralinis dugnas, todėl geriau su vandens batais", "Bangos tik patyrusiems banglentininkams: stiprios kairinės, formuojasi vamzdžiai", "Pagal vieną 2025 m. gidą dalis pastatų nugriauta, todėl kavinių, tualetų ir pavėsio gali nebūti, pasiimk vandens", "Kelias iki jo prasto stovio, važiuok atsargiai"], links: [["Bingin žemėlapyje", "Bingin Beach"]] },
@@ -579,9 +583,8 @@ const V = {
   stay() {
     return `<div class="view pad">${ttl("Where", "to Stay")}<div class="section"><div class="card rise" ${rise(1)} style="background:var(--olive);color:#fff">${art(TRIP.stayTip.scene, null, "round", TRIP.stayTip.wiki)}<span class="pill" style="background:rgba(255,255,255,.2);color:#fff">Patarimas</span><h3 style="margin-top:8px">${esc(TRIP.stayTip.title)}</h3><p style="color:rgba(255,255,255,.85)">${esc(TRIP.stayTip.text)}</p>${TRIP.stayTip.bullets.map(b => `<p style="color:#fff;margin-top:6px">• ${esc(b)}</p>`).join("")}</div>${TRIP.stays.map((s, i) => `<div class="card rise" ${rise(i + 1)}${s.images ? ` data-stay="${i}" style="cursor:pointer"` : ""}>${art(s.scene, s.photo || (s.images && s.images[0]), "round", s.wiki)}<h3>${esc(s.name)}</h3><p>${esc(s.where)}${s.dates ? " · " + esc(s.dates) : ""}</p>${s.price ? `<span class="pill">${esc(s.price)}</span>` : ""}<p style="margin-top:10px">${esc(s.note)}</p>${s.images ? `<span class="mapbtn" style="margin-right:8px">Nuotraukos ir daugiau</span>` : ""}<a class="mapbtn" target="_blank" rel="noopener" href="${mapUrl(s.name + " " + s.where)}">Žemėlapis</a></div>`).join("")}</div></div>`;
   },
-  surf() {
-    return `<div class="view pad">${ttl("Surf", "spots")}<div class="section"><div class="card rise" ${rise(1)} style="padding:22px 20px;text-align:center"><p class="prose" style="margin:0">Surf spotų aprašymai jau netrukus.</p></div></div></div>`;
-  },
+  surf() { return tallGrid("Surf", "spots", TRIP.surf, true, "data-surf"); },
+  surfd(i) { return spotPage(TRIP.surf[i]); },
   beaches() { return tallGrid("Beach", "Guide", TRIP.beaches, true, "data-beach"); },
   beach(i) { return spotPage(TRIP.beaches[i]); },
   prep() {
@@ -647,7 +650,7 @@ function go(name, arg, push = true) {
   $("phone").classList.toggle("nonav", cover);
   $("topbar").classList.toggle("hidden", cover);
   $("backBtn").hidden = stack.length < 2 || name === "home";
-  const key = { beach: "beaches", spot: "visit", stayd: "stay" }[name] || name;
+  const key = { beach: "beaches", surfd: "surf", spot: "visit", stayd: "stay" }[name] || name;
   $("nav").innerHTML = NAV.map(([k, l]) => `<button data-go="${k}" class="${k === key ? "on" : ""}">${ic(k)}<span>${l}</span></button>`).join("");
   const gal = $("gal");
   if (gal) gal.addEventListener("scroll", () => {
@@ -674,6 +677,7 @@ document.addEventListener("click", e => {
   const gb = e.target.closest("[data-gal]");
   if (gb) { const g = $("gal"); g.scrollBy({ left: Number(gb.dataset.gal) * (g.firstElementChild.offsetWidth + 10), behavior: "smooth" }); return; }
   const stc = e.target.closest("[data-stay]"); if (stc) return go("stayd", Number(stc.dataset.stay));
+  const sf = e.target.closest("[data-surf]"); if (sf) return go("surfd", Number(sf.dataset.surf));
   const bc = e.target.closest("[data-beach]"); if (bc) return go("beach", Number(bc.dataset.beach));
   const sp = e.target.closest("[data-spot]"); if (sp) return go("spot", Number(sp.dataset.spot));
   const pr = e.target.closest("[data-prep]");
