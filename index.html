@@ -287,11 +287,13 @@
     <button id="menuBtn" aria-label="Meniu"><svg class="ic" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h10"/></svg></button>
     <button id="backBtn" aria-label="Atgal" hidden><svg class="ic" viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button>
   </div>
+  <button id="langBtn" aria-label="Language" style="position:absolute;top:10px;right:16px;z-index:30;height:38px;min-width:44px;padding:0 12px;border-radius:19px;background:rgba(250,246,238,.9);box-shadow:0 2px 8px rgba(60,50,30,.15);color:var(--olive-d);font:600 12px Jost,sans-serif;letter-spacing:.08em">EN</button>
   <div class="screen" id="screen"></div>
   <nav id="nav"></nav>
   <div class="drawer" id="drawer"><div class="shade" id="shade"></div><div class="sheet" id="sheet"></div></div>
 </div>
 
+<script src="en.js"></script>
 <script>
 /* ============================================================
    ČIA KEISK SAVO KELIONĖS DUOMENIS
@@ -786,8 +788,56 @@ $("menuBtn").addEventListener("click", openDrawer);
 $("shade").addEventListener("click", closeDrawer);
 $("backBtn").addEventListener("click", back);
 
-document.title = "Kelionių gidas · " + TRIP.title;
-go(hasAccess() ? "home" : "cover");
+
+/* ---------- i18n (LT / EN) ---------- */
+const LK = "gidas_kalba";
+let LANG = "lt";
+try { LANG = localStorage.getItem(LK) === "en" ? "en" : "lt"; } catch (e) {}
+const ORIG = new WeakMap(), DONE = new WeakMap();
+const EN_RX = [
+  [/^(\d+) iš (\d+) padaryta/, (m, a, b) => `${a} of ${b} done`],
+  [/Uluvatu/g, () => "Uluwatu"]
+];
+function trEn(t) {
+  const EN = window.EN || {};
+  const k = t.trim(); if (!k) return t;
+  let r = EN[k];
+  if (r == null) {
+    r = k;
+    for (const [rx, f] of EN_RX) r = r.replace(rx, f);
+    if (r === k) return t;
+  }
+  return t.replace(k, () => r);
+}
+function trNode(n) {
+  if (LANG !== "en") return;
+  if (n.nodeType === 3) {
+    if (DONE.get(n) === n.nodeValue) return;
+    const v = n.nodeValue, r = trEn(v);
+    if (r !== v) { ORIG.set(n, v); DONE.set(n, r); n.nodeValue = r; }
+  } else if (n.nodeType === 1) {
+    for (const a of ["aria-label", "placeholder"]) { if (n.hasAttribute(a) && !n.dataset["o" + a.length]) { const v = n.getAttribute(a), r = trEn(v); if (r !== v) { n.dataset["o" + a.length] = v; n.setAttribute(a, r); } } }
+    n.childNodes.forEach(trNode);
+  }
+}
+let busy = false;
+const mo = new MutationObserver(() => { if (busy || LANG !== "en") return; busy = true; try { trNode($("phone")); } finally { busy = false; } });
+mo.observe($("phone"), { childList: true, subtree: true, characterData: true });
+function setLang(l) {
+  LANG = l;
+  try { localStorage.setItem(LK, l); } catch (e) {}
+  document.documentElement.lang = l;
+  $("langBtn").textContent = l === "en" ? "LT" : "EN";
+  document.title = (l === "en" ? "Travel guide" : "Kelionių gidas") + " · " + TRIP.title;
+  if (l === "lt") document.querySelectorAll("[data-o10],[data-o11]").forEach(e => { for (const a of ["aria-label", "placeholder"]) { const k = "o" + a.length; if (e.dataset[k]) { e.setAttribute(a, e.dataset[k]); delete e.dataset[k]; } } });
+  const cur = stack[stack.length - 1] || [hasAccess() ? "home" : "cover"];
+  go(cur[0], cur[1], false);
+  if ($("drawer").classList.contains("open")) openDrawer();
+  if (l === "en") { busy = true; try { trNode($("phone")); } finally { busy = false; } }
+}
+$("langBtn").addEventListener("click", () => setLang(LANG === "en" ? "lt" : "en"));
+setLang(LANG);
+if (!stack.length) go(hasAccess() ? "home" : "cover");
 reverify();
 </script>
 </body>
