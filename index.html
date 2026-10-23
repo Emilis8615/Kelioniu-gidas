@@ -153,7 +153,7 @@
   .slot { font-family: var(--serif); font-size: 28px; font-weight: 700; margin: 18px 0 4px; display: flex; align-items: center; gap: 10px; }
   .slot::after { content: ""; flex: 1; border-top: 1px solid var(--taupe); }
   .it { display: flex; gap: 12px; padding: 9px 0; }
-  .it .t { width: 46px; flex: none; font-size: 11px; letter-spacing: .08em; font-weight: 600; color: var(--olive-d); padding-top: 3px; }
+  .it .t { width: 58px; flex: none; font-size: 11px; letter-spacing: .08em; font-weight: 600; color: var(--olive-d); padding-top: 3px; }
   .it .x { font-size: 14.5px; line-height: 1.4; }
   .it .mini { display: inline-block; margin-top: 5px; font-size: 9.5px; letter-spacing: .16em; text-transform: uppercase; font-weight: 600; color: var(--olive-d); background: var(--sand); padding: 4px 10px; border-radius: 999px; text-decoration: none; }
   .it .n { font-size: 12.5px; color: var(--muted); margin-top: 2px; line-height: 1.5; }
@@ -344,7 +344,20 @@ const TRIP = {
     { date: "23 rugpjūčio", title: "Seminjakas", wiki: "Seminyak Bali", scene: "market", morning: [["10:00","Persikėlimas į Seminjaką"]], afternoon: [["14:00","Apsipirkimas ir kavinės"]], evening: [["19:30","Vakarienė, paplūdimio klubas"]] },
     { date: "24 rugpjūčio", title: "Uluvatu", wiki: "Uluwatu Temple Bali", scene: "temple", morning: [["10:00","Plaukimas ir poilsis"]], afternoon: [["16:00","Uluvatu šventykla ant uolos"]], evening: [["18:00","Kecak šokis saulėlydyje"]] },
     { date: "25 rugpjūčio", title: "Kuta", wiki: "Kuta Bali beach", scene: "beach", morning: [["10:00","Persikėlimas į Kutą"]], afternoon: [["14:00","Bangos ir paplūdimys"]], evening: [["19:00","Naktinė turgavietė"]] },
-    { date: "26 rugpjūčio", title: "Nusa Penida", wiki: "Kelingking Beach Nusa Penida", scene: "sunset", morning: [["07:30","Laivas į Nusa Penidą"]], afternoon: [["12:00","Kelingkingo uola ir Angelo paplūdimys"]], evening: [["18:00","Grįžimas laivu"]] },
+    { date: "26 rugpjūčio", title: "Nusa Penida", wiki: "Kelingking Beach Nusa Penida", scene: "sunset",
+      morning: [
+        ["Anksti","Išvažiuok iš viešbučio kuo anksčiau","Iki uosto ~1,5 val. motoroleriu, taksi panašiai. Kuo anksčiau atvyksi, tuo daugiau laiko saloje."],
+        ["Uoste","The Angkal Fast Boat ofisas (Denpasare)","Ofise parodai bilietus ir gauni korteles, su kuriomis įlipsi į keltą. Bilietus pirk iš anksto, kaina apie 20 €.","The Angkal Fast Boat Denpasar","https://12go.asia/en/checkout/5a8340e4/step/passengers"]
+      ],
+      afternoon: [
+        ["Saloje","Motoroleris nuomai Nusa Penidoje","Nuomok ne nuomos punkte, o iš vietinių žmonių ir nusiderėk. Visai dienai paprastai iki 10 €. Su šalmu.","Nusa Penida scooter rental"],
+        ["Pakeliui","Sustok pasipirkti vandens ir maisto parduotuvėje","Prie paplūdimio nebus laiko to daryti."],
+        ["Paplūdimys","Kelingking paplūdimys","Nusileidimas uolomis ~40 min į apačią ir tiek pat atgal. Karšta, todėl avėk patogius batus.","Kelingking Beach Nusa Penida"]
+      ],
+      evening: [
+        ["~17:00","Paskutinis keltas atgal","Dažniausiai apie 17 val., todėl nedelsk ir kooperuokis greitai."],
+        ["Jei lieki","Diamond Beach ir nakvynė saloje","Diamond Beach yra kitoje salos pusėje, per vieną dieną nespėsi. Reikės likti nakvoti.","Diamond Beach Nusa Penida"]
+      ] },
     { date: "27 rugpjūčio", title: "Laisva diena", wiki: "Kuta Bali beach", scene: "cafe", morning: [["10:00","Pusryčiai"]], afternoon: [["14:00","Masažas ir pirkiniai"]], evening: [["19:00","Vakarienė"]] },
     { date: "28 rugpjūčio", title: "Legianas", wiki: "Legian Bali", scene: "palms", morning: [["10:00","Persikėlimas į Legianą"]], afternoon: [["15:00","Paskutinis plaukimas"]], evening: [["18:30","Saulėlydis ir atsisveikinimas"],["22:30","Transferis į oro uostą"]] },
     { date: "29 rugpjūčio", title: "Namo", wiki: "Vilnius Airport", scene: "plane", morning: [["01:00","Skrydis į Vilnių"]], afternoon: [["~12:00","Persėdimas"]], evening: [["18:40","Nusileidimas Vilniuje"]] }
@@ -384,6 +397,22 @@ const TRIP = {
       text: "Pasivažinėjimas ATV per džiungles Ubude: protingos kainos, važiuojama ilgai ir labai smagu.",
       bullets: ["Protingos kainos", "Važiuojama ilgai", "Kelias per džiungles", "Parink operatorių pagal atsiliepimus"],
       links: [["ATV ratai Ubude žemėlapyje", "ATV ride Ubud"]] },
+    { name: "Nusa Penida", wiki: "Kelingking Beach Nusa Penida", note: "Dienos kelionė keltu", scene: "sunset", map: "Nusa Penida",
+      text: "Į Nusa Penidą plauki greituoju keltu iš Denpasaro. Dieną planuok taip, kad spėtum į paskutinį keltą atgal.",
+      bullets: ["Į The Angkal Fast Boat ofisą Denpasare reikia atvykti iš ryto ir kuo anksčiau", "Iki ofiso ~1,5 val. motoroleriu, taksi panašiai", "Bilietai internetu ~20 €, ofise gausi korteles įlipti į keltą", "Saloje motorolerį nuomok iš vietinių žmonių ir nusiderėk (dažniausiai iki 10 € visai dienai)", "Pakeliui nusipirk vandens ir maisto, prie paplūdimio nebus laiko", "Paskutinis keltas atgal dažniausiai ~17 val."],
+      links: [["Pirkti bilietus (12go)", "", "https://12go.asia/en/checkout/5a8340e4/step/passengers"], ["Keltų ofisas Denpasare", "The Angkal Fast Boat Denpasar"], ["Nusa Penida žemėlapyje", "Nusa Penida"]] },
+    { name: "Kelingking paplūdimys", wiki: "Kelingking Beach Nusa Penida", note: "Uolos ir turkio vanduo", scene: "beach", map: "Kelingking Beach Nusa Penida",
+      text: "Nusileisti iki paplūdimio reikia lipti uolomis, ir tai labai karšta, todėl užsimauk patogius batus.",
+      bullets: ["Nusileidimas žemyn vidutiniškai ~40 min", "Į viršų tiek pat", "Karšta, todėl pasiimk vandens", "Patogūs batai, ne šlepetės", "Nedelsk, nes paskutinis keltas atgal ~17 val."],
+      links: [["Kelingking žemėlapyje", "Kelingking Beach Nusa Penida"]] },
+    { name: "Diamond Beach", wiki: "Diamond Beach Nusa Penida", note: "Kita salos pusė", scene: "beach", map: "Diamond Beach Nusa Penida",
+      text: "Labai gražus paplūdimys, atrodo tarsi nubarstytas deimantais. Verta aplankyti, bet jis yra kitoje salos pusėje.",
+      bullets: ["Per vieną dieną kartu su Kelingking nespėsi", "Reikia likti nakvoti Nusa Penidoje", "Nakvynę rezervuok iš anksto"],
+      links: [["Diamond Beach žemėlapyje", "Diamond Beach Nusa Penida"]] },
+    { name: "Bungee jump", wiki: "Nusa Penida cliff", note: "Šuolis nuo uolos", scene: "sunset", map: "Bungee jump Nusa Penida",
+      text: "Bungee jump nuo uolos Nusa Penidoje. Kaina tikrai didelė, apie 200 € žmogui, bet verta.",
+      bullets: ["Kaina apie 200 € asmeniui", "Bilietus ir laiką pasitikrink iš anksto"],
+      links: [["Bungee jump žemėlapyje", "Bungee jump Nusa Penida"]] },
     { name: "Uluvatu šventykla", wiki: "Uluwatu Temple Bali", note: "Šventykla ant uolos",
       text: "Labai gražūs vaizdai ir kultūra, todėl tikrai verta nueiti. Bilietą pirk vietoje. Verta pamatyti ir vietinių pasirodymą apie jų kultūrą (Kecak šokis saulėlydžio metu).",
       bullets: ["Bilietą pirk vietoje", "Pasirodymas apie vietinę kultūrą, verta pamatyti", "Vaizdai nuo uolos į vandenyną", "Beždžionės čia drąsios: saugok akinius ir telefoną", "Šventyklai reikalingas sarongas, dažnai jį duoda prie įėjimo"],
@@ -607,7 +636,7 @@ const V = {
   },
   day(i) {
     const d = TRIP.days[i];
-    const slot = (n, a) => a.length ? `<div class="slot">${n}</div>` + a.map(([t, x, nt, m]) => `<div class="it"><div class="t">${esc(t)}</div><div><div class="x">${esc(x)}</div>${nt ? `<div class="n">${esc(nt)}</div>` : ""}${m ? `<a class="mini" target="_blank" rel="noopener" href="${mapUrl(m)}">Žemėlapis ↗</a>` : ""}</div></div>`).join("") : "";
+    const slot = (n, a) => a.length ? `<div class="slot">${n}</div>` + a.map(([t, x, nt, m, u]) => `<div class="it"><div class="t">${esc(t)}</div><div><div class="x">${esc(x)}</div>${nt ? `<div class="n">${esc(nt)}</div>` : ""}${m ? `<a class="mini" target="_blank" rel="noopener" href="${mapUrl(m)}">Žemėlapis ↗</a>` : ""}${u ? ` <a class="mini" style="background:var(--olive);color:#fff" target="_blank" rel="noopener" href="${esc(u)}">Bilietai ↗</a>` : ""}</div></div>`).join("") : "";
     return `<div class="view full"><div class="side"><div class="strip">${art(d.scene, d.photo, "", d.wiki)}</div><div class="main" style="padding-top:62px">
       <h2 class="ttl rise" ${rise(0)} style="padding:0"><span class="a">Day</span><span class="b" style="margin:-4px 0 0 46px">${i + 1}</span></h2>
       <div class="eyebrow rise" ${rise(1)} style="text-align:left;margin-top:6px">${esc(d.date)} · ${esc(d.title)}</div>
@@ -636,7 +665,7 @@ const V = {
       <div class="place-title rise" ${rise(1)} style="margin-top:-34px"><h2 style="font-size:32px;letter-spacing:.03em">${esc(v.name)}</h2><div class="script">Details</div></div>
       <p class="prose rise" ${rise(2)}>${esc(v.text || v.note)}</p>
       ${(v.bullets || []).length ? `<div class="section rise" ${rise(3)}><div class="card" style="padding:6px 18px">${v.bullets.map(b => `<div class="check" style="cursor:default"><div class="box" style="background:var(--olive)">✓</div><div class="label">${esc(b)}</div></div>`).join("")}</div></div>` : ""}
-      <div style="display:flex;flex-direction:column;gap:10px;align-items:center;margin-top:12px" class="rise" ${rise(4)}>${(v.links || [["Žemėlapis", v.map]]).map(([l, q]) => `<a class="mapbtn" target="_blank" rel="noopener" href="${mapUrl(q)}">${esc(l)} ↗</a>`).join("")}</div></div>`;
+      <div style="display:flex;flex-direction:column;gap:10px;align-items:center;margin-top:12px" class="rise" ${rise(4)}>${(v.links || [["Žemėlapis", v.map]]).map(([l, q, u]) => `<a class="mapbtn" target="_blank" rel="noopener" href="${u ? esc(u) : mapUrl(q)}">${esc(l)} ↗</a>`).join("")}</div></div>`;
   },
   eat() { return placeGrid("Where", "to Eat", TRIP.eat); },
   out() { return placeGrid("Going", "Out", TRIP.out); },
