@@ -388,10 +388,9 @@ const TRIP = {
   ],
 
   out: [
-    { name: "Paplūdimio klubas", wiki: "Seminyak beach Bali", type: "Saulėlydis", where: "Seminjakas", note: "Atvykti prieš saulėlydį, kad rastum vietą.", scene: "sunset" },
-    { name: "Koktelių baras", wiki: "Cocktail", type: "Vakaras", where: "Seminjakas", note: "Gyva muzika kas vakarą.", scene: "night" },
-    { name: "Naktinė turgavietė", wiki: "Night market Bali", type: "Pasivaikščiojimas", where: "Kuta", note: "Skanus gatvės maistas.", scene: "market" },
-    { name: "Kecak šokis", wiki: "Kecak dance Uluwatu", type: "Kultūra", where: "Uluvatu", note: "Šokis saulėlydžio metu, bilietai prie įėjimo.", scene: "temple" }
+    { name: "Single Fin Bali", type: "Naktinis baras", where: "Uluvatu", map: "Single Fin Bali", photo: "img/singlefin-1.jpg", note: "Naktinis baras ant uolos virš vandenyno. Smagu po kokteilį išgerti, pasitikti saulėlydį ir pasimėgauti gera muzika bei nuotaika.", scene: "sunset" },
+    { name: "Savaya Beach Club", type: "Klubas", where: "Uluvatu", map: "Savaya Bali", photo: "img/savaya-1.jpg", note: "Prabangus klubas virš vandenyno. Įėjimas griežtai nuo 21 metų.", scene: "night" },
+    { name: "Finns ir Atlas Beach Club", type: "Paplūdimio klubai", where: "Čangu", map: "Finns Beach Club Bali", photo: "img/finns-1.jpg", note: "Vieni didžiausių klubų Bali: visą naktį veiksmas, daug garso, baseinų ir muzikos.", scene: "night", links: [["Finns Beach Club", "Finns Beach Club Bali"], ["Atlas Beach Club", "Atlas Beach Club Bali"]] },
   ],
 
   shop: [
@@ -438,13 +437,6 @@ const TRIP = {
     { name: "Tegenunganas", wiki: "Tegenungan Waterfall Bali", note: "Krioklys", scene: "waterfall", map: "Tegenungan Waterfall" }
   ],
 
-  things: [
-    { name: "Banglentės", wiki: "Canggu Batu Bolong beach", note: "Pamokos Čangu ir Kutoje", scene: "beach", map: "Surf lesson Canggu" },
-    { name: "Joga Ubude", wiki: "Yoga Ubud Bali", note: "Rytinės pamokos", scene: "palms", map: "Yoga Ubud" },
-    { name: "Nusa Penida", wiki: "Nusa Penida island", note: "Dienos kelionė laivu", scene: "sunset", map: "Nusa Penida" },
-    { name: "Masažas", wiki: "Balinese massage", note: "Nuo 10 € valandai", scene: "cafe", map: "Spa Ubud" }
-  ],
-
   attire: [
     ["Dienai", "Lengvi lininiai drabužiai, šortai, marškinėliai."],
     ["Šventykloms", "Dengti pečius ir kelius. Sarongą dažnai išduoda prie įėjimo."],
@@ -460,7 +452,6 @@ const TRIP = {
     ["Iš oro uosto", "Gojek arba Grab. Abu ima tokį patį mokestį, kaina matoma programėlėje."]
   ],
 
-  packing: ["Pasas ir bilietai","Kelionės draudimas","Apsauga nuo saulės (SPF 50)","Repelentas","Lengvi drabužiai","Maudymosi kostiumėlis","Sarongas šventykloms","Universalus adapteris","Maža vaistinėlė","Nešiojamas įkroviklis","Lietpaltis"],
 
   tips: [
     ["Valiuta", "Indonezijos rupija (IDR). Grynieji praverčia mažose kavinėse."],
@@ -479,13 +470,11 @@ const IC = {
   stay: '<path d="M3 11l9-7.5 9 7.5"/><path d="M5.5 9.5V20h13V9.5"/><path d="M10 20v-6h4v6"/>',
   daily: '<rect x="4" y="5" width="16" height="15" rx="2.5"/><path d="M4 10h16M9 3v4M15 3v4M8.5 14h2M13.5 14h2"/>',
   attire: '<path d="M12 7.5a2 2 0 10-2-2"/><path d="M12 7.5V9l9 6.2a1 1 0 01-.6 1.8H3.6A1 1 0 013 15.2L12 9"/>',
-  packing: '<rect x="5.5" y="5" width="13" height="16" rx="2"/><path d="M9 5V3.5h6V5M9 11l1.5 1.5L13.5 9.5M9 16.5h6"/>',
   transport: '<circle cx="12" cy="12" r="9"/><path d="M15.8 8.2l-2.2 5.4-5.4 2.2 2.2-5.4z"/>',
   eat: '<path d="M7 3v7.5M5 3v5a2 2 0 004 0V3M7 10.5V21"/><path d="M17.5 3c-2.3 1.6-3.5 4.4-3.5 8h3.5V21"/>',
   out: '<path d="M4.5 4h15L12 12.5z"/><path d="M12 12.5V20M8 20.5h8M16.5 6.5l3-3"/>',
   shop: '<path d="M5.5 8.5h13L19.5 21h-15z"/><path d="M9 8.5a3 3 0 016 0"/>',
   visit: '<path d="M12 21.5s-7-6.3-7-12a7 7 0 0114 0c0 5.7-7 12-7 12z"/><circle cx="12" cy="9.5" r="2.5"/>',
-  things: '<circle cx="16.5" cy="6.5" r="2.5"/><path d="M3 14c2-2.6 4-2.6 6 0s4 2.6 6 0 4-2.6 6 0M3 19c2-2.6 4-2.6 6 0s4 2.6 6 0 4-2.6 6 0"/>',
   tips: '<path d="M12 3a6 6 0 00-3.6 10.8c.6.5 1 1.2 1 2V17h5.2v-1.2c0-.8.4-1.5 1-2A6 6 0 0012 3z"/><path d="M10 20.5h4"/>',
   prep: '<rect x="5" y="3.5" width="14" height="17" rx="2"/><circle cx="12" cy="10" r="3"/><path d="M8.5 16.5h7"/>',
   home: '<path d="M3.5 11L12 4l8.5 7"/><path d="M5.5 10v10h13V10"/><path d="M10 20v-5h4v5"/>'
@@ -494,11 +483,11 @@ const ic = n => `<svg class="ic" viewBox="0 0 24 24">${IC[n] || ""}</svg>`;
 
 const MENU = [
   ["overview","Apžvalga"],["flight","Skrydžiai"],["stay","Nakvynė"],
-  ["daily","Dienos"],["attire","Apranga"],["packing","Pakuotė"],
+  ["daily","Dienos"],["attire","Apranga"],
   ["transport","Transportas"],["eat","Kur valgyti"],["out","Vakarai"],
-  ["shop","Pirkiniai"],["visit","Aplankyti"],["things","Veiklos"]
+  ["shop","Pirkiniai"],["visit","Aplankyti"]
 ];
-const NAV = [["home","Pradžia"],["overview","Maršrutas"],["daily","Dienos"],["eat","Maistas"],["visit","Vietos"],["packing","Pakuotė"]];
+const NAV = [["home","Pradžia"],["overview","Maršrutas"],["daily","Dienos"],["eat","Maistas"],["visit","Vietos"],["out","Vakarai"]];
 
 const $ = id => document.getElementById(id);
 const esc = s => { const d = document.createElement("div"); d.textContent = s == null ? "" : String(s); return d.innerHTML; };
@@ -698,18 +687,12 @@ const V = {
   out() { return placeGrid("Going", "Out", TRIP.out); },
   shop() { return placeGrid("Where", "to Buy", TRIP.shop); },
   visit() { return tallGrid("Places", "to Visit", TRIP.visit, true); },
-  things() { return tallGrid("Things", "to Do", TRIP.things); },
   attire() { return listPage("Attire", "what to wear", TRIP.attire); },
   transport() { return listPage("Transport", "getting around", TRIP.transport); },
-  tips() { return listPage("Good", "to know", TRIP.tips); },
-  packing() {
-    const done = getChecks(), n = TRIP.packing.filter(p => done[p]).length, pct = Math.round(n / TRIP.packing.length * 100);
-    return `<div class="view pad">${ttl("Packing", "List")}<div class="lead rise" ${rise(1)}>${n} iš ${TRIP.packing.length} supakuota</div>
-      <div class="section"><div class="progress"><i style="width:${pct}%"></i></div><div class="card" style="padding:6px 18px">${TRIP.packing.map(p => `<div class="check ${done[p] ? "done" : ""}" data-check="${esc(p)}"><div class="box">${done[p] ? "✓" : ""}</div><div class="label">${esc(p)}</div></div>`).join("")}</div></div></div>`;
-  }
+  tips() { return listPage("Good", "to know", TRIP.tips); }
 };
 function placeGrid(a, b, items) {
-  return `<div class="view pad">${ttl(a, b)}<div class="two" style="margin-top:14px">${items.map((e, i) => `<div class="cell rise" ${rise(i + 1)}>${art(e.scene, e.photo, "round", e.wiki)}<h4>${esc(e.name)}</h4><small>${esc(e.where)}${e.price ? " · " + esc(e.price) : ""}</small><small>${esc(e.note)}</small><a class="badge" target="_blank" rel="noopener" href="${mapUrl(e.name + " " + e.where)}">Žemėlapis</a></div>`).join("")}</div></div>`;
+  return `<div class="view pad">${ttl(a, b)}<div class="two" style="margin-top:14px">${items.map((e, i) => `<div class="cell rise" ${rise(i + 1)}>${art(e.scene, e.photo, "round", e.wiki)}<h4>${esc(e.name)}</h4><small>${esc(e.where)}${e.price ? " · " + esc(e.price) : ""}</small><small>${esc(e.note)}</small>${(e.links || [["Žemėlapis", e.map || (e.name + " " + e.where)]]).map(([l, q]) => `<a class="badge" target="_blank" rel="noopener" href="${mapUrl(q)}">${esc(l)}</a> `).join("")}</div>`).join("")}</div></div>`;
 }
 function tallGrid(a, b, items, clickable) {
   return `<div class="view pad">${ttl(a, b)}<div class="two" style="margin-top:14px">${items.map((e, i) => `<div class="cell tall rise" ${rise(i + 1)}${clickable ? ` data-spot="${i}" style="cursor:pointer"` : ""}>${art(e.scene, e.photo, "arch-sm", e.wiki)}<h4>${esc(e.name)}</h4><small>${esc(e.note)}</small>${clickable && e.text ? `<span class="badge" style="background:var(--olive);color:#fff">Daugiau</span> ` : ""}<a class="badge" target="_blank" rel="noopener" href="${mapUrl(e.map)}">Žemėlapis</a></div>`).join("")}</div></div>`;
@@ -773,8 +756,6 @@ document.addEventListener("click", e => {
   const f = e.target.closest("[data-flight]"); if (f) { S.flight = Number(f.dataset.flight); return go("flight", undefined, false); }
   const pr = e.target.closest("[data-prep]");
   if (pr) { const x = TRIP.prep.find(i => i.id === pr.dataset.prep), st = getPrep(), y = $("screen").scrollTop; st[x.id] = !isDone(x, st); try { localStorage.setItem(PRK, JSON.stringify(st)); } catch (e) {} go("prep", undefined, false); $("screen").scrollTop = y; return; }
-  const c = e.target.closest("[data-check]");
-  if (c) { const k = c.dataset.check, y = $("screen").scrollTop; setCheck(k, !getChecks()[k]); go("packing", undefined, false); $("screen").scrollTop = y; }
 });
 $("menuBtn").addEventListener("click", openDrawer);
 $("shade").addEventListener("click", closeDrawer);
