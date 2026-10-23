@@ -320,14 +320,6 @@ const TRIP = {
     { title: "Pinigus pasikeisk mieste", info: ["Nuvažiavęs į viešbutį, apsidairyk, kur galima pasikeisti pinigų.", "Nepasitikėk viena vieta: pasivaikščiok ir palygink kelias, nes kursai labai skiriasi."] }
   ],
 
-  overview: [
-    { place: "Ubudas", wiki: "Ubud Bali", dates: "1–6 dienos", scene: "terraces", text: "Kultūrinė Balio širdis: ryžių terasos, šventyklos, beždžionių miškas ir tylūs rytai. Čia verta leisti laiką lėtai: joga, kava su vaizdu ir pasivaikščiojimai tarp laukų." },
-    { place: "Čangu", wiki: "Canggu Bali", dates: "7–8 dienos", scene: "beach", text: "Juodo smėlio paplūdimiai, banglentininkai ir madingos kavinės. Geriausia vieta pramokti sėlinti ant bangų ir pamatyti saulėlydį." },
-    { place: "Seminjakas", wiki: "Seminyak Bali", dates: "9–10 dienos", scene: "night", text: "Prabangesnė pakrantės dalis: restoranai, paplūdimio klubai, parduotuvės ir gyvas vakaras." },
-    { place: "Kuta", wiki: "Kuta Bali beach", dates: "11–13 dienos", scene: "sunset", text: "Platus paplūdimys ir pirmosios bangos pradedantiesiems. Gyva, triukšminga ir nebrangi vieta." },
-    { place: "Legianas", wiki: "Legian Bali", dates: "14–15 dienos", scene: "palms", text: "Ramesnis paplūdimys ir paskutinės dienos prieš grįžimą namo. Ilgi pusryčiai, masažas ir saulėlydis." }
-  ],
-
   flights: [
     { tab: "Išvykimas", wiki: "Ngurah Rai International Airport", date: "", from: "VNO", fromCity: "Vilnius", to: "DPS", toCity: "Denpasaras", flight: "XX 123", depart: "06:00", arrive: "23:30", airline: "Pavyzdinė oro linija", terminal: "1", seat: "15A" },
     { tab: "Grįžimas", wiki: "Vilnius Airport", date: "", from: "DPS", fromCity: "Denpasaras", to: "VNO", toCity: "Vilnius", flight: "XX 124", depart: "01:00", arrive: "18:40", airline: "Pavyzdinė oro linija", terminal: "I", seat: "15B" }
@@ -393,48 +385,39 @@ const TRIP = {
     { name: "Finns ir Atlas Beach Club", type: "Paplūdimio klubai", where: "Čangu", map: "Finns Beach Club Bali", photo: "img/finns-1.jpg", note: "Vieni didžiausių klubų Bali: visą naktį veiksmas, daug garso, baseinų ir muzikos.", scene: "night", links: [["Finns Beach Club", "Finns Beach Club Bali"], ["Atlas Beach Club", "Atlas Beach Club Bali"]] },
   ],
 
-  shop: [
-    { name: "Ubudo turgus", wiki: "Ubud Art Market", type: "Suvenyrai", where: "Ubudas", note: "Derėtis galima ir verta.", scene: "market" },
-    { name: "Seminjako butikai", wiki: "Seminyak shopping Bali", type: "Mada", where: "Seminjakas", note: "Lengvi lininiai drabužiai.", scene: "market" },
-    { name: "Kavos parduotuvė", wiki: "Kopi Bali coffee plantation", type: "Skanėstai", where: "Ubudas", note: "Balio kava ir prieskoniai dovanoms.", scene: "cafe" },
-    { name: "Sidabro dirbtuvės", wiki: "Celuk Bali silver", type: "Papuošalai", where: "Čelukas", note: "Rankų darbo papuošalai.", scene: "market" }
-  ],
-
   visit: [
-    { name: "Ryžių terasos", wiki: "Tegallalang rice terrace Bali", note: "Ubudas: terasos ir baseinai", scene: "terraces", map: "Tegalalang Rice Terrace",
-      text: "Ubude labai smagu pasižiūrėti ir pasivaikščioti ryžių terasose. Šalia yra labai smagių baseinų.",
-      bullets: ["Pasivaikščiojimas tarp terasų", "Šalia smagūs baseinai", "Pakeliui užsuk į zoologijos sodą, o tada ATV"],
+    { name: "Ryžių terasos", photo: "img/terasos-1.jpg", images2: ["img/baseinai-1.jpg"], note: "Ubudas: terasos ir baseinai", scene: "terraces", map: "Tegalalang Rice Terrace",
+      text: "Ubude labai smagu pasižiūrėti ir pasivaikščioti ryžių terasose. Šalia yra didžiuliai baseinai, kur visi klausosi muzikos.",
+      bullets: ["Pasivaikščiojimas tarp terasų", "Šalia didžiuliai baseinai, kur visi klausosi muzikos", "Pakeliui užsuk į zoologijos sodą, o tada ATV"],
       links: [["Ryžių terasos žemėlapyje", "Tegalalang Rice Terrace"], ["Baseinai prie terasų", "swimming pool near Tegalalang Rice Terrace"]] },
     { name: "Zoologijos sodas", wiki: "Bali Zoo", note: "Pakeliui į ATV", scene: "palms", map: "Bali Zoo",
       text: "Pakeliui verta užsukti į zoologijos sodą.",
       bullets: ["Gerai tinka pakeliui tarp terasų ir ATV", "Bilietus galima pirkti internetu arba vietoje"],
       links: [["Zoologijos sodas žemėlapyje", "Bali Zoo"]] },
-    { name: "ATV Ubude", wiki: "Ubud Bali jungle", note: "Per džiungles", scene: "waterfall", map: "ATV ride Ubud",
+    { name: "ATV Ubude", photo: "img/atv-1.jpg", note: "Per džiungles", scene: "waterfall", map: "ATV ride Ubud",
       text: "Pasivažinėjimas ATV per džiungles Ubude: protingos kainos, važiuojama ilgai ir labai smagu.",
       bullets: ["Protingos kainos", "Važiuojama ilgai", "Kelias per džiungles", "Parink operatorių pagal atsiliepimus"],
       links: [["ATV ratai Ubude žemėlapyje", "ATV ride Ubud"]] },
-    { name: "Nusa Penida", wiki: "Kelingking Beach Nusa Penida", note: "Dienos kelionė keltu", scene: "sunset", map: "Nusa Penida",
+    { name: "Nusa Penida", photo: "img/nusapenida-1.jpg", note: "Dienos kelionė keltu", scene: "sunset", map: "Nusa Penida",
       text: "Į Nusa Penidą plauki greituoju keltu iš Denpasaro. Dieną planuok taip, kad spėtum į paskutinį keltą atgal.",
       bullets: ["Į The Angkal Fast Boat ofisą Denpasare reikia atvykti iš ryto ir kuo anksčiau", "Iki ofiso ~1,5 val. motoroleriu, taksi panašiai", "Bilietai internetu ~20 €, ofise gausi korteles įlipti į keltą", "Saloje motorolerį nuomok iš vietinių žmonių ir nusiderėk (dažniausiai iki 10 € visai dienai)", "Pakeliui nusipirk vandens ir maisto, prie paplūdimio nebus laiko", "Paskutinis keltas atgal dažniausiai ~17 val."],
       links: [["Bilietai (12go)", "", "https://12go.asia/en/travel/bali/nusa-penida"], ["Keltų ofisas Denpasare", "The Angkal Fast Boat Denpasar"], ["Nusa Penida žemėlapyje", "Nusa Penida"]] },
-    { name: "Kelingking paplūdimys", wiki: "Kelingking Beach Nusa Penida", note: "Uolos ir turkio vanduo", scene: "beach", map: "Kelingking Beach Nusa Penida",
-      text: "Nusileisti iki paplūdimio reikia lipti uolomis, ir tai labai karšta, todėl užsimauk patogius batus.",
-      bullets: ["Nusileidimas žemyn vidutiniškai ~40 min", "Į viršų tiek pat", "Karšta, todėl pasiimk vandens", "Patogūs batai, ne šlepetės", "Nedelsk, nes paskutinis keltas atgal ~17 val."],
+    { name: "Kelingking paplūdimys", photo: "img/kelingking-1.jpg", note: "Uolos ir turkio vanduo", scene: "beach", map: "Kelingking Beach Nusa Penida",
+      text: "Garsusis „T-Rex“ paplūdimys Nusa Penidoje. Iš viršaus vaizdas stulbinantis, bet nusileisti iki paplūdimio reikia lipti uolomis, ir tai labai karšta, todėl užsimauk patogius batus. Pirmoji dalis – betoniniai laiptai su turėklais, toliau takas siaurėja, tampa status ir uolėtas, o paskutinė atkarpa yra lipimas uola.",
+      bullets: ["Nusileidimas žemyn vidutiniškai ~40 min., į viršų tiek pat, kai kam iki valandos", "Kelias: pradžioje betoniniai laiptai su turėklais, toliau siauras, status uolėtas takas", "Venk 11–14 val. minios: eik anksti ryte arba po 15 val.", "Nelipk tamsoje, o žemyn leiskis tik per atoslūgį", "Karšta, todėl pasiimk daug vandens, kremą nuo saulės ir kepurę", "Patogūs batai su gera sankiba, ne šlepetės, ir maža kuprinė, kad rankos būtų laisvos", "Maudytis nesaugu: stiprios srovės, staigiai kylančios bangos, gelbėtojų nėra", "Įėjimas apie 10 000 IDR už transporto priemonę, grynais", "Pagrindinis apžvalgos taškas – maždaug 5 min. lygiu keliu nuo įėjimo, todėl vaizdu galima pasigrožėti ir nenusileidus"],
       links: [["Kelingking žemėlapyje", "Kelingking Beach Nusa Penida"]] },
-    { name: "Diamond Beach", wiki: "Diamond Beach Nusa Penida", note: "Kita salos pusė", scene: "beach", map: "Diamond Beach Nusa Penida",
-      text: "Labai gražus paplūdimys, atrodo tarsi nubarstytas deimantais. Verta aplankyti, bet jis yra kitoje salos pusėje.",
-      bullets: ["Per vieną dieną kartu su Kelingking nespėsi", "Reikia likti nakvoti Nusa Penidoje", "Nakvynę rezervuok iš anksto"],
+    { name: "Diamond Beach", photo: "img/diamond-1.jpg", note: "Kita salos pusė", scene: "beach", map: "Diamond Beach Nusa Penida",
+      text: "Labai gražus paplūdimys, atrodo tarsi nubarstytas deimantais. Verta aplankyti, bet jis yra kitoje salos pusėje, rytiniame Nusa Penidos pakraštyje. Žemyn veda siauri balti laiptai išilgai uolos.",
+      bullets: ["Per vieną dieną kartu su Kelingking nespėsi", "Reikia likti nakvoti Nusa Penidoje", "Nakvynę rezervuok iš anksto", "Nusileidimas laiptais užtrunka ~10 min., bet lipti atgal į viršų karšta ir varginanti, todėl pasiimk vandens", "Laiptai siauri, todėl eik atsargiai", "Įėjimas apie 25 000 IDR ir apie 5 000 IDR už parkavimą", "Maudytis geriausia ten, kur baltas smėlis ir palmės, o kitoje dalyje uolos ir bangų baseinėliai", "Paplūdimyje yra mažas warung su šaltais gėrimais ir patiekalais (apie 3 € už porciją), taip pat sūpuoklės tarp palmių", "Gudru pradėti nuo Diamond Beach, o tada važiuoti į vakarus link Kelingking"],
       links: [["Diamond Beach žemėlapyje", "Diamond Beach Nusa Penida"]] },
-    { name: "Bungee jump", wiki: "Nusa Penida cliff", note: "Šuolis nuo uolos", scene: "sunset", map: "Bungee jump Nusa Penida",
+    { name: "Bungee jump", photo: "img/bungee-1.jpg", note: "Šuolis nuo uolos", scene: "sunset", map: "Bungee jump Nusa Penida",
       text: "Bungee jump nuo uolos Nusa Penidoje. Kaina tikrai didelė, apie 200 € žmogui, bet verta.",
       bullets: ["Kaina apie 200 € asmeniui", "Bilietus ir laiką pasitikrink iš anksto"],
       links: [["Bungee jump žemėlapyje", "Bungee jump Nusa Penida"]] },
-    { name: "Uluvatu šventykla", wiki: "Uluwatu Temple Bali", note: "Šventykla ant uolos",
+    { name: "Uluvatu šventykla", photo: "img/uluwatu-1.jpg", note: "Šventykla ant uolos",
       text: "Labai gražūs vaizdai ir kultūra, todėl tikrai verta nueiti. Bilietą pirk vietoje. Verta pamatyti ir vietinių pasirodymą apie jų kultūrą (Kecak šokis saulėlydžio metu).",
       bullets: ["Bilietą pirk vietoje", "Pasirodymas apie vietinę kultūrą, verta pamatyti", "Vaizdai nuo uolos į vandenyną", "Beždžionės čia drąsios: saugok akinius ir telefoną", "Šventyklai reikalingas sarongas, dažnai jį duoda prie įėjimo"],
       links: [["Uluvatu šventykla žemėlapyje", "Uluwatu Temple"]], scene: "temple", map: "Uluwatu Temple" },
-    { name: "Tanah Lotas", wiki: "Tanah Lot temple Bali", note: "Saulėlydžio šventykla", scene: "sunset", map: "Tanah Lot" },
-    { name: "Tegenunganas", wiki: "Tegenungan Waterfall Bali", note: "Krioklys", scene: "waterfall", map: "Tegenungan Waterfall" }
   ],
 
   attire: [
@@ -465,7 +448,6 @@ const TRIP = {
    PROGRAMĖLĖS KODAS (nebūtina keisti)
    ============================================================ */
 const IC = {
-  overview: '<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3.2 3 3.2 15 0 18M12 3c-3.2 3-3.2 15 0 18"/>',
   flight: '<path d="M21 15.5v-2L13.5 9V4a1.5 1.5 0 00-3 0v5L3 13.5v2l7.5-2.2V18l-2 1.5V21l3.5-1 3.5 1v-1.5l-2-1.5v-4.7z"/>',
   stay: '<path d="M3 11l9-7.5 9 7.5"/><path d="M5.5 9.5V20h13V9.5"/><path d="M10 20v-6h4v6"/>',
   daily: '<rect x="4" y="5" width="16" height="15" rx="2.5"/><path d="M4 10h16M9 3v4M15 3v4M8.5 14h2M13.5 14h2"/>',
@@ -473,7 +455,6 @@ const IC = {
   transport: '<circle cx="12" cy="12" r="9"/><path d="M15.8 8.2l-2.2 5.4-5.4 2.2 2.2-5.4z"/>',
   eat: '<path d="M7 3v7.5M5 3v5a2 2 0 004 0V3M7 10.5V21"/><path d="M17.5 3c-2.3 1.6-3.5 4.4-3.5 8h3.5V21"/>',
   out: '<path d="M4.5 4h15L12 12.5z"/><path d="M12 12.5V20M8 20.5h8M16.5 6.5l3-3"/>',
-  shop: '<path d="M5.5 8.5h13L19.5 21h-15z"/><path d="M9 8.5a3 3 0 016 0"/>',
   visit: '<path d="M12 21.5s-7-6.3-7-12a7 7 0 0114 0c0 5.7-7 12-7 12z"/><circle cx="12" cy="9.5" r="2.5"/>',
   tips: '<path d="M12 3a6 6 0 00-3.6 10.8c.6.5 1 1.2 1 2V17h5.2v-1.2c0-.8.4-1.5 1-2A6 6 0 0012 3z"/><path d="M10 20.5h4"/>',
   prep: '<rect x="5" y="3.5" width="14" height="17" rx="2"/><circle cx="12" cy="10" r="3"/><path d="M8.5 16.5h7"/>',
@@ -482,12 +463,12 @@ const IC = {
 const ic = n => `<svg class="ic" viewBox="0 0 24 24">${IC[n] || ""}</svg>`;
 
 const MENU = [
-  ["overview","Apžvalga"],["flight","Skrydžiai"],["stay","Nakvynė"],
+  ["flight","Skrydžiai"],["stay","Nakvynė"],
   ["daily","Dienos"],["attire","Apranga"],
   ["transport","Transportas"],["eat","Kur valgyti"],["out","Vakarai"],
-  ["shop","Pirkiniai"],["visit","Aplankyti"]
+  ["visit","Aplankyti"]
 ];
-const NAV = [["home","Pradžia"],["overview","Maršrutas"],["daily","Dienos"],["eat","Maistas"],["visit","Vietos"],["out","Vakarai"]];
+const NAV = [["home","Pradžia"],["daily","Dienos"],["eat","Maistas"],["visit","Vietos"],["out","Vakarai"]];
 
 const $ = id => document.getElementById(id);
 const esc = s => { const d = document.createElement("div"); d.textContent = s == null ? "" : String(s); return d.innerHTML; };
@@ -608,17 +589,6 @@ const V = {
       <div class="hint rise" ${rise(3)}>Spausk ikoną</div>
     </div>`;
   },
-  overview() {
-    return `<div class="view pad"><div class="split"><div class="vert"><span class="a">Trip</span><span class="b">Overview</span></div>
-      <div class="stops">${TRIP.overview.map((s, i) => `<button class="stop rise" ${rise(i + 1)} data-place="${i}"><h4>${esc(s.place)}</h4><div class="d">${esc(s.dates)}</div></button>`).join("")}</div></div></div>`;
-  },
-  place(i) {
-    const p = TRIP.overview[i];
-    return `<div class="view pad">${art(p.scene, p.photo, "arch hero", p.wiki)}
-      <div class="place-title rise" ${rise(1)}><h2>${esc(p.place)}</h2><div class="script">Details</div></div>
-      <p class="prose rise" ${rise(2)}>${esc(p.text)}</p>
-      <div style="text-align:center;margin-top:18px" class="rise" ${rise(3)}><a class="mapbtn" target="_blank" rel="noopener" href="${mapUrl(p.place)}">Žemėlapis</a></div></div>`;
-  },
   flight() {
     const f = TRIP.flights[S.flight];
     return `<div class="view pad">${ttl("Flight", "Details")}
@@ -680,12 +650,12 @@ const V = {
     return `<div class="view pad">${art(v.scene, v.photo, "arch hero", v.wiki)}
       <div class="place-title rise" ${rise(1)} style="margin-top:-34px"><h2 style="font-size:32px;letter-spacing:.03em">${esc(v.name)}</h2><div class="script">Details</div></div>
       <p class="prose rise" ${rise(2)}>${esc(v.text || v.note)}</p>
+      ${(v.images2 || []).map(u => `<img src="${esc(u)}" alt="" style="display:block;width:calc(100% - 36px);border-radius:22px;margin:16px auto;object-fit:cover">`).join("")}
       ${(v.bullets || []).length ? `<div class="section rise" ${rise(3)}><div class="card" style="padding:6px 18px">${v.bullets.map(b => `<div class="check" style="cursor:default"><div class="box" style="background:var(--olive)">✓</div><div class="label">${esc(b)}</div></div>`).join("")}</div></div>` : ""}
       <div style="display:flex;flex-direction:column;gap:10px;align-items:center;margin-top:12px" class="rise" ${rise(4)}>${(v.links || [["Žemėlapis", v.map]]).map(([l, q, u]) => `<a class="mapbtn" target="_blank" rel="noopener" href="${u ? esc(u) : mapUrl(q)}">${esc(l)} ↗</a>`).join("")}</div></div>`;
   },
   eat() { return placeGrid("Where", "to Eat", TRIP.eat); },
   out() { return placeGrid("Going", "Out", TRIP.out); },
-  shop() { return placeGrid("Where", "to Buy", TRIP.shop); },
   visit() { return tallGrid("Places", "to Visit", TRIP.visit, true); },
   attire() { return listPage("Attire", "what to wear", TRIP.attire); },
   transport() { return listPage("Transport", "getting around", TRIP.transport); },
@@ -723,7 +693,7 @@ function go(name, arg, push = true) {
   $("phone").classList.toggle("nonav", cover);
   $("topbar").classList.toggle("hidden", cover);
   $("backBtn").hidden = stack.length < 2 || name === "home";
-  const key = { day: "daily", place: "overview", spot: "visit", stayd: "stay" }[name] || name;
+  const key = { day: "daily", spot: "visit", stayd: "stay" }[name] || name;
   $("nav").innerHTML = NAV.map(([k, l]) => `<button data-go="${k}" class="${k === key ? "on" : ""}">${ic(k)}<span>${l}</span></button>`).join("");
   const gal = $("gal");
   if (gal) gal.addEventListener("scroll", () => {
@@ -752,7 +722,6 @@ document.addEventListener("click", e => {
   if (gb) { const g = $("gal"); g.scrollBy({ left: Number(gb.dataset.gal) * (g.firstElementChild.offsetWidth + 10), behavior: "smooth" }); return; }
   const stc = e.target.closest("[data-stay]"); if (stc) return go("stayd", Number(stc.dataset.stay));
   const sp = e.target.closest("[data-spot]"); if (sp) return go("spot", Number(sp.dataset.spot));
-  const p = e.target.closest("[data-place]"); if (p) return go("place", Number(p.dataset.place));
   const f = e.target.closest("[data-flight]"); if (f) { S.flight = Number(f.dataset.flight); return go("flight", undefined, false); }
   const pr = e.target.closest("[data-prep]");
   if (pr) { const x = TRIP.prep.find(i => i.id === pr.dataset.prep), st = getPrep(), y = $("screen").scrollTop; st[x.id] = !isDone(x, st); try { localStorage.setItem(PRK, JSON.stringify(st)); } catch (e) {} go("prep", undefined, false); $("screen").scrollTop = y; return; }
