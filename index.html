@@ -305,7 +305,6 @@ const TRIP = {
   tagline: "Kelionių gidas",
   photo: "img/kelingking-1.jpg",
   script: "Bali gidas lietuviams",
-  price: "20 €",
   instagram: "keliones_lietuviams",
   email: "Kelioneslietuviams@gmail.com",
   buyUrl: "",
@@ -589,8 +588,8 @@ const contactHtml = () => `<div class="contact"><div class="ct">Susisiekti</div>
 const V = {
   cover() {
     const buy = TRIP.buyUrl
-      ? `<a class="btn-main" href="${esc(TRIP.buyUrl)}" target="_blank" rel="noopener">Pirkti už ${money(TRIP.price)}</a>`
-      : `<div class="howbuy">Norėdami įsigyti gidą (${money(TRIP.price)}), kreipkitės į mūsų kontaktus.</div>`;
+      ? `<a class="btn-main" href="${esc(TRIP.buyUrl)}" target="_blank" rel="noopener">Pirkti</a>`
+      : `<div class="howbuy">Dominantys ar norintys įsigyti gidą, susisiekite su mumis. Padėsime ir visos kelionės metu.</div>`;
     return `<div class="cover">
       <div class="small">${esc(TRIP.tagline)}</div>
       <h1>${esc(TRIP.title)}</h1>
@@ -599,7 +598,7 @@ const V = {
       <div class="sell card">
         <h3>Ką gausi</h3>
         ${TRIP.gets.map(g => `<div class="check" style="cursor:default"><div class="box" style="background:var(--olive)">✓</div><div class="label">${esc(g)}</div></div>`).join("")}
-        <div class="help">Nusipirkęs iš mūsų gauni <b>neribotą bendravimą ir pagalbą</b> planuojant kelionę į Balį.</div>
+        <div class="help">Įsigijęs gidą iš mūsų gauni <b>neribotą bendravimą ir pagalbą</b> planuojant kelionę į Balį ir visos kelionės metu.</div>
       </div>
       <div class="actions">${buy}<button class="btn-alt" data-go="code">Turiu kodą</button></div>
       ${contactHtml()}
