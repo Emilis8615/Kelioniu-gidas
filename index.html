@@ -79,6 +79,10 @@
   .codebox { width: 100%; max-width: 360px; margin-top: 22px; display: flex; flex-direction: column; gap: 14px; align-items: stretch; text-align: center; }
   .codebox input { padding: 16px 18px; border-radius: 16px; border: 1.5px solid var(--taupe); background: #fff; font-size: 18px; letter-spacing: .12em; text-align: center; text-transform: uppercase; }
   .codemsg { min-height: 22px; font-size: 14px; color: #a24a3a; }
+  .cover .eur, .price .eur { font-family: var(--sans); font-weight: 600; }
+  .cover .price .eur { font-size: .8em; margin-left: .12em; }
+  .contact { width: 100%; margin-top: 26px; display: flex; flex-direction: column; gap: 10px; align-items: center; text-align: center; z-index: 3; }
+  .contact .ct { font-family: var(--display); font-size: 22px; }
   .script { font-family: var(--script); }
   .cover .foot .script { font-size: 46px; line-height: 1; }
   .btn-main { background: var(--olive); color: #fff; padding: 14px 34px; border-radius: 999px; font-weight: 500; letter-spacing: .14em; font-size: 12px; text-transform: uppercase; box-shadow: 0 8px 20px rgba(79,86,56,.35); transition: transform .15s; }
@@ -299,6 +303,8 @@ const TRIP = {
   photo: "img/kelingking-1.jpg",
   script: "Bali gidas lietuviams",
   price: "10 €",
+  instagram: "keliones_lietuviams",
+  email: "Kelioneslietuviams@gmail.com",
   buyUrl: "",
   gets: ["Dokumentai prieš skrydį: viza, turistinis mokestis ir atvykimo kortelė su oficialiomis nuorodomis","Nakvynės su nuotraukomis, kainomis ir žemėlapiu","Kur valgyti ir kur pusryčiauti, išbandytos vietos Uluvatu","Vakarai: barai ir klubai, kur verta eiti","Paplūdimiai su kainomis, laiptais ir patarimais","Vietos ir veiklos: Nusa Penida, Kelingking, Diamond Beach, ATV, ryžių terasos ir šventyklos","Surf pamokos ir motorolerio nuoma","Viskas paruošta telefonui, su tiesioginėmis nuorodomis į žemėlapį ir bilietus"],
   traveler: "Emilis ir kompanija",
@@ -447,6 +453,7 @@ const IC = {
   eat: '<path d="M7 3v7.5M5 3v5a2 2 0 004 0V3M7 10.5V21"/><path d="M17.5 3c-2.3 1.6-3.5 4.4-3.5 8h3.5V21"/>',
   out: '<path d="M4.5 4h15L12 12.5z"/><path d="M12 12.5V20M8 20.5h8M16.5 6.5l3-3"/>',
   visit: '<path d="M12 21.5s-7-6.3-7-12a7 7 0 0114 0c0 5.7-7 12-7 12z"/><circle cx="12" cy="9.5" r="2.5"/>',
+  contact: '<rect x="3.5" y="5.5" width="17" height="13" rx="2.5"/><path d="M4 7l8 6 8-6"/>',
   tips: '<path d="M12 3a6 6 0 00-3.6 10.8c.6.5 1 1.2 1 2V17h5.2v-1.2c0-.8.4-1.5 1-2A6 6 0 0012 3z"/><path d="M10 20.5h4"/>',
   prep: '<rect x="5" y="3.5" width="14" height="17" rx="2"/><circle cx="12" cy="10" r="3"/><path d="M8.5 16.5h7"/>',
   home: '<path d="M3.5 11L12 4l8.5 7"/><path d="M5.5 10v10h13V10"/><path d="M10 20v-5h4v5"/>'
@@ -562,24 +569,32 @@ function hydrate() {
 const ttl = (a, b) => `<h2 class="ttl rise" ${rise(0)}><span class="a">${a}</span><span class="b">${b}</span></h2>`;
 
 /* ---------- Ekranai ---------- */
+function money(t) { return esc(t).replace(/€/g, '<span class="eur">€</span>'); }
+const contactHtml = () => `<div class="contact"><div class="ct">Susisiekti</div>
+  <a class="mapbtn" target="_blank" rel="noopener" href="https://www.instagram.com/${esc(TRIP.instagram)}/">Instagram @${esc(TRIP.instagram)}</a>
+  <a class="mapbtn" href="mailto:${esc(TRIP.email)}">${esc(TRIP.email)}</a></div>`;
 const V = {
   cover() {
     const buy = TRIP.buyUrl
-      ? `<a class="btn-main" href="${esc(TRIP.buyUrl)}" target="_blank" rel="noopener">Pirkti už ${esc(TRIP.price)}</a>`
-      : `<button class="btn-main" disabled style="opacity:.55">Pirkti už ${esc(TRIP.price)} (netrukus)</button>`;
+      ? `<a class="btn-main" href="${esc(TRIP.buyUrl)}" target="_blank" rel="noopener">Pirkti už ${money(TRIP.price)}</a>`
+      : `<button class="btn-main" disabled style="opacity:.55">Pirkti už ${money(TRIP.price)} (netrukus)</button>`;
     return `<div class="cover">
       <div class="small">${esc(TRIP.tagline)}</div>
       <h1>${esc(TRIP.title)}</h1>
       ${art("palms", TRIP.photo, "arch", TRIP.wiki)}
       <div class="foot"><div class="script">${esc(TRIP.script)}</div>
-        <div class="price">${esc(TRIP.price)}</div></div>
+        <div class="price">${money(TRIP.price)}</div></div>
       <div class="sell card">
         <h3>Ką gausi</h3>
         ${TRIP.gets.map(g => `<div class="check" style="cursor:default"><div class="box" style="background:var(--olive)">✓</div><div class="label">${esc(g)}</div></div>`).join("")}
         <div class="help">Nusipirkęs iš mūsų gauni <b>neribotą bendravimą ir pagalbą</b> planuojant kelionę į Balį.</div>
       </div>
       <div class="actions">${buy}<button class="btn-alt" data-go="code">Turiu kodą</button></div>
+      ${contactHtml()}
     </div>`;
+  },
+  contact() {
+    return `<div class="view pad">${ttl("Contact", "susisiekti")}<div class="section"><div class="card rise" ${rise(1)} style="padding:20px;text-align:center"><p class="prose" style="margin:0 0 6px">Turi klausimų ar reikia pagalbos planuojant kelionę? Parašyk mums.</p>${contactHtml()}</div></div></div>`;
   },
   code() {
     return `<div class="cover code">
@@ -588,6 +603,7 @@ const V = {
       <p class="prose" style="margin-top:14px">Kodą gavai el. paštu nusipirkęs gidą.</p>
       <div class="codebox"><input id="codeIn" type="text" inputmode="text" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="XXXX-XXXX-XXXX"><button class="btn-main" data-unlock>Atrakinti</button><div id="codeMsg" class="codemsg"></div></div>
       <div class="actions"><button class="btn-alt" data-go="cover">← Atgal</button></div>
+      ${contactHtml()}
     </div>`;
   },
   home() {
@@ -699,7 +715,7 @@ function reverify() {
 }
 let stack = [];
 function go(name, arg, push = true) {
-  if (!hasAccess() && name !== "cover" && name !== "code") name = "cover";
+  if (!hasAccess() && name !== "cover" && name !== "code" && name !== "contact") name = "cover";
   if (push) stack.push([name, arg]);
   const html = V[name] ? V[name](arg) : V.home();
   $("screen").innerHTML = html;
@@ -724,7 +740,7 @@ function back() {
 }
 function openDrawer() {
   $("sheet").innerHTML = `<div class="brand">${esc(TRIP.title)}</div><div class="script">${esc(TRIP.script)}</div>` +
-    [["home", "Pradžia"], ["prep", "Prieš kelionę"], ...MENU, ["tips", "Patarimai"]].map(([k, l]) => `<button class="item" data-go="${k}">${ic(k)}<span>${l}</span></button>`).join("") + `<p style="font-size:10.5px;color:var(--muted);margin-top:18px;line-height:1.5">Nuotraukos: Wikipedia / Wikimedia Commons (autorių teisės ir licencijos nurodytos prie originalų).</p>`;
+    [["home", "Pradžia"], ["prep", "Prieš kelionę"], ...MENU, ["tips", "Patarimai"], ["contact", "Susisiekti"]].map(([k, l]) => `<button class="item" data-go="${k}">${ic(k)}<span>${l}</span></button>`).join("") + `<p style="font-size:10.5px;color:var(--muted);margin-top:18px;line-height:1.5">Nuotraukos: Wikipedia / Wikimedia Commons (autorių teisės ir licencijos nurodytos prie originalų).</p>`;
   $("drawer").classList.add("open");
 }
 function closeDrawer() { $("drawer").classList.remove("open"); }
