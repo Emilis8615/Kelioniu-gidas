@@ -194,6 +194,20 @@
   .sub { font-family: var(--serif); font-size: 32px; font-weight: 700; margin: 26px 4px 12px; }
   .step .sb p.warn { color: #8a5a2b; background: #f3e3c8; border-radius: 10px; padding: 8px 10px; font-size: 12.5px; }
 
+  .galwrap { position: relative; }
+  .gal { display: flex; gap: 10px; overflow-x: auto; scroll-snap-type: x mandatory; padding: 0 22px; scroll-padding: 0 22px; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+  .gal::-webkit-scrollbar { display: none; }
+  .slide { flex: 0 0 100%; scroll-snap-align: center; aspect-ratio: 4 / 3; border-radius: 22px; overflow: hidden; background: var(--sand); box-shadow: 0 8px 24px rgba(70,55,30,.18); }
+  .slide img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .gbtn { position: absolute; top: 50%; transform: translateY(-50%); width: 38px; height: 38px; border-radius: 50%; background: rgba(250,246,238,.9); box-shadow: 0 2px 8px rgba(0,0,0,.2); font-size: 26px; line-height: 1; color: var(--olive-d); display: flex; align-items: center; justify-content: center; padding-bottom: 3px; }
+  .gbtn.l { left: 30px; } .gbtn.r { right: 30px; }
+  .dots { display: flex; justify-content: center; gap: 7px; margin-top: 12px; }
+  .dots i { width: 7px; height: 7px; border-radius: 50%; background: var(--taupe); transition: all .2s; }
+  .dots i.on { background: var(--olive); width: 20px; border-radius: 999px; }
+  .stay-title { text-align: center; margin-top: 14px; padding: 0 20px; }
+  .stay-title h2 { font-family: var(--display); font-weight: 900; font-size: 30px; line-height: 1.1; }
+  .stay-title .script { font-size: 34px; color: var(--olive); margin-top: 2px; }
+
   /* Apatinė juosta */
   nav { height: calc(var(--nav-h) + env(safe-area-inset-bottom)); padding-bottom: env(safe-area-inset-bottom); background: var(--sand); display: flex; justify-content: space-around; align-items: center; flex: none; border-radius: 22px 22px 0 0; box-shadow: 0 -6px 20px rgba(70,55,30,.1); position: relative; z-index: 10; }
   nav button { display: flex; flex-direction: column; align-items: center; gap: 3px; color: #a99f88; padding: 6px 7px; font-size: 8.5px; letter-spacing: .12em; text-transform: uppercase; font-weight: 600; transition: color .15s, transform .15s; }
@@ -247,6 +261,8 @@
     .side .main { padding: 12px 36px 28px 28px; }
     .ttl .a { font-size: 62px; } .ttl .b { font-size: 56px; margin-left: 66px; }
     .drawer .sheet { width: 340px; }
+    .galwrap { max-width: 760px; margin: 0 auto; }
+    .slide { aspect-ratio: 3 / 2; }
   }
 </style>
 </head>
@@ -325,7 +341,8 @@ const TRIP = {
   },
 
   stays: [
-    { name: "COZ Bali Boutique Villas", wiki: "Padang Padang Beach Bali", where: "Pecatu, Uluvatu", dates: "", price: "", note: "Boutique vilos Pecatu rajone, netoli Padang Padang paplūdimio. Tavo rekomenduojama bazė Uluvatu. Kainą ir laisvas datas pasitikrink rezervuodamas.", scene: "beach" },
+    { name: "COZ Bali Boutique Villas", images: ["img/coz-1.jpg", "img/coz-2.jpg"], where: "Pecatu, Uluvatu", dates: "", price: "", note: "Boutique vilos Pecatu rajone, netoli Padang Padang paplūdimio. Tavo rekomenduojama bazė Uluvatu. Kainą ir laisvas datas pasitikrink rezervuodamas.", scene: "beach",
+      text: "Tobula nakvynė: kambariai tvarkomi 2 kartus per parą, o parduotuvės ir paplūdimiai yra šalia. Tobula vieta keliauti iš čia." },
     { name: "Ubudo vila su baseinu", wiki: "Ubud Bali", where: "Ubudas", dates: "1–6 dienos", price: "55 € / naktis", note: "Pusryčiai įskaičiuoti. Registracija nuo 14:00.", scene: "terraces" },
     { name: "Čangu bangų namelis", wiki: "Canggu Bali", where: "Čangu", dates: "7–8 dienos", price: "70 € / naktis", note: "5 min. pėsčiomis iki paplūdimio.", scene: "beach" },
     { name: "Seminjako viešbutis", wiki: "Seminyak Bali", where: "Seminjakas", dates: "9–10 dienos", price: "65 € / naktis", note: "Arti restoranų gatvės.", scene: "night" },
@@ -626,8 +643,19 @@ const V = {
           <div><small>Terminalas</small><b>${esc(f.terminal)}</b></div><div><small>Vieta</small><b>${esc(f.seat)}</b></div>
         </div></div></div>`;
   },
+  stayd(i) {
+    const s = TRIP.stays[i], imgs = s.images || [];
+    return `<div class="view pad"><div class="galwrap rise" ${rise(0)}>
+        <div class="gal" id="gal">${imgs.map(u => `<div class="slide"><img src="${esc(u)}" alt="${esc(s.name)}"></div>`).join("")}</div>
+        ${imgs.length > 1 ? `<button class="gbtn l" data-gal="-1" aria-label="Atgal">‹</button><button class="gbtn r" data-gal="1" aria-label="Pirmyn">›</button>` : ""}
+      </div>
+      ${imgs.length > 1 ? `<div class="dots">${imgs.map((_, k) => `<i class="${k === 0 ? "on" : ""}"></i>`).join("")}</div>` : ""}
+      <div class="stay-title rise" ${rise(1)}><h2>${esc(s.name)}</h2><div class="script">${esc(s.where)}</div></div>
+      <p class="prose rise" ${rise(2)}>${esc(s.text || s.note)}</p>
+      <div style="text-align:center;margin-top:16px" class="rise" ${rise(3)}><a class="mapbtn" target="_blank" rel="noopener" href="${mapUrl(s.name + " " + s.where)}">Žemėlapis ↗</a></div></div>`;
+  },
   stay() {
-    return `<div class="view pad">${ttl("Where", "to Stay")}<div class="section"><div class="card rise" ${rise(1)} style="background:var(--olive);color:#fff">${art(TRIP.stayTip.scene, null, "round", TRIP.stayTip.wiki)}<span class="pill" style="background:rgba(255,255,255,.2);color:#fff">Patarimas</span><h3 style="margin-top:8px">${esc(TRIP.stayTip.title)}</h3><p style="color:rgba(255,255,255,.85)">${esc(TRIP.stayTip.text)}</p>${TRIP.stayTip.bullets.map(b => `<p style="color:#fff;margin-top:6px">• ${esc(b)}</p>`).join("")}</div>${TRIP.stays.map((s, i) => `<div class="card rise" ${rise(i + 1)}>${art(s.scene, s.photo, "round", s.wiki)}<h3>${esc(s.name)}</h3><p>${esc(s.where)}${s.dates ? " · " + esc(s.dates) : ""}</p>${s.price ? `<span class="pill">${esc(s.price)}</span>` : ""}<p style="margin-top:10px">${esc(s.note)}</p><a class="mapbtn" target="_blank" rel="noopener" href="${mapUrl(s.name + " " + s.where)}">Žemėlapis</a></div>`).join("")}</div></div>`;
+    return `<div class="view pad">${ttl("Where", "to Stay")}<div class="section"><div class="card rise" ${rise(1)} style="background:var(--olive);color:#fff">${art(TRIP.stayTip.scene, null, "round", TRIP.stayTip.wiki)}<span class="pill" style="background:rgba(255,255,255,.2);color:#fff">Patarimas</span><h3 style="margin-top:8px">${esc(TRIP.stayTip.title)}</h3><p style="color:rgba(255,255,255,.85)">${esc(TRIP.stayTip.text)}</p>${TRIP.stayTip.bullets.map(b => `<p style="color:#fff;margin-top:6px">• ${esc(b)}</p>`).join("")}</div>${TRIP.stays.map((s, i) => `<div class="card rise" ${rise(i + 1)}${s.images ? ` data-stay="${i}" style="cursor:pointer"` : ""}>${art(s.scene, s.photo || (s.images && s.images[0]), "round", s.wiki)}<h3>${esc(s.name)}</h3><p>${esc(s.where)}${s.dates ? " · " + esc(s.dates) : ""}</p>${s.price ? `<span class="pill">${esc(s.price)}</span>` : ""}<p style="margin-top:10px">${esc(s.note)}</p>${s.images ? `<span class="mapbtn" style="margin-right:8px">Nuotraukos ir daugiau</span>` : ""}<a class="mapbtn" target="_blank" rel="noopener" href="${mapUrl(s.name + " " + s.where)}">Žemėlapis</a></div>`).join("")}</div></div>`;
   },
   daily() {
     return `<div class="view full"><div class="side"><div class="strip">${art("terraces", null, "", "Tegallalang rice terrace Bali")}</div><div class="main" style="padding-top:62px">
@@ -713,8 +741,13 @@ function go(name, arg, push = true) {
   $("phone").classList.toggle("nonav", cover);
   $("topbar").classList.toggle("hidden", cover);
   $("backBtn").hidden = stack.length < 2 || name === "home";
-  const key = { day: "daily", place: "overview", spot: "visit" }[name] || name;
+  const key = { day: "daily", place: "overview", spot: "visit", stayd: "stay" }[name] || name;
   $("nav").innerHTML = NAV.map(([k, l]) => `<button data-go="${k}" class="${k === key ? "on" : ""}">${ic(k)}<span>${l}</span></button>`).join("");
+  const gal = $("gal");
+  if (gal) gal.addEventListener("scroll", () => {
+    const w = gal.firstElementChild.offsetWidth + 10, k = Math.round(gal.scrollLeft / w);
+    document.querySelectorAll(".dots i").forEach((d, n) => d.classList.toggle("on", n === k));
+  }, { passive: true });
   $("screen").querySelectorAll("[data-i]").forEach(e => e.style.setProperty("--i", e.dataset.i));
   closeDrawer();
   hydrate();
@@ -733,6 +766,9 @@ document.addEventListener("click", e => {
   const g = e.target.closest("[data-go]"); if (g) return go(g.dataset.go);
   const d = e.target.closest("[data-day]"); if (d && !d.disabled) return go("day", Number(d.dataset.day));
   if (e.target.closest("a")) return;
+  const gb = e.target.closest("[data-gal]");
+  if (gb) { const g = $("gal"); g.scrollBy({ left: Number(gb.dataset.gal) * (g.firstElementChild.offsetWidth + 10), behavior: "smooth" }); return; }
+  const stc = e.target.closest("[data-stay]"); if (stc) return go("stayd", Number(stc.dataset.stay));
   const sp = e.target.closest("[data-spot]"); if (sp) return go("spot", Number(sp.dataset.spot));
   const p = e.target.closest("[data-place]"); if (p) return go("place", Number(p.dataset.place));
   const f = e.target.closest("[data-flight]"); if (f) { S.flight = Number(f.dataset.flight); return go("flight", undefined, false); }
